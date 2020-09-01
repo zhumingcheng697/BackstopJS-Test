@@ -10,24 +10,29 @@
       "label": "tablet",
       "width": 1024,
       "height": 768
+    },
+    {
+      "label": "1080p",
+      "width": 1920,
+      "height": 1080
     }
   ],
   "onBeforeScript": "puppet/onBefore.js",
   "onReadyScript": "puppet/onReady.js",
   "scenarios": [
     {
-      "label": "BackstopJS Homepage",
-      "cookiePath": "backstop_data/engine_scripts/cookies.json",
-      "url": "https://garris.github.io/BackstopJS/",
+      "label": "Main Page",
+      "cookiePath": "",
+      "url": "https://zhumingcheng697.github.io/Portfolio-Site/",
       "referenceUrl": "",
       "readyEvent": "",
       "readySelector": "",
-      "delay": 0,
+      "delay": 5000,
       "hideSelectors": [],
       "removeSelectors": [],
-      "hoverSelector": "",
+      "hoverSelector": "#card-container .card.app",
       "clickSelector": "",
-      "postInteractionWait": 0,
+      "postInteractionWait": 1000,
       "selectors": [],
       "selectorExpansion": true,
       "expect": 0,
@@ -47,7 +52,7 @@
   "engineOptions": {
     "args": ["--no-sandbox"]
   },
-  "asyncCaptureLimit": 5,
+  "asyncCaptureLimit": 10,
   "asyncCompareLimit": 50,
   "debug": false,
   "debugWindow": false

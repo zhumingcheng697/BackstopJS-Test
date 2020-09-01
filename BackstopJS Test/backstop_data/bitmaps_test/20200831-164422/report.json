@@ -1,0 +1,57 @@
+{
+  "testSuite": "BackstopJS",
+  "tests": [
+    {
+      "pair": {
+        "reference": "../bitmaps_reference/backstop_default_Main_Page_0_document_0_phone.png",
+        "test": "../bitmaps_test/20200831-164422/backstop_default_Main_Page_0_document_0_phone.png",
+        "selector": "document",
+        "fileName": "backstop_default_Main_Page_0_document_0_phone.png",
+        "label": "Main Page",
+        "requireSameDimensions": true,
+        "misMatchThreshold": 0.1,
+        "url": "https://zhumingcheng697.github.io/Portfolio-Site/",
+        "referenceUrl": "",
+        "expect": 0,
+        "viewportLabel": "phone",
+        "error": "Reference file not found /Volumes/McCoy Zhu/DigiComm-Work/BackstopJS Test/backstop_data/bitmaps_reference/backstop_default_Main_Page_0_document_0_phone.png"
+      },
+      "status": "fail"
+    },
+    {
+      "pair": {
+        "reference": "../bitmaps_reference/backstop_default_Main_Page_0_document_1_tablet.png",
+        "test": "../bitmaps_test/20200831-164422/backstop_default_Main_Page_0_document_1_tablet.png",
+        "selector": "document",
+        "fileName": "backstop_default_Main_Page_0_document_1_tablet.png",
+        "label": "Main Page",
+        "requireSameDimensions": true,
+        "misMatchThreshold": 0.1,
+        "url": "https://zhumingcheng697.github.io/Portfolio-Site/",
+        "referenceUrl": "",
+        "expect": 0,
+        "viewportLabel": "tablet",
+        "error": "Reference file not found /Volumes/McCoy Zhu/DigiComm-Work/BackstopJS Test/backstop_data/bitmaps_reference/backstop_default_Main_Page_0_document_1_tablet.png"
+      },
+      "status": "fail"
+    },
+    {
+      "pair": {
+        "reference": "../bitmaps_reference/backstop_default_Main_Page_0_document_2_1080p.png",
+        "test": "../bitmaps_test/20200831-164422/backstop_default_Main_Page_0_document_2_1080p.png",
+        "selector": "document",
+        "fileName": "backstop_default_Main_Page_0_document_2_1080p.png",
+        "label": "Main Page",
+        "requireSameDimensions": true,
+        "misMatchThreshold": 0.1,
+        "url": "https://zhumingcheng697.github.io/Portfolio-Site/",
+        "referenceUrl": "",
+        "expect": 0,
+        "viewportLabel": "1080p",
+        "error": "Reference file not found /Volumes/McCoy Zhu/DigiComm-Work/BackstopJS Test/backstop_data/bitmaps_reference/backstop_default_Main_Page_0_document_2_1080p.png"
+      },
+      "status": "fail"
+    }
+  ],
+  "id": "backstop_default"
+}
