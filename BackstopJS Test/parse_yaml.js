@@ -1,6 +1,19 @@
 const YAML = require('yaml');
 const fs = require('fs');
 const backstop = require('backstopjs');
+const readline = require('readline');
+
+// http://logan.tw/posts/2015/12/12/read-lines-from-stdin-in-nodejs/
+let rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+    terminal: false
+});
+
+rl.on('line', function (line) {
+    console.log(line);
+});
+
 
 const file = fs.readFileSync('nyu.yml', 'utf8');
 const parsed = YAML.parse(file);
