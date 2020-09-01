@@ -38,6 +38,25 @@
       "expect": 0,
       "misMatchThreshold" : 0.1,
       "requireSameDimensions": true
+    },
+    {
+      "label": "Web Page",
+      "cookiePath": "",
+      "url": "https://zhumingcheng697.github.io/Portfolio-Site/web/index.html",
+      "referenceUrl": "",
+      "readyEvent": "",
+      "readySelector": "div.main-view div.projects .project-card",
+      "delay": 5000,
+      "hideSelectors": [],
+      "removeSelectors": [],
+      "hoverSelector": ["h2", "h2 div.drop-down div.menu > div.scrollable :nth-child(3)"],
+      "clickSelector": "",
+      "postInteractionWait": 1000,
+      "selectors": [],
+      "selectorExpansion": true,
+      "expect": 0,
+      "misMatchThreshold" : 0.1,
+      "requireSameDimensions": true
     }
   ],
   "paths": {
