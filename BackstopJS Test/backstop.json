@@ -21,6 +21,25 @@
   "onReadyScript": "puppet/onReady.js",
   "scenarios": [
     {
+      "label": "NYU Homepage",
+      "cookiePath": "",
+      "url": "https://www.nyu.edu",
+      "referenceUrl": "",
+      "readyEvent": "tab",
+      "readySelector": "body",
+      "delay": 10000,
+      "hideSelectors": [],
+      "removeSelectors": [],
+      "hoverSelector": ["header.header .main-navigation-menu > li:nth-child(2)", "header.header .main-nav-wrap .has-submenu .menu-title:nth-child(2)"],
+      "clickSelector": ["header.header .hamburger", "header.header .has-submenu .menu-expand:nth-child(2)"],
+      "postInteractionWait": 10000,
+      "selectors": [],
+      "selectorExpansion": true,
+      "expect": 0,
+      "misMatchThreshold" : 0.1,
+      "requireSameDimensions": true
+    },
+    {
       "label": "Main Page",
       "cookiePath": "",
       "url": "https://zhumingcheng697.github.io/Portfolio-Site/",
