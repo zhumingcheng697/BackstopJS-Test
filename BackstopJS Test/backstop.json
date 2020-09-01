@@ -57,6 +57,25 @@
       "expect": 0,
       "misMatchThreshold" : 0.1,
       "requireSameDimensions": true
+    },
+    {
+      "label": "App Page Detail",
+      "cookiePath": "",
+      "url": "https://zhumingcheng697.github.io/Portfolio-Site/app/index.html",
+      "referenceUrl": "",
+      "readyEvent": "",
+      "readySelector": "div.main-view div.projects .project-card",
+      "delay": 5000,
+      "hideSelectors": [],
+      "removeSelectors": [],
+      "hoverSelector": "body.app div.modal-view div.modal-area .actual-modal p:not(.tags) > a:first-child",
+      "clickSelector": "#guess-the-number-2020",
+      "postInteractionWait": 10000,
+      "selectors": [],
+      "selectorExpansion": true,
+      "expect": 0,
+      "misMatchThreshold" : 0.1,
+      "requireSameDimensions": true
     }
   ],
   "paths": {
@@ -71,8 +90,8 @@
   "engineOptions": {
     "args": ["--no-sandbox"]
   },
-  "asyncCaptureLimit": 10,
-  "asyncCompareLimit": 50,
+  "asyncCaptureLimit": 20,
+  "asyncCompareLimit": 100,
   "debug": false,
   "debugWindow": false
 }
