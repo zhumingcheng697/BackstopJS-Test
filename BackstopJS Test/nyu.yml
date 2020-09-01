@@ -1,0 +1,378 @@
+column1: QA
+column2: Prod
+column3: Diff
+
+urls:
+    - name: homepage
+      url1: http://qacms.home.nyu.edu/
+      url2: http://www.nyu.edu/
+      screen_sizes:
+        - 320x2500
+        - 480x2500
+        - 690x2500
+        - 930x2500
+        - 1200x2500
+
+    - name: channel
+      url1: http://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel.html
+      url2: http://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel.html
+      screen_sizes:
+        - 320x2500
+        - 480x2500
+        - 690x2500
+        - 930x2500
+        - 1200x2500
+
+    - name: role
+      url1: http://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/role.html
+      url2: https://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/role.html
+      screen_sizes:
+        - 320x2500
+        - 480x2500
+        - 690x2500
+        - 930x2500
+        - 1200x2500
+
+    - name: content
+      url1: http://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/content-template.html
+      url2: https://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/content-template.html
+      screen_sizes:
+        - 320x2500
+        - 480x2500
+        - 690x2500
+        - 930x2500
+        - 1200x2500
+
+    - name: content_w_sidebar
+      url1: http://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/content-template-with-sidebar.html
+      url2: https://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/content-template-with-sidebar.html
+      screen_sizes:
+        - 320x2500
+        - 480x2500
+        - 690x2500
+        - 930x2500
+        - 1200x2500
+
+    - name: study_abroad_home
+      url1: http://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/global-study-centers/study-abroad-homepage.html
+      url2: https://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/global-study-centers/study-abroad-homepage.html
+      screen_sizes:
+        - 320x2500
+        - 480x2500
+        - 690x2500
+        - 930x2500
+        - 1200x2500
+
+    - name: study_abroad_landing
+      url1: http://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/global-study-centers/study-abroad-homepage/study-abroad-landing.html
+      url2: https://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/global-study-centers/study-abroad-homepage/study-abroad-landing.html
+      screen_sizes:
+        - 320x2500
+        - 480x2500
+        - 690x2500
+        - 930x2500
+        - 1200x2500
+
+    - name: study_abroad_content
+      url1: http://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/global-study-centers/study-abroad-homepage/study-abroad-landing/study-abroad-content.html
+      url2: http://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/global-study-centers/study-abroad-homepage/study-abroad-landing/study-abroad-content.html
+      screen_sizes:
+        - 320x2500
+        - 480x2500
+        - 690x2500
+        - 930x2500
+        - 1200x2500
+
+    - name: study_abroad_content_w_sidebar
+      url1: http://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/global-study-centers/study-abroad-homepage/study-abroad-landing/study-abroad-content-w-sidebar.html
+      url2: https://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/global-study-centers/study-abroad-homepage/study-abroad-landing/study-abroad-content-w-sidebar.html
+      screen_sizes:
+        - 320x2500
+        - 480x2500
+        - 690x2500
+        - 930x2500
+        - 1200x2500
+
+    - name: study_abroad_landing_2
+      url1: http://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/global-study-centers/study-abroad-homepage/study-abroad-landing1.html
+      url2: https://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/global-study-centers/study-abroad-homepage/study-abroad-landing1.html
+      screen_sizes:
+        - 320x2500
+        - 480x2500
+        - 690x2500
+        - 930x2500
+        - 1200x2500
+      delay: 1
+
+    - name: study_abroad_content_2
+      url1: http://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/global-study-centers/study-abroad-homepage/study-abroad-landing1/study-abroad-content.html
+      url2: http://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/global-study-centers/study-abroad-homepage/study-abroad-landing1/study-abroad-content.html
+      screen_sizes:
+        - 320x2500
+        - 480x2500
+        - 690x2500
+        - 930x2500
+        - 1200x2500
+      delay: 1
+
+    - name: study_abroad_content_w_sidebar_2
+      url1: http://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/global-study-centers/study-abroad-homepage/study-abroad-landing1/study-abroad-content-w-sidebar.html
+      url2: https://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/global-study-centers/study-abroad-homepage/study-abroad-landing1/study-abroad-content-w-sidebar.html
+      screen_sizes:
+        - 320x2500
+        - 480x2500
+        - 690x2500
+        - 930x2500
+        - 1200x2500
+      delay: 1
+
+    - name: study_abroad_landing_3
+      url1: http://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/global-study-centers/study-abroad-homepage/study-abroad-landing11.html
+      url2: https://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/global-study-centers/study-abroad-homepage/study-abroad-landing11.html
+      screen_sizes:
+        - 320x2500
+        - 480x2500
+        - 690x2500
+        - 930x2500
+        - 1200x2500
+
+    - name: study_abroad_content_3
+      url1: http://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/global-study-centers/study-abroad-homepage/study-abroad-landing11/study-abroad-content.html
+      url2: http://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/global-study-centers/study-abroad-homepage/study-abroad-landing11/study-abroad-content.html
+      screen_sizes:
+        - 320x2500
+        - 480x2500
+        - 690x2500
+        - 930x2500
+        - 1200x2500
+
+    - name: organization
+      url1: http://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/organization-page.html
+      url2: https://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/organization-page.html
+      screen_sizes:
+        - 320x2500
+        - 480x2500
+        - 690x2500
+        - 930x2500
+        - 1200x2500
+
+    - name: bio
+      url1: http://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/organization-page/personnel-bio-page.html
+      url2: https://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/organization-page/personnel-bio-page.html
+      screen_sizes:
+        - 320x2500
+        - 480x2500
+        - 690x2500
+        - 930x2500
+        - 1200x2500
+
+    - name: policy_detail
+      url1: http://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/policy/policy-detail.html
+      url2: https://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/policy/policy-detail.html
+      screen_sizes:
+        - 320x2500
+        - 480x2500
+        - 690x2500
+        - 930x2500
+        - 1200x2500
+
+    - name: policy_search
+      url1: http://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/policy/policy-search.html?kw=environment&ct=University%20Policies%3Aacademic-affairs-faculty
+      url2: https://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/policy/policy-search.html?kw=environment&ct=University%20Policies%3Aacademic-affairs-faculty
+      screen_sizes:
+        - 320x2500
+        - 480x2500
+        - 690x2500
+        - 930x2500
+        - 1200x2500
+
+    - name: news_landing
+      url1: http://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/news-landing.html
+      url2: http://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/news-landing.html
+      screen_sizes:
+        - 320x2500
+        - 480x2500
+        - 690x2500
+        - 930x2500
+        - 1200x2500
+      delay: 1
+
+    - name: news_month_archive
+      url1: http://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/news-landing/news-year-archive/news-month-archive.html
+      url2: https://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/news-landing/news-year-archive/news-month-archive.html
+      screen_sizes:
+        - 320x2500
+        - 480x2500
+        - 690x2500
+        - 930x2500
+        - 1200x2500
+
+    - name: news_year_archive
+      url1: http://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/news-landing/news-year-archive.html
+      url2: https://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/news-landing/news-year-archive.html
+      screen_sizes:
+        - 320x2500
+        - 480x2500
+        - 690x2500
+        - 930x2500
+        - 1200x2500
+
+    - name: news_release
+      url1: http://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/news-landing/news-year-archive/news-month-archive/news-release-article.html
+      url2: http://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/news-landing/news-year-archive/news-month-archive/news-release-article.html
+      screen_sizes:
+        - 320x2500
+        - 480x2500
+        - 690x2500
+        - 930x2500
+        - 1200x2500
+
+    - name: news_story
+      url1: http://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/news-landing/news-year-archive/news-month-archive/news-story-article.html
+      url2: http://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/news-landing/news-year-archive/news-month-archive/news-story-article.html
+      screen_sizes:
+        - 320x2500
+        - 480x2500
+        - 690x2500
+        - 930x2500
+        - 1200x2500
+
+    - name: news_category
+      url1: http://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/news-landing/news-category.html
+      url2: http://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/news-landing/news-category.html
+      screen_sizes:
+        - 320x2500
+        - 480x2500
+        - 690x2500
+        - 930x2500
+        - 1200x2500
+
+    - name: news_series
+      url1: http://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/news-landing/series-archive/news-series.html
+      url2: http://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/news-landing/series-archive/news-series.html
+      screen_sizes:
+        - 320x2500
+        - 480x2500
+        - 690x2500
+        - 930x2500
+        - 1200x2500
+
+    - name: news_archive
+      url1: http://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/news-landing/series-archive.html
+      url2: http://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/news-landing/series-archive.html
+      screen_sizes:
+        - 320x2500
+        - 480x2500
+        - 690x2500
+        - 930x2500
+        - 1200x2500
+
+    - name: news_search
+      url1: http://qacms.home.nyu.edu/about/news-publications/news/search.html?kw=autumn&sct=nyu_schools%3Asteinhardt_school_of_culture_education_and_human_development
+      url2: https://www.nyu.edu/about/news-publications/news/search.html?kw=autumn&sct=nyu_schools%3Asteinhardt_school_of_culture_education_and_human_development
+      screen_sizes:
+        - 320x2500
+        - 480x2500
+        - 690x2500
+        - 930x2500
+        - 1200x2500
+
+    - name: search_web
+      url1: http://qacms.home.nyu.edu/search.html?search=eastenders&st=web
+      url2: https://www.nyu.edu/search.html?search=eastenders&st=web
+      screen_sizes:
+        - 320x2500
+        - 480x2500
+        - 690x2500
+        - 930x2500
+        - 1200x2500
+
+    - name: search_people
+      url1: http://qacms.home.nyu.edu/search.html?search=varoqua&st=people
+      url2: https://www.nyu.edu/search.html?search=varoqua&st=people
+      screen_sizes:
+        - 320x2500
+        - 480x2500
+        - 690x2500
+        - 930x2500
+        - 1200x2500
+
+    - name: error
+      url1: http://qacms.home.nyu.edu/errors/404error.html
+      url2: http://www.nyu.edu/asdfasdf
+      screen_sizes:
+        - 320x2500
+        - 480x2500
+        - 690x2500
+        - 930x2500
+        - 1200x2500
+
+    - name: campus_map
+      url1: http://qacms.home.nyu.edu/footer/map.html
+      url2: http://www.nyu.edu/footer/map.html
+      screen_sizes:
+        - 320x2500
+        - 480x2500
+        - 690x2500
+        - 930x2500
+        - 1200x2500
+
+    - name: rental_inventory_page
+      url1: http://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/role/rental-inventory.html
+      url2: http://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/role/rental-inventory.html
+      screen_sizes:
+        - 320x2500
+        - 480x2500
+        - 690x2500
+        - 930x2500
+        - 1200x2500
+
+    - name: rental_cart_page
+      url1: http://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/role/rental-inventory/rental-cart.html
+      url2: http://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/role/rental-inventory/rental-cart.html
+      screen_sizes:
+        - 320x2500
+        - 480x2500
+        - 690x2500
+        - 930x2500
+        - 1200x2500
+
+    - name: rental_checkout_page
+      url1: http://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/role/rental-inventory/rental-checkout.html
+      url2: http://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/role/rental-inventory/rental-checkout.html
+      screen_sizes:
+        - 320x2500
+        - 480x2500
+        - 690x2500
+        - 930x2500
+        - 1200x2500
+
+    - name: rental_thank_you_page
+      url1: http://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/role/rental-inventory/rental-thank-you.html
+      url2: http://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/role/rental-inventory/rental-thank-you.html
+      screen_sizes:
+        - 320x2500
+        - 480x2500
+        - 690x2500
+        - 930x2500
+        - 1200x2500
+
+    - name: column_control_content_sidebar_1
+      url1: http://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/role/contentsidebar_col-ctrl11.html
+      url2: https://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/role/contentsidebar_col-ctrl11.html
+      screen_sizes:
+        - 320x2500
+        - 480x2500
+        - 690x2500
+        - 930x2500
+        - 1200x2500
+
+    - name: column_control_content_sidebar_2
+      url1: http://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/role/contentsidebar_col-ctrl21.html
+      url2: https://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/role/contentsidebar_col-ctrl21.html
+      screen_sizes:
+        - 320x2500
+        - 480x2500
+        - 690x2500
+        - 930x2500
+        - 1200x2500
