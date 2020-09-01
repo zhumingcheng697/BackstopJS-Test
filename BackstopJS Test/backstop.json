@@ -30,7 +30,7 @@
       "delay": 10000,
       "hideSelectors": [],
       "removeSelectors": [],
-      "hoverSelector": "#alertContainer a.alert.alert_info",
+      "hoverSelector": ".stream .card.social a[href=\"https://www.instagram.com/p/CEb9-1-nGjB\"]",
       "clickSelector": "",
       "postInteractionWait": 3000,
       "selectors": [],

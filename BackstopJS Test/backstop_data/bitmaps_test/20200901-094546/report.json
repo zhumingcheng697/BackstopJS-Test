@@ -1,0 +1,60 @@
+{
+  "testSuite": "BackstopJS",
+  "tests": [
+    {
+      "pair": {
+        "reference": "../bitmaps_reference/backstop_default_NYU_Homepage_0__0_phone.png",
+        "test": "../bitmaps_test/20200901-094546/backstop_default_NYU_Homepage_0__0_phone.png",
+        "selector": "",
+        "fileName": "backstop_default_NYU_Homepage_0__0_phone.png",
+        "label": "NYU Homepage",
+        "requireSameDimensions": true,
+        "misMatchThreshold": 0.1,
+        "url": "https://www.nyu.edu",
+        "referenceUrl": "",
+        "expect": 0,
+        "viewportLabel": "phone",
+        "engineErrorMsg": "waiting for selector \".main-footer .footer-top-wrapper .main-campuses .main-campuses-menu a:nth-child(3)\" failed: timeout 30000ms exceeded",
+        "error": "Reference file not found /Volumes/McCoy Zhu/DigiComm-Work/BackstopJS Test/backstop_data/bitmaps_reference/backstop_default_NYU_Homepage_0__0_phone.png"
+      },
+      "status": "fail"
+    },
+    {
+      "pair": {
+        "reference": "../bitmaps_reference/backstop_default_NYU_Homepage_0__1_tablet.png",
+        "test": "../bitmaps_test/20200901-094546/backstop_default_NYU_Homepage_0__1_tablet.png",
+        "selector": "",
+        "fileName": "backstop_default_NYU_Homepage_0__1_tablet.png",
+        "label": "NYU Homepage",
+        "requireSameDimensions": true,
+        "misMatchThreshold": 0.1,
+        "url": "https://www.nyu.edu",
+        "referenceUrl": "",
+        "expect": 0,
+        "viewportLabel": "tablet",
+        "engineErrorMsg": "waiting for selector \".main-footer .footer-top-wrapper .main-campuses .main-campuses-menu a:nth-child(3)\" failed: timeout 30000ms exceeded",
+        "error": "Reference file not found /Volumes/McCoy Zhu/DigiComm-Work/BackstopJS Test/backstop_data/bitmaps_reference/backstop_default_NYU_Homepage_0__1_tablet.png"
+      },
+      "status": "fail"
+    },
+    {
+      "pair": {
+        "reference": "../bitmaps_reference/backstop_default_NYU_Homepage_0__2_1080p.png",
+        "test": "../bitmaps_test/20200901-094546/backstop_default_NYU_Homepage_0__2_1080p.png",
+        "selector": "",
+        "fileName": "backstop_default_NYU_Homepage_0__2_1080p.png",
+        "label": "NYU Homepage",
+        "requireSameDimensions": true,
+        "misMatchThreshold": 0.1,
+        "url": "https://www.nyu.edu",
+        "referenceUrl": "",
+        "expect": 0,
+        "viewportLabel": "1080p",
+        "engineErrorMsg": "waiting for selector \".main-footer .footer-top-wrapper .main-campuses .main-campuses-menu a:nth-child(3)\" failed: timeout 30000ms exceeded",
+        "error": "Reference file not found /Volumes/McCoy Zhu/DigiComm-Work/BackstopJS Test/backstop_data/bitmaps_reference/backstop_default_NYU_Homepage_0__2_1080p.png"
+      },
+      "status": "fail"
+    }
+  ],
+  "id": "backstop_default"
+}
