@@ -26,10 +26,9 @@ const defaultConfig = {
     debugWindow: false
 }
 
-let scenario = scenarios[0]
+let scenario = scenarios[1]
 // for (const scenario of scenarios) {
     let config = Object.assign({}, defaultConfig);
-    config.id = scenario.name;
 
     config.viewports = scenario["screen_sizes"].map((screenSizeStr) => {
         const match = screenSizeStr.match(/([1-9][0-9]{0,})x([1-9][0-9]{0,})/);
