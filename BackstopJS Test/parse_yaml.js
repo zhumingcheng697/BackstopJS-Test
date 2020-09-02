@@ -7,6 +7,7 @@ let isRunning = false;
 let scenarioChosen = false;
 let scenarioConfirmed = false;
 let scenarioIndex = 0;
+let tempScenarioIndex = 0;
 
 // https://stackoverflow.com/a/40560590
 const logStyle = {
@@ -73,8 +74,8 @@ const defaultConfig = {
     debugWindow: false
 }
 
-function typeInIndexToChoosePrompt(firstPrompt = false) {
-    console.log(`${logStyle.fg.white}Type in a valid index (0 to ${scenarios.length - 1}) to choose a scenario, type in "--" or "++" to choose the previous or the next scenario, if there is one, or type anything else or press enter to choose the ${firstPrompt ? "first" : "current"} scenario by default${logStyle.reset}`);
+function typeInIndexToChoosePrompt() {
+    console.log(`${logStyle.fg.white}Type in a valid index (0 to ${scenarios.length - 1}) to choose a scenario, type in "--" or "++" to choose the previous or the next scenario, if there is one, or type anything else or press enter to choose scenario ${scenarioIndex} (${scenarios[scenarioIndex].name}) by default${logStyle.reset}`);
 }
 
 function typeInKeywordToStartPrompt() {
@@ -84,30 +85,32 @@ function typeInKeywordToStartPrompt() {
 function chooseScenario(line) {
     if (line === "++") {
         if (scenarioIndex < scenarios.length - 1) {
-            scenarioIndex += 1;
+            tempScenarioIndex = scenarioIndex + 1;
         }
     } else if (line === "--") {
         if (scenarioIndex > 0) {
-            scenarioIndex -= 1;
+            tempScenarioIndex = scenarioIndex - 1;
         }
     } else {
         let parsedIndex = (parseInt(line) || -1)
         if (parsedIndex.toString() === line && parsedIndex >= 0 && parsedIndex < scenarios.length) {
-            scenarioIndex = parsedIndex;
+            tempScenarioIndex = parsedIndex;
         }
     }
 
-    console.log(`${logStyle.fg.white}Scenario ${scenarioIndex} (${scenarios[scenarioIndex].name}) chosen. Continue? (y/n)${logStyle.reset}`);
+    console.log(`${logStyle.fg.white}Scenario ${tempScenarioIndex} (${scenarios[tempScenarioIndex].name}) chosen. Continue? (y/n)${logStyle.reset}`);
 
     scenarioChosen = true;
 }
 
 function confirmScenario(line) {
     if (line.toLowerCase() === "y") {
+        scenarioIndex = tempScenarioIndex;
         scenarioConfirmed = true;
         typeInKeywordToStartPrompt();
     } else if (line.toLowerCase() === "n") {
         scenarioChosen = false;
+        tempScenarioIndex = scenarioIndex;
         typeInIndexToChoosePrompt();
     } else {
         console.log(`${logStyle.fg.red}Please type in a valid keyword. (y/n)${logStyle.reset}`);
@@ -194,7 +197,7 @@ function runBackstop(scenario, action = "test") {
     );
 }
 
-typeInIndexToChoosePrompt(true);
+typeInIndexToChoosePrompt();
 
 rl.on('line', (line) => {
     if (!isRunning) {
