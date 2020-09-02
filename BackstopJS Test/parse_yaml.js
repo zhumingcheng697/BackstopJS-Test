@@ -2,6 +2,7 @@ const YAML = require('yaml');
 const fs = require('fs');
 const backstop = require('backstopjs');
 const readline = require('readline');
+let isRunning = false;
 
 // https://stackoverflow.com/a/40560590
 const logStyle = {
@@ -24,8 +25,8 @@ const logStyle = {
         crimson: "\x1b[38m"
     },
     bg: {
-        Black: "\x1b[40m",
-        Red: "\x1b[41m",
+        black: "\x1b[40m",
+        red: "\x1b[41m",
         green: "\x1b[42m",
         yellow: "\x1b[43m",
         blue: "\x1b[44m",
@@ -43,14 +44,11 @@ let rl = readline.createInterface({
     terminal: false
 });
 
-rl.on('line', (line) => {
-    console.log(line);
-});
-
-
 const file = fs.readFileSync('nyu.yml', 'utf8');
 const parsed = YAML.parse(file);
 const scenarios = parsed.urls;
+
+console.log(`${logStyle.fg.green}${scenarios.length} scenario${scenarios.length === 1 ? "" : "s"} loaded${logStyle.reset}`);
 
 const defaultConfig = {
     // paths: {
@@ -71,20 +69,35 @@ const defaultConfig = {
     debugWindow: false
 }
 
+function typeInKeywordToStartPrompt() {
+    console.log(`${logStyle.fg.white}Type in a keyword to start: "test" (t), "approve" (a), "reference" (r)${logStyle.reset}`);
+}
+
 function runBackstop(scenario, action = "test") {
-    if (!["test", "approve", "reference"].includes(action)) {
-        console.log(`${logStyle.fg.red}Please type in a valid keyword: "test", "approve", "reference"${logStyle.reset}`)
+    let parsedAction = action.toLowerCase()
+
+    isRunning = true;
+
+    if (parsedAction === "t") {
+        parsedAction = "test";
+    } else if (parsedAction === "a") {
+        parsedAction = "approve";
+    } else if (parsedAction === "r") {
+        parsedAction = "reference";
+    } else if (!["test", "approve", "reference"].includes(parsedAction)) {
+        console.log(`${logStyle.fg.red}Please type in a valid keyword: "test" (t), "approve" (a), "reference" (r)${logStyle.reset}`);
+        isRunning = false;
         return;
-    } else {
-        console.log(`${logStyle.fg.white}Running ${action.toUpperCase()} for ${scenario.name}${logStyle.reset}`);
     }
+
+    console.log(`${logStyle.fg.white}Running ${parsedAction.toUpperCase()} for ${scenario.name}${logStyle.reset}`);
 
     const name = scenario.name.replace(/\s/g, "_")
 
     let config = Object.assign({}, defaultConfig);
 
     config.viewports = scenario["screen_sizes"].map((screenSizeStr) => {
-        const match = screenSizeStr.match(/([1-9][0-9]{0,})x([1-9][0-9]{0,})/);
+        const match = screenSizeStr.match(/([1-9][0-9]*)x([1-9][0-9]*)/);
         return {
             label: screenSizeStr,
             width: parseInt(match[1]),
@@ -122,13 +135,23 @@ function runBackstop(scenario, action = "test") {
         }
     ];
 
-    backstop(action, {config: config})
+    backstop(parsedAction, {config: config})
         .then(() => {
-            console.log(`${logStyle.fg.green}${action.toUpperCase()} succeeded for ${scenario.name}${logStyle.reset}`);
+            console.log(`${logStyle.fg.green}${parsedAction.toUpperCase()} succeeded for ${scenario.name}${logStyle.reset}`);
+            isRunning = false;
+            typeInKeywordToStartPrompt();
         }).catch(() => {
-            console.log(`${logStyle.fg.red}${action.toUpperCase()} failed for ${scenario.name}${logStyle.reset}`);
+            console.log(`${logStyle.fg.red}${parsedAction.toUpperCase()} failed for ${scenario.name}${logStyle.reset}`);
+            isRunning = false;
+            typeInKeywordToStartPrompt();
         }
     );
 }
 
-runBackstop(scenarios[1], "test")
+typeInKeywordToStartPrompt();
+
+rl.on('line', (line) => {
+    if (!isRunning) {
+        runBackstop(scenarios[1], line);
+    }
+});
