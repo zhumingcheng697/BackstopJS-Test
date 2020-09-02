@@ -75,7 +75,7 @@ const defaultConfig = {
 }
 
 function typeInIndexToChoosePrompt() {
-    console.log(`${logStyle.fg.white}Type in a valid index (0 to ${scenarios.length - 1}) to choose a scenario, type in "--" or "++" to choose the previous or the next scenario, if there is one, or type anything else or press enter to choose scenario ${scenarioIndex} (${scenarios[scenarioIndex].name}) by default${logStyle.reset}`);
+    console.log(`${logStyle.fg.white}Type in a valid index (0 to ${scenarios.length - 1}) or the scenario name to choose a scenario, type in "--" or "++" to choose the previous or the next scenario, if there is one, or type anything else or press enter to choose scenario ${scenarioIndex} (${scenarios[scenarioIndex].name}) by default${logStyle.reset}`);
 }
 
 function typeInKeywordToStartPrompt() {
@@ -92,9 +92,14 @@ function chooseScenario(line) {
             tempScenarioIndex = scenarioIndex - 1;
         }
     } else {
-        let parsedIndex = (parseInt(line) || -1)
-        if (parsedIndex.toString() === line && parsedIndex >= 0 && parsedIndex < scenarios.length) {
-            tempScenarioIndex = parsedIndex;
+        let foundIndex = scenarios.map((el) => el.name.toLowerCase()).indexOf(line.toLowerCase())
+        if (foundIndex >= 0) {
+            tempScenarioIndex = foundIndex;
+        } else {
+            let parsedIndex = (parseInt(line) || -1)
+            if (parsedIndex.toString() === line && parsedIndex >= 0 && parsedIndex < scenarios.length) {
+                tempScenarioIndex = parsedIndex;
+            }
         }
     }
 
@@ -200,7 +205,7 @@ function runBackstop(scenario, action = "test") {
 typeInIndexToChoosePrompt();
 
 rl.on('line', (line) => {
-    if (!isRunning) {
+    if (!isRunning && scenarios.length > 0) {
         if (!scenarioChosen) {
             chooseScenario(line);
         } else if (!scenarioConfirmed) {
