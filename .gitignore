@@ -2,4 +2,4 @@
 .idea
 node_modules
 BackstopJS\ Test/backstop_data/html_report/
-BackstopJS\ Test/backstop_data/bitmaps_test/*/*.png
+BackstopJS\ Test/backstop_data/bitmaps_test/**/*.png
