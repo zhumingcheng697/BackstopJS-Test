@@ -3,6 +3,7 @@ const fs = require('fs');
 const backstop = require('backstopjs');
 const readline = require('readline');
 
+let runMode = "";
 let isRunning = false;
 let scenarioChosen = false;
 let scenarioConfirmed = false;
@@ -72,6 +73,10 @@ const defaultConfig = {
     asyncCompareLimit: 100,
     debug: false,
     debugWindow: false
+};
+
+function chooseRunModePrompt() {
+    console.log(`${logStyle.fg.white}Run in "auto" (a) or "manual" (m) mode?${logStyle.reset}`);
 }
 
 function typeInIndexToChoosePrompt() {
@@ -80,6 +85,19 @@ function typeInIndexToChoosePrompt() {
 
 function typeInKeywordToStartPrompt() {
     console.log(`${logStyle.fg.white}Type in a keyword to start: "test" (t), "approve" (a), "reference" (r)${logStyle.reset}`);
+}
+
+function chooseRunMode(line) {
+    if (["auto", "a"].includes(line.toLowerCase())) {
+        runMode = "a";
+        console.log(`${logStyle.fg.white}Running in auto mode${logStyle.reset}`);
+    } else if (["manual", "m"].includes(line.toLowerCase())) {
+        runMode = "m";
+        console.log(`${logStyle.fg.white}Running in manual mode${logStyle.reset}`);
+        typeInIndexToChoosePrompt();
+    } else {
+        console.log(`${logStyle.fg.red}Please type in a valid keyword. (auto/manual/a/m)${logStyle.reset}`);
+    }
 }
 
 function chooseScenario(line) {
@@ -202,16 +220,24 @@ function runBackstop(scenario, action = "test") {
     );
 }
 
-typeInIndexToChoosePrompt();
+if (runMode === "") {
+    chooseRunModePrompt();
+} else if (runMode === "m") {
+    typeInIndexToChoosePrompt();
+}
 
 rl.on('line', (line) => {
     if (!isRunning && scenarios.length > 0) {
-        if (!scenarioChosen) {
-            chooseScenario(line);
-        } else if (!scenarioConfirmed) {
-            confirmScenario(line);
-        } else {
-            runBackstop(scenarios[scenarioIndex], line);
+        if (runMode === "") {
+            chooseRunMode(line);
+        } else if (runMode === "m") {
+            if (!scenarioChosen) {
+                chooseScenario(line);
+            } else if (!scenarioConfirmed) {
+                confirmScenario(line);
+            } else {
+                runBackstop(scenarios[scenarioIndex], line);
+            }
         }
     }
 });
