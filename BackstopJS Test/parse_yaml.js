@@ -114,7 +114,8 @@ function chooseScenario(line) {
         if (foundIndex >= 0) {
             tempScenarioIndex = foundIndex;
         } else {
-            let parsedIndex = (parseInt(line) || -1)
+            let parsedInt = parseInt(line);
+            let parsedIndex = isNaN(parsedInt) ? -1 : parsedInt;
             if (parsedIndex.toString() === line && parsedIndex >= 0 && parsedIndex < scenarios.length) {
                 tempScenarioIndex = parsedIndex;
             }
@@ -148,14 +149,30 @@ function resetAfterRun() {
 }
 
 function runBackstop(scenario, action = "test") {
-    let parsedAction = action.toLowerCase()
+    let parsedAction = action.toLowerCase();
+    const name = scenario.name.replace(/\s/g, "_");
 
     isRunning = true;
 
     if (parsedAction === "t") {
-        parsedAction = "test";
+        if (fs.existsSync(`backstop_data/bitmaps_reference/${name}`)) {
+            parsedAction = "test";
+        } else {
+            console.log(`${logStyle.fg.red}No previous references exist for scenario ${scenario.name}${logStyle.reset}`);
+            parsedAction = "reference";
+        }
     } else if (parsedAction === "a") {
-        parsedAction = "approve";
+        if (fs.existsSync(`backstop_data/bitmaps_test/${name}`)) {
+            parsedAction = "approve";
+        } else {
+            console.log(`${logStyle.fg.red}No previous tests exist for scenario ${scenario.name}${logStyle.reset}`);
+            if (fs.existsSync(`backstop_data/bitmaps_reference/${name}`)) {
+                parsedAction = "test";
+            } else {
+                console.log(`${logStyle.fg.red}No previous references exist for scenario ${scenario.name}${logStyle.reset}`);
+                parsedAction = "reference";
+            }
+        }
     } else if (parsedAction === "r") {
         parsedAction = "reference";
     } else if (!["test", "approve", "reference"].includes(parsedAction)) {
@@ -165,8 +182,6 @@ function runBackstop(scenario, action = "test") {
     }
 
     console.log(`${logStyle.fg.white}Running ${parsedAction.toUpperCase()} for ${scenario.name}${logStyle.reset}`);
-
-    const name = scenario.name.replace(/\s/g, "_")
 
     let config = Object.assign({}, defaultConfig);
 
@@ -211,10 +226,14 @@ function runBackstop(scenario, action = "test") {
 
     backstop(parsedAction, {config: config})
         .then(() => {
-            console.log(`${logStyle.fg.green}${parsedAction.toUpperCase()} succeeded for ${scenario.name}${logStyle.reset}`);
-            resetAfterRun();
+            console.log(`${logStyle.fg.green}${parsedAction.toUpperCase()} succeeded for scenario ${scenario.name}${logStyle.reset}`);
+            if (parsedAction === "reference" && ["t", "a"].includes(action.toLowerCase().charAt(0))) {
+                runBackstop(scenario);
+            } else {
+                resetAfterRun();
+            }
         }).catch(() => {
-            console.log(`${logStyle.fg.red}${parsedAction.toUpperCase()} failed for ${scenario.name}${logStyle.reset}`);
+            console.log(`${logStyle.fg.red}${parsedAction.toUpperCase()} failed for scenario ${scenario.name}${logStyle.reset}`);
             resetAfterRun();
         }
     );
