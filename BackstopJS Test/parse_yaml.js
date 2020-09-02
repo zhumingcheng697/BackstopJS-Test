@@ -10,7 +10,7 @@ let rl = readline.createInterface({
     terminal: false
 });
 
-rl.on('line', function (line) {
+rl.on('line', (line) => {
     console.log(line);
 });
 
@@ -39,8 +39,11 @@ const defaultConfig = {
     debugWindow: false
 }
 
-let scenario = scenarios[1]
-// for (const scenario of scenarios) {
+function runBackstop(scenario, action = "test") {
+    if (!["test", "approve", "reference"].includes(action)) {
+        return;
+    }
+
     let config = Object.assign({}, defaultConfig);
 
     config.viewports = scenario["screen_sizes"].map((screenSizeStr) => {
@@ -49,7 +52,7 @@ let scenario = scenarios[1]
             label: screenSizeStr,
             width: parseInt(match[1]),
             height: parseInt(match[2])
-        }
+        };
     });
 
     config.scenarios = [
@@ -72,7 +75,9 @@ let scenario = scenarios[1]
             misMatchThreshold : 0.1,
             requireSameDimensions: true
         }
-    ]
+    ];
 
-    backstop("test", {config: config});
-// }
+    backstop(action, {config: config});
+}
+
+runBackstop(scenarios[1], "test")
