@@ -2,7 +2,11 @@ const YAML = require('yaml');
 const fs = require('fs');
 const backstop = require('backstopjs');
 const readline = require('readline');
+
 let isRunning = false;
+let scenarioChosen = false;
+let scenarioConfirmed = false;
+let scenarioIndex = 0;
 
 // https://stackoverflow.com/a/40560590
 const logStyle = {
@@ -69,8 +73,52 @@ const defaultConfig = {
     debugWindow: false
 }
 
+function typeInIndexToChoosePrompt(firstPrompt = false) {
+    console.log(`${logStyle.fg.white}Type in a valid index (0 to ${scenarios.length - 1}) to choose a scenario, type in "--" or "++" to choose the previous or the next scenario, if there is one, or type anything else or press enter to choose the ${firstPrompt ? "first" : "current"} scenario by default${logStyle.reset}`);
+}
+
 function typeInKeywordToStartPrompt() {
     console.log(`${logStyle.fg.white}Type in a keyword to start: "test" (t), "approve" (a), "reference" (r)${logStyle.reset}`);
+}
+
+function chooseScenario(line) {
+    if (line === "++") {
+        if (scenarioIndex < scenarios.length - 1) {
+            scenarioIndex += 1;
+        }
+    } else if (line === "--") {
+        if (scenarioIndex > 0) {
+            scenarioIndex -= 1;
+        }
+    } else {
+        let parsedIndex = (parseInt(line) || -1)
+        if (parsedIndex.toString() === line && parsedIndex >= 0 && parsedIndex < scenarios.length) {
+            scenarioIndex = parsedIndex;
+        }
+    }
+
+    console.log(`${logStyle.fg.white}Scenario ${scenarioIndex} (${scenarios[scenarioIndex].name}) chosen. Continue? (y/n)${logStyle.reset}`);
+
+    scenarioChosen = true;
+}
+
+function confirmScenario(line) {
+    if (line.toLowerCase() === "y") {
+        scenarioConfirmed = true;
+        typeInKeywordToStartPrompt();
+    } else if (line.toLowerCase() === "n") {
+        scenarioChosen = false;
+        typeInIndexToChoosePrompt();
+    } else {
+        console.log(`${logStyle.fg.red}Please type in a valid keyword. (y/n)${logStyle.reset}`);
+    }
+}
+
+function resetAfterRun() {
+    isRunning = false;
+    scenarioChosen = false;
+    scenarioConfirmed = false;
+    typeInIndexToChoosePrompt();
 }
 
 function runBackstop(scenario, action = "test") {
@@ -85,7 +133,7 @@ function runBackstop(scenario, action = "test") {
     } else if (parsedAction === "r") {
         parsedAction = "reference";
     } else if (!["test", "approve", "reference"].includes(parsedAction)) {
-        console.log(`${logStyle.fg.red}Please type in a valid keyword: "test" (t), "approve" (a), "reference" (r)${logStyle.reset}`);
+        console.log(`${logStyle.fg.red}Please type in a valid keyword. (test/approve/reference/t/a/r)${logStyle.reset}`);
         isRunning = false;
         return;
     }
@@ -138,20 +186,24 @@ function runBackstop(scenario, action = "test") {
     backstop(parsedAction, {config: config})
         .then(() => {
             console.log(`${logStyle.fg.green}${parsedAction.toUpperCase()} succeeded for ${scenario.name}${logStyle.reset}`);
-            isRunning = false;
-            typeInKeywordToStartPrompt();
+            resetAfterRun();
         }).catch(() => {
             console.log(`${logStyle.fg.red}${parsedAction.toUpperCase()} failed for ${scenario.name}${logStyle.reset}`);
-            isRunning = false;
-            typeInKeywordToStartPrompt();
+            resetAfterRun();
         }
     );
 }
 
-typeInKeywordToStartPrompt();
+typeInIndexToChoosePrompt(true);
 
 rl.on('line', (line) => {
     if (!isRunning) {
-        runBackstop(scenarios[1], line);
+        if (!scenarioChosen) {
+            chooseScenario(line);
+        } else if (!scenarioConfirmed) {
+            confirmScenario(line);
+        } else {
+            runBackstop(scenarios[scenarioIndex], line);
+        }
     }
 });

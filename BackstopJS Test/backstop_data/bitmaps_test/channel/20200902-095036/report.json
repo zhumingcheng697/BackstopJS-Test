@@ -1,0 +1,90 @@
+{
+  "testSuite": "BackstopJS",
+  "tests": [
+    {
+      "pair": {
+        "reference": "../../bitmaps_reference/channel/1563446148_channel_0_document_0_320x2500.png",
+        "test": "../../bitmaps_test/channel/20200902-095036/1563446148_channel_0_document_0_320x2500.png",
+        "selector": "document",
+        "fileName": "1563446148_channel_0_document_0_320x2500.png",
+        "label": "channel",
+        "requireSameDimensions": true,
+        "misMatchThreshold": 0.1,
+        "url": "http://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel.html",
+        "referenceUrl": "http://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel.html",
+        "expect": 0,
+        "viewportLabel": "320x2500",
+        "error": "Reference file not found /Volumes/McCoy Zhu/DigiComm-Work/BackstopJS Test/backstop_data/bitmaps_reference/channel/1563446148_channel_0_document_0_320x2500.png"
+      },
+      "status": "fail"
+    },
+    {
+      "pair": {
+        "reference": "../../bitmaps_reference/channel/1563446148_channel_0_document_1_480x2500.png",
+        "test": "../../bitmaps_test/channel/20200902-095036/1563446148_channel_0_document_1_480x2500.png",
+        "selector": "document",
+        "fileName": "1563446148_channel_0_document_1_480x2500.png",
+        "label": "channel",
+        "requireSameDimensions": true,
+        "misMatchThreshold": 0.1,
+        "url": "http://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel.html",
+        "referenceUrl": "http://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel.html",
+        "expect": 0,
+        "viewportLabel": "480x2500",
+        "error": "Reference file not found /Volumes/McCoy Zhu/DigiComm-Work/BackstopJS Test/backstop_data/bitmaps_reference/channel/1563446148_channel_0_document_1_480x2500.png"
+      },
+      "status": "fail"
+    },
+    {
+      "pair": {
+        "reference": "../../bitmaps_reference/channel/1563446148_channel_0_document_2_690x2500.png",
+        "test": "../../bitmaps_test/channel/20200902-095036/1563446148_channel_0_document_2_690x2500.png",
+        "selector": "document",
+        "fileName": "1563446148_channel_0_document_2_690x2500.png",
+        "label": "channel",
+        "requireSameDimensions": true,
+        "misMatchThreshold": 0.1,
+        "url": "http://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel.html",
+        "referenceUrl": "http://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel.html",
+        "expect": 0,
+        "viewportLabel": "690x2500",
+        "error": "Reference file not found /Volumes/McCoy Zhu/DigiComm-Work/BackstopJS Test/backstop_data/bitmaps_reference/channel/1563446148_channel_0_document_2_690x2500.png"
+      },
+      "status": "fail"
+    },
+    {
+      "pair": {
+        "reference": "../../bitmaps_reference/channel/1563446148_channel_0_document_3_930x2500.png",
+        "test": "../../bitmaps_test/channel/20200902-095036/1563446148_channel_0_document_3_930x2500.png",
+        "selector": "document",
+        "fileName": "1563446148_channel_0_document_3_930x2500.png",
+        "label": "channel",
+        "requireSameDimensions": true,
+        "misMatchThreshold": 0.1,
+        "url": "http://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel.html",
+        "referenceUrl": "http://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel.html",
+        "expect": 0,
+        "viewportLabel": "930x2500",
+        "error": "Reference file not found /Volumes/McCoy Zhu/DigiComm-Work/BackstopJS Test/backstop_data/bitmaps_reference/channel/1563446148_channel_0_document_3_930x2500.png"
+      },
+      "status": "fail"
+    },
+    {
+      "pair": {
+        "reference": "../../bitmaps_reference/channel/1563446148_channel_0_document_4_1200x2500.png",
+        "test": "../../bitmaps_test/channel/20200902-095036/1563446148_channel_0_document_4_1200x2500.png",
+        "selector": "document",
+        "fileName": "1563446148_channel_0_document_4_1200x2500.png",
+        "label": "channel",
+        "requireSameDimensions": true,
+        "misMatchThreshold": 0.1,
+        "url": "http://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel.html",
+        "referenceUrl": "http://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel.html",
+        "expect": 0,
+        "viewportLabel": "1200x2500",
+        "error": "Reference file not found /Volumes/McCoy Zhu/DigiComm-Work/BackstopJS Test/backstop_data/bitmaps_reference/channel/1563446148_channel_0_document_4_1200x2500.png"
+      },
+      "status": "fail"
+    }
+  ]
+}
