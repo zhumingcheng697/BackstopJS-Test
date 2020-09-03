@@ -1,0 +1,135 @@
+{
+  "testSuite": "BackstopJS",
+  "tests": [
+    {
+      "pair": {
+        "reference": "../../bitmaps_reference/homepage/1563446148_homepage_0_document_0_320x2500.png",
+        "test": "../../bitmaps_test/homepage/20200902-195553/1563446148_homepage_0_document_0_320x2500.png",
+        "selector": "document",
+        "fileName": "1563446148_homepage_0_document_0_320x2500.png",
+        "label": "homepage",
+        "requireSameDimensions": true,
+        "misMatchThreshold": 0.1,
+        "url": "http://qacms.home.nyu.edu/",
+        "referenceUrl": "http://www.nyu.edu/",
+        "expect": 0,
+        "viewportLabel": "320x2500",
+        "diff": {
+          "isSameDimensions": true,
+          "dimensionDifference": {
+            "width": 0,
+            "height": 0
+          },
+          "misMatchPercentage": "26.15",
+          "analysisTime": 42
+        },
+        "diffImage": "../../bitmaps_test/homepage/20200902-195553/failed_diff_1563446148_homepage_0_document_0_320x2500.png"
+      },
+      "status": "fail"
+    },
+    {
+      "pair": {
+        "reference": "../../bitmaps_reference/homepage/1563446148_homepage_0_document_1_480x2500.png",
+        "test": "../../bitmaps_test/homepage/20200902-195553/1563446148_homepage_0_document_1_480x2500.png",
+        "selector": "document",
+        "fileName": "1563446148_homepage_0_document_1_480x2500.png",
+        "label": "homepage",
+        "requireSameDimensions": true,
+        "misMatchThreshold": 0.1,
+        "url": "http://qacms.home.nyu.edu/",
+        "referenceUrl": "http://www.nyu.edu/",
+        "expect": 0,
+        "viewportLabel": "480x2500",
+        "diff": {
+          "isSameDimensions": true,
+          "dimensionDifference": {
+            "width": 0,
+            "height": 0
+          },
+          "misMatchPercentage": "6.44",
+          "analysisTime": 50
+        },
+        "diffImage": "../../bitmaps_test/homepage/20200902-195553/failed_diff_1563446148_homepage_0_document_1_480x2500.png"
+      },
+      "status": "fail"
+    },
+    {
+      "pair": {
+        "reference": "../../bitmaps_reference/homepage/1563446148_homepage_0_document_2_690x2500.png",
+        "test": "../../bitmaps_test/homepage/20200902-195553/1563446148_homepage_0_document_2_690x2500.png",
+        "selector": "document",
+        "fileName": "1563446148_homepage_0_document_2_690x2500.png",
+        "label": "homepage",
+        "requireSameDimensions": true,
+        "misMatchThreshold": 0.1,
+        "url": "http://qacms.home.nyu.edu/",
+        "referenceUrl": "http://www.nyu.edu/",
+        "expect": 0,
+        "viewportLabel": "690x2500",
+        "diff": {
+          "isSameDimensions": true,
+          "dimensionDifference": {
+            "width": 0,
+            "height": 0
+          },
+          "misMatchPercentage": "22.94",
+          "analysisTime": 74
+        },
+        "diffImage": "../../bitmaps_test/homepage/20200902-195553/failed_diff_1563446148_homepage_0_document_2_690x2500.png"
+      },
+      "status": "fail"
+    },
+    {
+      "pair": {
+        "reference": "../../bitmaps_reference/homepage/1563446148_homepage_0_document_3_930x2500.png",
+        "test": "../../bitmaps_test/homepage/20200902-195553/1563446148_homepage_0_document_3_930x2500.png",
+        "selector": "document",
+        "fileName": "1563446148_homepage_0_document_3_930x2500.png",
+        "label": "homepage",
+        "requireSameDimensions": true,
+        "misMatchThreshold": 0.1,
+        "url": "http://qacms.home.nyu.edu/",
+        "referenceUrl": "http://www.nyu.edu/",
+        "expect": 0,
+        "viewportLabel": "930x2500",
+        "diff": {
+          "isSameDimensions": true,
+          "dimensionDifference": {
+            "width": 0,
+            "height": 0
+          },
+          "misMatchPercentage": "13.89",
+          "analysisTime": 92
+        },
+        "diffImage": "../../bitmaps_test/homepage/20200902-195553/failed_diff_1563446148_homepage_0_document_3_930x2500.png"
+      },
+      "status": "fail"
+    },
+    {
+      "pair": {
+        "reference": "../../bitmaps_reference/homepage/1563446148_homepage_0_document_4_1200x2500.png",
+        "test": "../../bitmaps_test/homepage/20200902-195553/1563446148_homepage_0_document_4_1200x2500.png",
+        "selector": "document",
+        "fileName": "1563446148_homepage_0_document_4_1200x2500.png",
+        "label": "homepage",
+        "requireSameDimensions": true,
+        "misMatchThreshold": 0.1,
+        "url": "http://qacms.home.nyu.edu/",
+        "referenceUrl": "http://www.nyu.edu/",
+        "expect": 0,
+        "viewportLabel": "1200x2500",
+        "diff": {
+          "isSameDimensions": true,
+          "dimensionDifference": {
+            "width": 0,
+            "height": 0
+          },
+          "misMatchPercentage": "7.51",
+          "analysisTime": 100
+        },
+        "diffImage": "../../bitmaps_test/homepage/20200902-195553/failed_diff_1563446148_homepage_0_document_4_1200x2500.png"
+      },
+      "status": "fail"
+    }
+  ]
+}
