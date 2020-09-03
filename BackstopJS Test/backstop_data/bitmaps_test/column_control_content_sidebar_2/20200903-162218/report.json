@@ -1,0 +1,135 @@
+{
+  "testSuite": "BackstopJS",
+  "tests": [
+    {
+      "pair": {
+        "reference": "../../bitmaps_reference/column_control_content_sidebar_2/1563446148_column_control_content_sidebar_2_0_document_0_320x2500.png",
+        "test": "../../bitmaps_test/column_control_content_sidebar_2/20200903-162218/1563446148_column_control_content_sidebar_2_0_document_0_320x2500.png",
+        "selector": "document",
+        "fileName": "1563446148_column_control_content_sidebar_2_0_document_0_320x2500.png",
+        "label": "column_control_content_sidebar_2",
+        "requireSameDimensions": true,
+        "misMatchThreshold": 0.1,
+        "url": "http://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/role/contentsidebar_col-ctrl21.html",
+        "referenceUrl": "https://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/role/contentsidebar_col-ctrl21.html",
+        "expect": 0,
+        "viewportLabel": "320x2500",
+        "diff": {
+          "isSameDimensions": false,
+          "dimensionDifference": {
+            "width": 0,
+            "height": -30
+          },
+          "misMatchPercentage": "32.50",
+          "analysisTime": 56
+        },
+        "diffImage": "../../bitmaps_test/column_control_content_sidebar_2/20200903-162218/failed_diff_1563446148_column_control_content_sidebar_2_0_document_0_320x2500.png"
+      },
+      "status": "fail"
+    },
+    {
+      "pair": {
+        "reference": "../../bitmaps_reference/column_control_content_sidebar_2/1563446148_column_control_content_sidebar_2_0_document_1_480x2500.png",
+        "test": "../../bitmaps_test/column_control_content_sidebar_2/20200903-162218/1563446148_column_control_content_sidebar_2_0_document_1_480x2500.png",
+        "selector": "document",
+        "fileName": "1563446148_column_control_content_sidebar_2_0_document_1_480x2500.png",
+        "label": "column_control_content_sidebar_2",
+        "requireSameDimensions": true,
+        "misMatchThreshold": 0.1,
+        "url": "http://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/role/contentsidebar_col-ctrl21.html",
+        "referenceUrl": "https://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/role/contentsidebar_col-ctrl21.html",
+        "expect": 0,
+        "viewportLabel": "480x2500",
+        "diff": {
+          "isSameDimensions": true,
+          "dimensionDifference": {
+            "width": 0,
+            "height": 0
+          },
+          "misMatchPercentage": "0.44",
+          "analysisTime": 48
+        },
+        "diffImage": "../../bitmaps_test/column_control_content_sidebar_2/20200903-162218/failed_diff_1563446148_column_control_content_sidebar_2_0_document_1_480x2500.png"
+      },
+      "status": "fail"
+    },
+    {
+      "pair": {
+        "reference": "../../bitmaps_reference/column_control_content_sidebar_2/1563446148_column_control_content_sidebar_2_0_document_2_690x2500.png",
+        "test": "../../bitmaps_test/column_control_content_sidebar_2/20200903-162218/1563446148_column_control_content_sidebar_2_0_document_2_690x2500.png",
+        "selector": "document",
+        "fileName": "1563446148_column_control_content_sidebar_2_0_document_2_690x2500.png",
+        "label": "column_control_content_sidebar_2",
+        "requireSameDimensions": true,
+        "misMatchThreshold": 0.1,
+        "url": "http://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/role/contentsidebar_col-ctrl21.html",
+        "referenceUrl": "https://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/role/contentsidebar_col-ctrl21.html",
+        "expect": 0,
+        "viewportLabel": "690x2500",
+        "diff": {
+          "isSameDimensions": false,
+          "dimensionDifference": {
+            "width": 0,
+            "height": -30
+          },
+          "misMatchPercentage": "25.25",
+          "analysisTime": 88
+        },
+        "diffImage": "../../bitmaps_test/column_control_content_sidebar_2/20200903-162218/failed_diff_1563446148_column_control_content_sidebar_2_0_document_2_690x2500.png"
+      },
+      "status": "fail"
+    },
+    {
+      "pair": {
+        "reference": "../../bitmaps_reference/column_control_content_sidebar_2/1563446148_column_control_content_sidebar_2_0_document_3_930x2500.png",
+        "test": "../../bitmaps_test/column_control_content_sidebar_2/20200903-162218/1563446148_column_control_content_sidebar_2_0_document_3_930x2500.png",
+        "selector": "document",
+        "fileName": "1563446148_column_control_content_sidebar_2_0_document_3_930x2500.png",
+        "label": "column_control_content_sidebar_2",
+        "requireSameDimensions": true,
+        "misMatchThreshold": 0.1,
+        "url": "http://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/role/contentsidebar_col-ctrl21.html",
+        "referenceUrl": "https://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/role/contentsidebar_col-ctrl21.html",
+        "expect": 0,
+        "viewportLabel": "930x2500",
+        "diff": {
+          "isSameDimensions": true,
+          "dimensionDifference": {
+            "width": 0,
+            "height": 0
+          },
+          "misMatchPercentage": "9.39",
+          "analysisTime": 101
+        },
+        "diffImage": "../../bitmaps_test/column_control_content_sidebar_2/20200903-162218/failed_diff_1563446148_column_control_content_sidebar_2_0_document_3_930x2500.png"
+      },
+      "status": "fail"
+    },
+    {
+      "pair": {
+        "reference": "../../bitmaps_reference/column_control_content_sidebar_2/1563446148_column_control_content_sidebar_2_0_document_4_1200x2500.png",
+        "test": "../../bitmaps_test/column_control_content_sidebar_2/20200903-162218/1563446148_column_control_content_sidebar_2_0_document_4_1200x2500.png",
+        "selector": "document",
+        "fileName": "1563446148_column_control_content_sidebar_2_0_document_4_1200x2500.png",
+        "label": "column_control_content_sidebar_2",
+        "requireSameDimensions": true,
+        "misMatchThreshold": 0.1,
+        "url": "http://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/role/contentsidebar_col-ctrl21.html",
+        "referenceUrl": "https://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/role/contentsidebar_col-ctrl21.html",
+        "expect": 0,
+        "viewportLabel": "1200x2500",
+        "diff": {
+          "isSameDimensions": true,
+          "dimensionDifference": {
+            "width": 0,
+            "height": 0
+          },
+          "misMatchPercentage": "0.41",
+          "analysisTime": 97
+        },
+        "diffImage": "../../bitmaps_test/column_control_content_sidebar_2/20200903-162218/failed_diff_1563446148_column_control_content_sidebar_2_0_document_4_1200x2500.png"
+      },
+      "status": "fail"
+    }
+  ]
+}

@@ -1,0 +1,135 @@
+{
+  "testSuite": "BackstopJS",
+  "tests": [
+    {
+      "pair": {
+        "reference": "../../bitmaps_reference/policy_detail/1563446148_policy_detail_0_document_0_320x2500.png",
+        "test": "../../bitmaps_test/policy_detail/20200903-161414/1563446148_policy_detail_0_document_0_320x2500.png",
+        "selector": "document",
+        "fileName": "1563446148_policy_detail_0_document_0_320x2500.png",
+        "label": "policy_detail",
+        "requireSameDimensions": true,
+        "misMatchThreshold": 0.1,
+        "url": "http://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/policy/policy-detail.html",
+        "referenceUrl": "https://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/policy/policy-detail.html",
+        "expect": 0,
+        "viewportLabel": "320x2500",
+        "diff": {
+          "isSameDimensions": false,
+          "dimensionDifference": {
+            "width": 0,
+            "height": -30
+          },
+          "misMatchPercentage": "19.71",
+          "analysisTime": 77
+        },
+        "diffImage": "../../bitmaps_test/policy_detail/20200903-161414/failed_diff_1563446148_policy_detail_0_document_0_320x2500.png"
+      },
+      "status": "fail"
+    },
+    {
+      "pair": {
+        "reference": "../../bitmaps_reference/policy_detail/1563446148_policy_detail_0_document_1_480x2500.png",
+        "test": "../../bitmaps_test/policy_detail/20200903-161414/1563446148_policy_detail_0_document_1_480x2500.png",
+        "selector": "document",
+        "fileName": "1563446148_policy_detail_0_document_1_480x2500.png",
+        "label": "policy_detail",
+        "requireSameDimensions": true,
+        "misMatchThreshold": 0.1,
+        "url": "http://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/policy/policy-detail.html",
+        "referenceUrl": "https://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/policy/policy-detail.html",
+        "expect": 0,
+        "viewportLabel": "480x2500",
+        "diff": {
+          "isSameDimensions": true,
+          "dimensionDifference": {
+            "width": 0,
+            "height": 0
+          },
+          "misMatchPercentage": "0.31",
+          "analysisTime": 68
+        },
+        "diffImage": "../../bitmaps_test/policy_detail/20200903-161414/failed_diff_1563446148_policy_detail_0_document_1_480x2500.png"
+      },
+      "status": "fail"
+    },
+    {
+      "pair": {
+        "reference": "../../bitmaps_reference/policy_detail/1563446148_policy_detail_0_document_2_690x2500.png",
+        "test": "../../bitmaps_test/policy_detail/20200903-161414/1563446148_policy_detail_0_document_2_690x2500.png",
+        "selector": "document",
+        "fileName": "1563446148_policy_detail_0_document_2_690x2500.png",
+        "label": "policy_detail",
+        "requireSameDimensions": true,
+        "misMatchThreshold": 0.1,
+        "url": "http://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/policy/policy-detail.html",
+        "referenceUrl": "https://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/policy/policy-detail.html",
+        "expect": 0,
+        "viewportLabel": "690x2500",
+        "diff": {
+          "isSameDimensions": false,
+          "dimensionDifference": {
+            "width": 0,
+            "height": -30
+          },
+          "misMatchPercentage": "13.76",
+          "analysisTime": 109
+        },
+        "diffImage": "../../bitmaps_test/policy_detail/20200903-161414/failed_diff_1563446148_policy_detail_0_document_2_690x2500.png"
+      },
+      "status": "fail"
+    },
+    {
+      "pair": {
+        "reference": "../../bitmaps_reference/policy_detail/1563446148_policy_detail_0_document_3_930x2500.png",
+        "test": "../../bitmaps_test/policy_detail/20200903-161414/1563446148_policy_detail_0_document_3_930x2500.png",
+        "selector": "document",
+        "fileName": "1563446148_policy_detail_0_document_3_930x2500.png",
+        "label": "policy_detail",
+        "requireSameDimensions": true,
+        "misMatchThreshold": 0.1,
+        "url": "http://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/policy/policy-detail.html",
+        "referenceUrl": "https://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/policy/policy-detail.html",
+        "expect": 0,
+        "viewportLabel": "930x2500",
+        "diff": {
+          "isSameDimensions": false,
+          "dimensionDifference": {
+            "width": 0,
+            "height": -22
+          },
+          "misMatchPercentage": "12.66",
+          "analysisTime": 120
+        },
+        "diffImage": "../../bitmaps_test/policy_detail/20200903-161414/failed_diff_1563446148_policy_detail_0_document_3_930x2500.png"
+      },
+      "status": "fail"
+    },
+    {
+      "pair": {
+        "reference": "../../bitmaps_reference/policy_detail/1563446148_policy_detail_0_document_4_1200x2500.png",
+        "test": "../../bitmaps_test/policy_detail/20200903-161414/1563446148_policy_detail_0_document_4_1200x2500.png",
+        "selector": "document",
+        "fileName": "1563446148_policy_detail_0_document_4_1200x2500.png",
+        "label": "policy_detail",
+        "requireSameDimensions": true,
+        "misMatchThreshold": 0.1,
+        "url": "http://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/policy/policy-detail.html",
+        "referenceUrl": "https://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/policy/policy-detail.html",
+        "expect": 0,
+        "viewportLabel": "1200x2500",
+        "diff": {
+          "isSameDimensions": true,
+          "dimensionDifference": {
+            "width": 0,
+            "height": 0
+          },
+          "misMatchPercentage": "0.32",
+          "analysisTime": 112
+        },
+        "diffImage": "../../bitmaps_test/policy_detail/20200903-161414/failed_diff_1563446148_policy_detail_0_document_4_1200x2500.png"
+      },
+      "status": "fail"
+    }
+  ]
+}

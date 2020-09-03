@@ -1,0 +1,135 @@
+{
+  "testSuite": "BackstopJS",
+  "tests": [
+    {
+      "pair": {
+        "reference": "../../bitmaps_reference/study_abroad_content/1563446148_study_abroad_content_0_document_0_320x2500.png",
+        "test": "../../bitmaps_test/study_abroad_content/20200903-162020/1563446148_study_abroad_content_0_document_0_320x2500.png",
+        "selector": "document",
+        "fileName": "1563446148_study_abroad_content_0_document_0_320x2500.png",
+        "label": "study_abroad_content",
+        "requireSameDimensions": true,
+        "misMatchThreshold": 0.1,
+        "url": "http://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/global-study-centers/study-abroad-homepage/study-abroad-landing/study-abroad-content.html",
+        "referenceUrl": "http://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/global-study-centers/study-abroad-homepage/study-abroad-landing/study-abroad-content.html",
+        "expect": 0,
+        "viewportLabel": "320x2500",
+        "diff": {
+          "isSameDimensions": false,
+          "dimensionDifference": {
+            "width": 0,
+            "height": -225
+          },
+          "misMatchPercentage": "40.17",
+          "analysisTime": 50
+        },
+        "diffImage": "../../bitmaps_test/study_abroad_content/20200903-162020/failed_diff_1563446148_study_abroad_content_0_document_0_320x2500.png"
+      },
+      "status": "fail"
+    },
+    {
+      "pair": {
+        "reference": "../../bitmaps_reference/study_abroad_content/1563446148_study_abroad_content_0_document_1_480x2500.png",
+        "test": "../../bitmaps_test/study_abroad_content/20200903-162020/1563446148_study_abroad_content_0_document_1_480x2500.png",
+        "selector": "document",
+        "fileName": "1563446148_study_abroad_content_0_document_1_480x2500.png",
+        "label": "study_abroad_content",
+        "requireSameDimensions": true,
+        "misMatchThreshold": 0.1,
+        "url": "http://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/global-study-centers/study-abroad-homepage/study-abroad-landing/study-abroad-content.html",
+        "referenceUrl": "http://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/global-study-centers/study-abroad-homepage/study-abroad-landing/study-abroad-content.html",
+        "expect": 0,
+        "viewportLabel": "480x2500",
+        "diff": {
+          "isSameDimensions": false,
+          "dimensionDifference": {
+            "width": 0,
+            "height": -50
+          },
+          "misMatchPercentage": "41.36",
+          "analysisTime": 57
+        },
+        "diffImage": "../../bitmaps_test/study_abroad_content/20200903-162020/failed_diff_1563446148_study_abroad_content_0_document_1_480x2500.png"
+      },
+      "status": "fail"
+    },
+    {
+      "pair": {
+        "reference": "../../bitmaps_reference/study_abroad_content/1563446148_study_abroad_content_0_document_2_690x2500.png",
+        "test": "../../bitmaps_test/study_abroad_content/20200903-162020/1563446148_study_abroad_content_0_document_2_690x2500.png",
+        "selector": "document",
+        "fileName": "1563446148_study_abroad_content_0_document_2_690x2500.png",
+        "label": "study_abroad_content",
+        "requireSameDimensions": true,
+        "misMatchThreshold": 0.1,
+        "url": "http://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/global-study-centers/study-abroad-homepage/study-abroad-landing/study-abroad-content.html",
+        "referenceUrl": "http://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/global-study-centers/study-abroad-homepage/study-abroad-landing/study-abroad-content.html",
+        "expect": 0,
+        "viewportLabel": "690x2500",
+        "diff": {
+          "isSameDimensions": false,
+          "dimensionDifference": {
+            "width": 0,
+            "height": -80
+          },
+          "misMatchPercentage": "40.60",
+          "analysisTime": 97
+        },
+        "diffImage": "../../bitmaps_test/study_abroad_content/20200903-162020/failed_diff_1563446148_study_abroad_content_0_document_2_690x2500.png"
+      },
+      "status": "fail"
+    },
+    {
+      "pair": {
+        "reference": "../../bitmaps_reference/study_abroad_content/1563446148_study_abroad_content_0_document_3_930x2500.png",
+        "test": "../../bitmaps_test/study_abroad_content/20200903-162020/1563446148_study_abroad_content_0_document_3_930x2500.png",
+        "selector": "document",
+        "fileName": "1563446148_study_abroad_content_0_document_3_930x2500.png",
+        "label": "study_abroad_content",
+        "requireSameDimensions": true,
+        "misMatchThreshold": 0.1,
+        "url": "http://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/global-study-centers/study-abroad-homepage/study-abroad-landing/study-abroad-content.html",
+        "referenceUrl": "http://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/global-study-centers/study-abroad-homepage/study-abroad-landing/study-abroad-content.html",
+        "expect": 0,
+        "viewportLabel": "930x2500",
+        "diff": {
+          "isSameDimensions": true,
+          "dimensionDifference": {
+            "width": 0,
+            "height": 0
+          },
+          "misMatchPercentage": "31.60",
+          "analysisTime": 89
+        },
+        "diffImage": "../../bitmaps_test/study_abroad_content/20200903-162020/failed_diff_1563446148_study_abroad_content_0_document_3_930x2500.png"
+      },
+      "status": "fail"
+    },
+    {
+      "pair": {
+        "reference": "../../bitmaps_reference/study_abroad_content/1563446148_study_abroad_content_0_document_4_1200x2500.png",
+        "test": "../../bitmaps_test/study_abroad_content/20200903-162020/1563446148_study_abroad_content_0_document_4_1200x2500.png",
+        "selector": "document",
+        "fileName": "1563446148_study_abroad_content_0_document_4_1200x2500.png",
+        "label": "study_abroad_content",
+        "requireSameDimensions": true,
+        "misMatchThreshold": 0.1,
+        "url": "http://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/global-study-centers/study-abroad-homepage/study-abroad-landing/study-abroad-content.html",
+        "referenceUrl": "http://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/global-study-centers/study-abroad-homepage/study-abroad-landing/study-abroad-content.html",
+        "expect": 0,
+        "viewportLabel": "1200x2500",
+        "diff": {
+          "isSameDimensions": true,
+          "dimensionDifference": {
+            "width": 0,
+            "height": 0
+          },
+          "misMatchPercentage": "27.40",
+          "analysisTime": 98
+        },
+        "diffImage": "../../bitmaps_test/study_abroad_content/20200903-162020/failed_diff_1563446148_study_abroad_content_0_document_4_1200x2500.png"
+      },
+      "status": "fail"
+    }
+  ]
+}
