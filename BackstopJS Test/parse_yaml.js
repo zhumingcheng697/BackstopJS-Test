@@ -91,6 +91,9 @@ function chooseRunMode(line) {
     if (["auto", "a"].includes(line.toLowerCase())) {
         runMode = "a";
         console.log(`${logStyle.fg.white}Running in auto mode${logStyle.reset}`);
+        if (scenarios.length > 0) {
+            runBackstop(scenarios[0]);
+        }
     } else if (["manual", "m"].includes(line.toLowerCase())) {
         runMode = "m";
         console.log(`${logStyle.fg.white}Running in manual mode${logStyle.reset}`);
@@ -149,6 +152,37 @@ function resetAfterRun() {
 }
 
 function runBackstop(scenario, action = "test") {
+    function runNextSteps(isRunSuccessful) {
+        if (isRunSuccessful) {
+            console.log(`${logStyle.fg.green}${parsedAction.toUpperCase()} succeeded for scenario ${scenario.name}${logStyle.reset}`);
+        } else {
+            console.log(`${logStyle.fg.red}${parsedAction.toUpperCase()} failed for scenario ${scenario.name}${logStyle.reset}`);
+        }
+
+        if (isRunSuccessful && parsedAction === "reference" && ["t", "a"].includes(action.toLowerCase().charAt(0))) {
+            runBackstop(scenario);
+        } else {
+            if (runMode === "m") {
+                resetAfterRun();
+            } else if (runMode === "a") {
+                if (!isRunSuccessful && parsedAction === "reference") {
+                    resetAfterRun();
+                    runMode = "m";
+                    console.log(`${logStyle.fg.red}Automatically switched to manual mode${logStyle.reset}`);
+                } else if (scenarioIndex === scenarios.length - 1) {
+                    resetAfterRun();
+                    runMode = "m";
+                    console.log(`${logStyle.fg.green}All tests completed${logStyle.reset}`);
+                    console.log(`${logStyle.fg.green}Automatically switched to manual mode${logStyle.reset}`);
+                } else {
+                    scenarioIndex += 1;
+                    console.log(`${logStyle.fg.green}Automatically starting test for next scenario (${scenarios[scenarioIndex].name})${logStyle.reset}`);
+                    runBackstop(scenarios[scenarioIndex]);
+                }
+            }
+        }
+    }
+
     let parsedAction = action.toLowerCase();
     const name = scenario.name.replace(/\s/g, "_");
 
@@ -226,15 +260,9 @@ function runBackstop(scenario, action = "test") {
 
     backstop(parsedAction, {config: config})
         .then(() => {
-            console.log(`${logStyle.fg.green}${parsedAction.toUpperCase()} succeeded for scenario ${scenario.name}${logStyle.reset}`);
-            if (parsedAction === "reference" && ["t", "a"].includes(action.toLowerCase().charAt(0))) {
-                runBackstop(scenario);
-            } else {
-                resetAfterRun();
-            }
+            runNextSteps(true);
         }).catch(() => {
-            console.log(`${logStyle.fg.red}${parsedAction.toUpperCase()} failed for scenario ${scenario.name}${logStyle.reset}`);
-            resetAfterRun();
+            runNextSteps(false);
         }
     );
 }
