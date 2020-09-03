@@ -5,6 +5,9 @@ const readline = require('readline');
 
 let runMode = "";
 let isRunning = false;
+let isLastRunSuccessful = true;
+let willAutoRunResume = false;
+let lastRunAction = "";
 let scenarioChosen = false;
 let scenarioConfirmed = false;
 let scenarioIndex = 0;
@@ -101,9 +104,34 @@ function chooseRunMode(line) {
     }
 }
 
+function confirmResumeAutoRun(line) {
+    if (line.toLowerCase() === "y") {
+        runMode = "a";
+        willAutoRunResume = true;
+        let length = scenarios.length - scenarioIndex - ((lastRunAction === "reference" && isLastRunSuccessful) ? 0 : 1);
+        console.warn(`${logStyle.fg.red}All the rest ${length} scenario${length === 1 ? "" : "s"} will be tested in order. You can type anything at any time to stop the next test once the program starts running. Continue? (y/n)${logStyle.reset}`);
+    } else if (line.toLowerCase() === "n") {
+        runMode = "m";
+        console.log(`${logStyle.fg.green}Running in manual mode${logStyle.reset}`);
+        typeInIndexToChoosePrompt();
+    } else {
+        console.error(`${logStyle.fg.red}Please type in a valid keyword. (y/n)${logStyle.reset}`);
+    }
+}
+
 function confirmAutoRun(line) {
     if (line.toLowerCase() === "y") {
         runMode = "r";
+
+        if (scenarioIndex !== 0 && willAutoRunResume) {
+            if (lastRunAction === "reference" && isLastRunSuccessful) {
+                console.log(`${logStyle.fg.green}Resuming automatic run starting from the previous scenario (${scenarios[scenarioIndex].name})${logStyle.reset}`);
+            } else {
+                scenarioIndex += 1
+                console.log(`${logStyle.fg.green}Resuming automatic run starting from the next scenario (${scenarios[scenarioIndex].name})${logStyle.reset}`);
+            }
+        }
+
         if (scenarios.length > 0 && scenarioIndex >= 0 && scenarioIndex < scenarios.length - 1) {
             runBackstop(scenarios[scenarioIndex]);
         }
@@ -114,6 +142,8 @@ function confirmAutoRun(line) {
     } else {
         console.error(`${logStyle.fg.red}Please type in a valid keyword. (y/n)${logStyle.reset}`);
     }
+
+    willAutoRunResume = false;
 }
 
 function chooseScenario(line) {
@@ -166,13 +196,16 @@ function resetAfterRun() {
 
 function runBackstop(scenario, action = "test") {
     function runNextSteps(isRunSuccessful) {
+        lastRunAction = parsedAction;
+        isLastRunSuccessful = isRunSuccessful;
+
         if (isRunSuccessful) {
             console.log(`${logStyle.fg.green}${parsedAction.toUpperCase()} succeeded for scenario ${scenario.name}${logStyle.reset}`);
         } else {
             console.error(`${logStyle.fg.red}${parsedAction.toUpperCase()} failed for scenario ${scenario.name}${logStyle.reset}`);
         }
 
-        if (isRunSuccessful && parsedAction === "reference" && ["t", "a"].includes(action.toLowerCase().charAt(0))) {
+        if (isRunSuccessful && runMode !== "n" && parsedAction === "reference" && ["t", "a"].includes(action.toLowerCase().charAt(0))) {
             runBackstop(scenario);
         } else {
             if (runMode === "m") {
@@ -192,6 +225,20 @@ function runBackstop(scenario, action = "test") {
                     console.log(`${logStyle.fg.green}Automatically starting test for next scenario (${scenarios[scenarioIndex].name})${logStyle.reset}`);
                     runBackstop(scenarios[scenarioIndex]);
                 }
+            } else if (runMode === "n") {
+                if (!isRunSuccessful && parsedAction === "reference") {
+                    resetAfterRun();
+                    runMode = "m";
+                    console.log(`${logStyle.fg.red}Automatically switched to manual mode${logStyle.reset}`);
+                } else if (scenarioIndex === scenarios.length - 1) {
+                    resetAfterRun();
+                    runMode = "m";
+                    console.log(`${logStyle.fg.green}All tests completed${logStyle.reset}`);
+                    console.log(`${logStyle.fg.green}Automatically switched to manual mode${logStyle.reset}`);
+                } else {
+                    isRunning = false;
+                    console.log(`${logStyle.fg.green}Automatic run stopped due to your keyboard input. Resume the rest of the tests? (y/n)${logStyle.reset}`);
+                }
             }
         }
     }
@@ -201,14 +248,14 @@ function runBackstop(scenario, action = "test") {
 
     isRunning = true;
 
-    if (parsedAction === "t") {
+    if (["test", "t"].includes(parsedAction)) {
         if (fs.existsSync(`backstop_data/bitmaps_reference/${name}`)) {
             parsedAction = "test";
         } else {
             console.error(`${logStyle.fg.red}No previous references exist for scenario ${scenario.name}${logStyle.reset}`);
             parsedAction = "reference";
         }
-    } else if (parsedAction === "a") {
+    } else if (["approve", "a"].includes(parsedAction)) {
         if (fs.existsSync(`backstop_data/bitmaps_test/${name}`)) {
             parsedAction = "approve";
         } else {
@@ -220,9 +267,9 @@ function runBackstop(scenario, action = "test") {
                 parsedAction = "reference";
             }
         }
-    } else if (parsedAction === "r") {
+    } else if (["reference", "r"].includes(parsedAction)) {
         parsedAction = "reference";
-    } else if (!["test", "approve", "reference"].includes(parsedAction)) {
+    } else {
         console.error(`${logStyle.fg.red}Please type in a valid keyword. (test/approve/reference/t/a/r)${logStyle.reset}`);
         isRunning = false;
         return;
@@ -308,6 +355,8 @@ rl.on('line', (line) => {
             } else {
                 runBackstop(scenarios[scenarioIndex], line);
             }
+        } else if (runMode === "n") {
+            confirmResumeAutoRun(line);
         }
     }
 });
