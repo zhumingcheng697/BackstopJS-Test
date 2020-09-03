@@ -87,14 +87,6 @@ function typeInIndexToChoosePrompt() {
     console.log(`${logStyle.fg.white}Type in a valid index (0 to ${scenarios.length - 1}) or the scenario name to choose a scenario, type in "--" or "++" to choose the previous or the next scenario, if there is one, or type anything else or press enter to choose scenario ${scenarioIndex} (${scenarios[scenarioIndex].name}) by default${logStyle.reset}`);
 }
 
-function readyForAutoRun() {
-    runMode = "x";
-    scenarioChosen = false;
-    scenarioConfirmed = false;
-    console.log(`${logStyle.fg.green}Switching to auto mode${logStyle.reset}`);
-    console.log(`${logStyle.fg.white}Type in a valid index (0 to ${scenarios.length - 1}) or the scenario name to choose a scenario ${logStyle.reset}to start the auto run from${logStyle.fg.white}, type in "--" or "++" to choose the previous or the next scenario ${logStyle.reset}to start the auto run from${logStyle.fg.white}, if there is one, or type anything else or press enter to choose scenario ${scenarioIndex} (${scenarios[scenarioIndex].name}) by default ${logStyle.reset}to start the auto run from${logStyle.reset}`);
-}
-
 function typeInKeywordToStartPrompt() {
     console.log(`${logStyle.fg.white}Type in a keyword to start: "test" (t), "approve" (a), "reference" (r)${logStyle.reset}`);
 }
@@ -111,6 +103,61 @@ function chooseRunMode(line) {
     } else {
         console.error(`${logStyle.fg.red}Please type in a valid keyword. (auto/manual/a/m)${logStyle.reset}`);
     }
+}
+
+function chooseScenario(line) {
+    if (line === "++") {
+        if (scenarioIndex < scenarios.length - 1) {
+            tempScenarioIndex = scenarioIndex + 1;
+        }
+    } else if (line === "--") {
+        if (scenarioIndex > 0) {
+            tempScenarioIndex = scenarioIndex - 1;
+        }
+    } else {
+        let foundIndex = scenarios.map((el) => el.name.toLowerCase()).indexOf(line.toLowerCase())
+        if (foundIndex >= 0) {
+            tempScenarioIndex = foundIndex;
+        } else {
+            let parsedInt = parseInt(line);
+            let parsedIndex = isNaN(parsedInt) ? -1 : parsedInt;
+            if (parsedIndex.toString() === line && parsedIndex >= 0 && parsedIndex < scenarios.length) {
+                tempScenarioIndex = parsedIndex;
+            } else {
+                tempScenarioIndex = scenarioIndex;
+            }
+        }
+    }
+
+    if (runMode === "m") {
+        console.log(`${logStyle.fg.white}Scenario ${tempScenarioIndex} (${scenarios[tempScenarioIndex].name}) chosen. Continue? (y/n)${logStyle.reset}`);
+    } else if (runMode === "x") {
+        console.warn(`${logStyle.fg.red}All ${scenarios.length - tempScenarioIndex} scenario${scenarios.length - tempScenarioIndex === 1 ? "" : "s"} starting from scenario ${tempScenarioIndex} (${scenarios[tempScenarioIndex].name}) will be tested in order. You can type anything at any time to stop the next test once the program starts running. Continue? (y/n)${logStyle.reset}`);
+    }
+
+    scenarioChosen = true;
+}
+
+function confirmScenario(line) {
+    if (line.toLowerCase() === "y") {
+        scenarioIndex = tempScenarioIndex;
+        scenarioConfirmed = true;
+        typeInKeywordToStartPrompt();
+    } else if (line.toLowerCase() === "n") {
+        scenarioChosen = false;
+        tempScenarioIndex = scenarioIndex;
+        typeInIndexToChoosePrompt();
+    } else {
+        console.error(`${logStyle.fg.red}Please type in a valid keyword. (y/n)${logStyle.reset}`);
+    }
+}
+
+function readyForAutoRun() {
+    runMode = "x";
+    scenarioChosen = false;
+    scenarioConfirmed = false;
+    console.log(`${logStyle.fg.green}Switching to auto mode${logStyle.reset}`);
+    console.log(`${logStyle.fg.white}Type in a valid index (0 to ${scenarios.length - 1}) or the scenario name to choose a scenario ${logStyle.reset}to start the auto run from${logStyle.fg.white}, type in "--" or "++" to choose the previous or the next scenario ${logStyle.reset}to start the auto run from${logStyle.fg.white}, if there is one, or type anything else or press enter to choose scenario ${scenarioIndex} (${scenarios[scenarioIndex].name}) by default ${logStyle.reset}to start the auto run from${logStyle.reset}`);
 }
 
 function confirmResumeAutoRun(line) {
@@ -164,53 +211,6 @@ function confirmAutoRun(line) {
     }
 
     willAutoRunResume = false;
-}
-
-function chooseScenario(line) {
-    if (line === "++") {
-        if (scenarioIndex < scenarios.length - 1) {
-            tempScenarioIndex = scenarioIndex + 1;
-        }
-    } else if (line === "--") {
-        if (scenarioIndex > 0) {
-            tempScenarioIndex = scenarioIndex - 1;
-        }
-    } else {
-        let foundIndex = scenarios.map((el) => el.name.toLowerCase()).indexOf(line.toLowerCase())
-        if (foundIndex >= 0) {
-            tempScenarioIndex = foundIndex;
-        } else {
-            let parsedInt = parseInt(line);
-            let parsedIndex = isNaN(parsedInt) ? -1 : parsedInt;
-            if (parsedIndex.toString() === line && parsedIndex >= 0 && parsedIndex < scenarios.length) {
-                tempScenarioIndex = parsedIndex;
-            } else {
-                tempScenarioIndex = scenarioIndex;
-            }
-        }
-    }
-
-    if (runMode === "m") {
-        console.log(`${logStyle.fg.white}Scenario ${tempScenarioIndex} (${scenarios[tempScenarioIndex].name}) chosen. Continue? (y/n)${logStyle.reset}`);
-    } else if (runMode === "x") {
-        console.warn(`${logStyle.fg.red}All ${scenarios.length - tempScenarioIndex} scenario${scenarios.length - tempScenarioIndex === 1 ? "" : "s"} starting from scenario ${tempScenarioIndex} (${scenarios[tempScenarioIndex].name}) will be tested in order. You can type anything at any time to stop the next test once the program starts running. Continue? (y/n)${logStyle.reset}`);
-    }
-
-    scenarioChosen = true;
-}
-
-function confirmScenario(line) {
-    if (line.toLowerCase() === "y") {
-        scenarioIndex = tempScenarioIndex;
-        scenarioConfirmed = true;
-        typeInKeywordToStartPrompt();
-    } else if (line.toLowerCase() === "n") {
-        scenarioChosen = false;
-        tempScenarioIndex = scenarioIndex;
-        typeInIndexToChoosePrompt();
-    } else {
-        console.error(`${logStyle.fg.red}Please type in a valid keyword. (y/n)${logStyle.reset}`);
-    }
 }
 
 function resetAfterRun() {
