@@ -24,7 +24,7 @@
 
 ### Wednesday: September 2, 2020 (6 hours)
 
-- Enabled the program to print instructions and warnings in various colors in the console, listen to keyboard input, and run accordingly
+- Added the functionality to print instructions and warnings in various colors in the console, listen to keyboard input, and run accordingly
 
 - Enabled the program to run smarter and prevent errors by checking existence of necessary files:
 
@@ -45,3 +45,13 @@
     > In manual mode, the user first chooses a scenario based on its index or name, and then chooses whether to run `backstop reference`, `backstop test`, or `backstop approve` for that scenario
     >
     > The user will be able to switch from manual mode to auto mode in the future (currently only the other way around is supported)
+
+### Thursday: September 3, 2020 (3 hours) 
+
+- Added the functionality to resume auto runs when the user pauses it by typing anything during the run
+
+- Added the functionality to start auto run from a specific scenario (uses the same logic of choosing scenario by index or by name in manual mode)
+
+- Added documentation to most functions and important code blocks
+
+- Fixed multiple bugs related to scenario-choosing and state-tracking
