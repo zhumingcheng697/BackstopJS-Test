@@ -1,0 +1,135 @@
+{
+  "testSuite": "BackstopJS",
+  "tests": [
+    {
+      "pair": {
+        "reference": "../../bitmaps_reference/search_people/1563446148_search_people_0_document_0_320x2500.png",
+        "test": "../../bitmaps_test/search_people/20200903-182453/1563446148_search_people_0_document_0_320x2500.png",
+        "selector": "document",
+        "fileName": "1563446148_search_people_0_document_0_320x2500.png",
+        "label": "search_people",
+        "requireSameDimensions": true,
+        "misMatchThreshold": 0.1,
+        "url": "http://qacms.home.nyu.edu/search.html?search=varoqua&st=people",
+        "referenceUrl": "https://www.nyu.edu/search.html?search=varoqua&st=people",
+        "expect": 0,
+        "viewportLabel": "320x2500",
+        "diff": {
+          "isSameDimensions": true,
+          "dimensionDifference": {
+            "width": 0,
+            "height": 0
+          },
+          "misMatchPercentage": "11.45",
+          "analysisTime": 40
+        },
+        "diffImage": "../../bitmaps_test/search_people/20200903-182453/failed_diff_1563446148_search_people_0_document_0_320x2500.png"
+      },
+      "status": "fail"
+    },
+    {
+      "pair": {
+        "reference": "../../bitmaps_reference/search_people/1563446148_search_people_0_document_1_480x2500.png",
+        "test": "../../bitmaps_test/search_people/20200903-182453/1563446148_search_people_0_document_1_480x2500.png",
+        "selector": "document",
+        "fileName": "1563446148_search_people_0_document_1_480x2500.png",
+        "label": "search_people",
+        "requireSameDimensions": true,
+        "misMatchThreshold": 0.1,
+        "url": "http://qacms.home.nyu.edu/search.html?search=varoqua&st=people",
+        "referenceUrl": "https://www.nyu.edu/search.html?search=varoqua&st=people",
+        "expect": 0,
+        "viewportLabel": "480x2500",
+        "diff": {
+          "isSameDimensions": true,
+          "dimensionDifference": {
+            "width": 0,
+            "height": 0
+          },
+          "misMatchPercentage": "0.46",
+          "analysisTime": 40
+        },
+        "diffImage": "../../bitmaps_test/search_people/20200903-182453/failed_diff_1563446148_search_people_0_document_1_480x2500.png"
+      },
+      "status": "fail"
+    },
+    {
+      "pair": {
+        "reference": "../../bitmaps_reference/search_people/1563446148_search_people_0_document_2_690x2500.png",
+        "test": "../../bitmaps_test/search_people/20200903-182453/1563446148_search_people_0_document_2_690x2500.png",
+        "selector": "document",
+        "fileName": "1563446148_search_people_0_document_2_690x2500.png",
+        "label": "search_people",
+        "requireSameDimensions": true,
+        "misMatchThreshold": 0.1,
+        "url": "http://qacms.home.nyu.edu/search.html?search=varoqua&st=people",
+        "referenceUrl": "https://www.nyu.edu/search.html?search=varoqua&st=people",
+        "expect": 0,
+        "viewportLabel": "690x2500",
+        "diff": {
+          "isSameDimensions": true,
+          "dimensionDifference": {
+            "width": 0,
+            "height": 0
+          },
+          "misMatchPercentage": "8.04",
+          "analysisTime": 64
+        },
+        "diffImage": "../../bitmaps_test/search_people/20200903-182453/failed_diff_1563446148_search_people_0_document_2_690x2500.png"
+      },
+      "status": "fail"
+    },
+    {
+      "pair": {
+        "reference": "../../bitmaps_reference/search_people/1563446148_search_people_0_document_3_930x2500.png",
+        "test": "../../bitmaps_test/search_people/20200903-182453/1563446148_search_people_0_document_3_930x2500.png",
+        "selector": "document",
+        "fileName": "1563446148_search_people_0_document_3_930x2500.png",
+        "label": "search_people",
+        "requireSameDimensions": true,
+        "misMatchThreshold": 0.1,
+        "url": "http://qacms.home.nyu.edu/search.html?search=varoqua&st=people",
+        "referenceUrl": "https://www.nyu.edu/search.html?search=varoqua&st=people",
+        "expect": 0,
+        "viewportLabel": "930x2500",
+        "diff": {
+          "isSameDimensions": true,
+          "dimensionDifference": {
+            "width": 0,
+            "height": 0
+          },
+          "misMatchPercentage": "6.12",
+          "analysisTime": 86
+        },
+        "diffImage": "../../bitmaps_test/search_people/20200903-182453/failed_diff_1563446148_search_people_0_document_3_930x2500.png"
+      },
+      "status": "fail"
+    },
+    {
+      "pair": {
+        "reference": "../../bitmaps_reference/search_people/1563446148_search_people_0_document_4_1200x2500.png",
+        "test": "../../bitmaps_test/search_people/20200903-182453/1563446148_search_people_0_document_4_1200x2500.png",
+        "selector": "document",
+        "fileName": "1563446148_search_people_0_document_4_1200x2500.png",
+        "label": "search_people",
+        "requireSameDimensions": true,
+        "misMatchThreshold": 0.1,
+        "url": "http://qacms.home.nyu.edu/search.html?search=varoqua&st=people",
+        "referenceUrl": "https://www.nyu.edu/search.html?search=varoqua&st=people",
+        "expect": 0,
+        "viewportLabel": "1200x2500",
+        "diff": {
+          "isSameDimensions": true,
+          "dimensionDifference": {
+            "width": 0,
+            "height": 0
+          },
+          "misMatchPercentage": "0.41",
+          "analysisTime": 95
+        },
+        "diffImage": "../../bitmaps_test/search_people/20200903-182453/failed_diff_1563446148_search_people_0_document_4_1200x2500.png"
+      },
+      "status": "fail"
+    }
+  ]
+}

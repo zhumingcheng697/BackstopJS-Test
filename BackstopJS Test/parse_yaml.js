@@ -1,5 +1,5 @@
-const YAML = require('yaml');
 const fs = require('fs');
+const YAML = require('yaml');
 const backstop = require('backstopjs');
 const readline = require('readline');
 
@@ -16,6 +16,7 @@ const readline = require('readline');
  * @type {string}
  */
 let runMode = "";
+let scenarios = [];
 let isRunning = false;
 let isLastRunSuccessful = true;
 let willAutoRunResume = false;
@@ -74,12 +75,6 @@ let rl = readline.createInterface({
     terminal: false
 });
 
-const file = fs.readFileSync('nyu.yml', 'utf8');
-const parsed = YAML.parse(file);
-const scenarios = parsed.urls;
-
-console.log(`${logStyle.fg.green}${scenarios.length} scenario${scenarios.length === 1 ? "" : "s"} loaded${logStyle.reset}`);
-
 /**
  * Default Backstop configuration for all runs.
  *
@@ -96,6 +91,30 @@ const defaultConfig = {
     debug: false,
     debugWindow: false
 };
+
+/**
+ * Loads scenarios from a YAML file
+ *
+ * @param {string} path Path of the YAML config file to load scenarios from
+ */
+function loadYamlConfig(path) {
+    if (path === "") {
+        loadYamlConfig("nyu.yml");
+    } else if (fs.existsSync(path)) {
+        const file = fs.readFileSync(path, "utf8");
+        const parsed = YAML.parse(file);
+        scenarios = parsed.urls;
+
+        if (scenarios.length <= 0) {
+            console.error(`${logStyle.fg.red}No scenarios found. Please choose another file.${logStyle.reset}`);
+        } else {
+            console.log(`${logStyle.fg.green}${scenarios.length} scenario${scenarios.length === 1 ? "" : "s"} loaded${logStyle.reset}`);
+            chooseRunModePrompt();
+        }
+    } else {
+        console.error(`${logStyle.fg.red}File does not exist at "${path}". Please type in a valid path.${logStyle.reset}`);
+    }
+}
 
 function chooseRunModePrompt() {
     console.log(`${logStyle.fg.white}Run in "auto" (a) or "manual" (m) mode?${logStyle.reset}`);
@@ -282,7 +301,6 @@ function resetAfterRun() {
     scenarioChosen = false;
     scenarioConfirmed = false;
     setTimeout(typeInIndexToChoosePrompt, 100);
-    // typeInIndexToChoosePrompt();
 }
 
 /**
@@ -421,20 +439,14 @@ function runBackstop(scenario, action = "test") {
     );
 }
 
-/**
- * Checks if any scenarios are loaded from the file.
- */
-if (scenarios.length > 0) {
-    chooseRunModePrompt();
-} else {
-    process.exit(1);
-}
+console.log(`${logStyle.fg.white}Please type in the path of the YAML config file to load, or press enter to choose ${logStyle.reset}nyu.yml${logStyle.fg.white} by default${logStyle.reset}`);
 
 /**
  * Handles keyboard input in the console.
  */
 rl.on('line', (line) => {
     if (scenarios.length <= 0) {
+        loadYamlConfig(line);
         return;
     }
 
