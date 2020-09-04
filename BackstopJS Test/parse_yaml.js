@@ -117,16 +117,16 @@ function loadYamlConfig(path) {
 }
 
 function chooseRunModePrompt() {
-    console.log(`${logStyle.fg.white}Run in "auto" (a) or "manual" (m) mode?${logStyle.reset}`);
+    console.log(`${logStyle.fg.white}Run in ${logStyle.reset}"auto" (a)${logStyle.fg.white} or ${logStyle.reset}"manual" (m)${logStyle.fg.white} mode?${logStyle.reset}`);
 }
 
 function typeInIndexToChoosePrompt() {
-    console.log(`${logStyle.fg.green}Type in "auto" at any time to start auto run${logStyle.reset}`);
-    console.log(`${logStyle.fg.white}Type in a valid index (0 to ${scenarios.length - 1}) or the scenario name to choose a scenario, type in "--" or "++" to choose the previous or the next scenario, if there is one, or type anything else or press enter to choose scenario ${scenarioIndex} (${scenarios[scenarioIndex].name}) by default${logStyle.reset}`);
+    console.log(`${logStyle.fg.green}Type in "auto run" at any time to start auto run${logStyle.reset}`);
+    console.log(`${logStyle.fg.white}Type in a valid index (0 to ${scenarios.length - 1}) or the scenario name to choose a scenario, type in "--" or "++" to choose the previous or the next scenario, if there is one, or type anything else or press enter to choose ${logStyle.reset}scenario ${scenarioIndex} (${scenarios[scenarioIndex].name})${logStyle.fg.white} by default${logStyle.reset}`);
 }
 
 function typeInKeywordToStartPrompt() {
-    console.log(`${logStyle.fg.white}Type in a keyword to start: "test" (t), "approve" (a), "reference" (r)${logStyle.reset}`);
+    console.log(`${logStyle.fg.white}Type in a keyword to start: ${logStyle.reset}"test" (t), "approve" (a), "reference" (r)${logStyle.reset}`);
 }
 
 /**
@@ -139,7 +139,7 @@ function chooseRunMode(line) {
     if (["auto", "a"].includes(line.toLowerCase())) {
         runMode = "a";
         console.log(`${logStyle.fg.green}Running in auto mode${logStyle.reset}`);
-        console.warn(`${logStyle.fg.red}All ${scenarios.length} scenario${scenarios.length === 1 ? "" : "s"} will be tested in order. You can type anything at any time to stop the next test once the program starts running. Continue? (y/n)${logStyle.reset}`);
+        console.warn(`${logStyle.fg.red}All ${scenarios.length} scenario${scenarios.length === 1 ? "" : "s"} will be tested in order. Press enter at any time to stop the next test once the program starts running. Continue? (y/n)${logStyle.reset}`);
     } else if (["manual", "m"].includes(line.toLowerCase())) {
         runMode = "m";
         console.log(`${logStyle.fg.green}Running in manual mode${logStyle.reset}`);
@@ -180,9 +180,9 @@ function chooseScenario(line) {
     }
 
     if (runMode === "m") {
-        console.log(`${logStyle.fg.white}Scenario ${tempScenarioIndex} (${scenarios[tempScenarioIndex].name}) chosen. Continue? (y/n)${logStyle.reset}`);
+        console.log(`${logStyle.fg.white}Scenario ${tempScenarioIndex} (${scenarios[tempScenarioIndex].name}) chosen. Continue? ${logStyle.reset}(y/n)${logStyle.reset}`);
     } else if (runMode === "x") {
-        console.warn(`${logStyle.fg.red}All ${scenarios.length - tempScenarioIndex} scenario${scenarios.length - tempScenarioIndex === 1 ? "" : "s"} starting from scenario ${tempScenarioIndex} (${scenarios[tempScenarioIndex].name}) will be tested in order. You can type anything at any time to stop the next test once the program starts running. Continue? (y/n)${logStyle.reset}`);
+        console.warn(`${logStyle.fg.red}All ${scenarios.length - tempScenarioIndex} scenario${scenarios.length - tempScenarioIndex === 1 ? "" : "s"} starting from scenario ${tempScenarioIndex} (${scenarios[tempScenarioIndex].name}) will be tested in order. Press enter at any time to stop the next test once the program starts running. Continue? (y/n)${logStyle.reset}`);
     }
 
     scenarioChosen = true;
@@ -220,7 +220,7 @@ function readyForAutoRun() {
     scenarioChosen = false;
     scenarioConfirmed = false;
     console.log(`${logStyle.fg.green}Switching to auto mode${logStyle.reset}`);
-    console.log(`${logStyle.fg.white}Type in a valid index (0 to ${scenarios.length - 1}) or the scenario name to choose a scenario ${logStyle.reset}to start the auto run from${logStyle.fg.white}, type in "--" or "++" to choose the previous or the next scenario ${logStyle.reset}to start the auto run from${logStyle.fg.white}, if there is one, or type anything else or press enter to choose scenario ${scenarioIndex} (${scenarios[scenarioIndex].name}) by default ${logStyle.reset}to start the auto run from${logStyle.reset}`);
+    console.log(`${logStyle.fg.white}Type in a valid index (0 to ${scenarios.length - 1}) or the scenario name to choose a scenario to ${logStyle.reset}start the auto run from${logStyle.fg.white}, type in "--" or "++" to choose the previous or the next scenario to ${logStyle.reset}start the auto run from${logStyle.fg.white}, if there is one, or type anything else or press enter to choose ${logStyle.reset}scenario ${scenarioIndex} (${scenarios[scenarioIndex].name})${logStyle.fg.white} by default to ${logStyle.reset}start the auto run from${logStyle.reset}`);
 }
 
 /**
@@ -236,7 +236,7 @@ function confirmResumeAutoRun(line) {
         willAutoRunResume = true;
         let length = scenarios.length - scenarioIndex - ((lastRunAction === "reference" && isLastRunSuccessful) ? 0 : 1);
         let startIndex = scenarioIndex + ((lastRunAction === "reference" && isLastRunSuccessful) ? 0 : 1);
-        console.warn(`${logStyle.fg.red}All the rest ${length} scenario${length === 1 ? "" : "s"} starting from scenario ${startIndex} (${scenarios[startIndex].name}) will be tested in order. You can type anything at any time to stop the next test once the program starts running. Continue? (y/n)${logStyle.reset}`);
+        console.warn(`${logStyle.fg.red}All the rest ${length} scenario${length === 1 ? "" : "s"} starting from scenario ${startIndex} (${scenarios[startIndex].name}) will be tested in order. Press enter at any time to stop the next test once the program starts running. Continue? (y/n)${logStyle.reset}`);
     } else if (line.toLowerCase() === "n") {
         runMode = "m";
         console.log(`${logStyle.fg.green}Running in manual mode${logStyle.reset}`);
@@ -460,7 +460,7 @@ rl.on('line', (line) => {
         } else if (runMode === "a") {
             confirmAutoRun(line);
         } else if (runMode === "m") {
-            if (line.toLowerCase() === "auto") {
+            if (line.toLowerCase() === "auto run") {
                 readyForAutoRun();
             } else if (!scenarioChosen) {
                 chooseScenario(line);
