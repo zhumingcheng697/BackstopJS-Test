@@ -3,6 +3,18 @@ const fs = require('fs');
 const backstop = require('backstopjs');
 const readline = require('readline');
 
+/**
+ * Keeps track of the current state of the program.
+ *
+ * "": choosing mode;
+ * "a": auto mode chosen;
+ * "r": running auto tests;
+ * "n": auto run paused;
+ * "m": running in manual mode;
+ * "x": switching from manual mode to auto mode;
+ *
+ * @type {string}
+ */
 let runMode = "";
 let isRunning = false;
 let isLastRunSuccessful = true;
@@ -13,7 +25,12 @@ let scenarioConfirmed = false;
 let scenarioIndex = 0;
 let tempScenarioIndex = 0;
 
-// https://stackoverflow.com/a/40560590
+/**
+ * Makes the console logs colorful.
+ *
+ * @link https://stackoverflow.com/a/40560590
+ * @type {Object}
+ */
 const logStyle = {
     reset: "\x1b[0m",
     bright: "\x1b[1m",
@@ -46,7 +63,11 @@ const logStyle = {
     }
 };
 
-// http://logan.tw/posts/2015/12/12/read-lines-from-stdin-in-nodejs/
+/**
+ * Reads the keyboard input from the console.
+ *
+ * @link http://logan.tw/posts/2015/12/12/read-lines-from-stdin-in-nodejs/
+ */
 let rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout,
@@ -59,14 +80,12 @@ const scenarios = parsed.urls;
 
 console.log(`${logStyle.fg.green}${scenarios.length} scenario${scenarios.length === 1 ? "" : "s"} loaded${logStyle.reset}`);
 
+/**
+ * Default Backstop configuration for all runs.
+ *
+ * @type {Object}
+ */
 const defaultConfig = {
-    // paths: {
-    //     bitmaps_reference: "backstop_data/bitmaps_reference",
-    //     bitmaps_test: "backstop_data/bitmaps_test",
-    //     engine_scripts: "backstop_data/engine_scripts",
-    //     html_report: "backstop_data/html_report",
-    //     ci_report: "backstop_data/ci_report"
-    // },
     report: ["browser"],
     engine: "puppeteer",
     engineOptions: {
@@ -91,6 +110,12 @@ function typeInKeywordToStartPrompt() {
     console.log(`${logStyle.fg.white}Type in a keyword to start: "test" (t), "approve" (a), "reference" (r)${logStyle.reset}`);
 }
 
+/**
+ * Chooses which mode to run in depending on keyboard input at the start of the program.
+ *
+ * @param {string} line Keyboard input
+ * @return {void}
+ */
 function chooseRunMode(line) {
     if (["auto", "a"].includes(line.toLowerCase())) {
         runMode = "a";
@@ -105,6 +130,12 @@ function chooseRunMode(line) {
     }
 }
 
+/**
+ * Chooses which scenario to run test for depending on keyboard input.
+ *
+ * @param {string} line Keyboard input
+ * @return {void}
+ */
 function chooseScenario(line) {
     if (line === "++") {
         if (scenarioIndex < scenarios.length - 1) {
@@ -138,6 +169,13 @@ function chooseScenario(line) {
     scenarioChosen = true;
 }
 
+/**
+ * Confirms whether to choose the scenario chosen by chooseScenario.
+ *
+ * @see chooseScenario
+ * @param {string} line Keyboard input
+ * @return {void}
+ */
 function confirmScenario(line) {
     if (line.toLowerCase() === "y") {
         scenarioIndex = tempScenarioIndex;
@@ -152,6 +190,12 @@ function confirmScenario(line) {
     }
 }
 
+/**
+ * Exits the program from "m" mode and gets the program ready for running auto tests.
+ *
+ * @see runMode
+ * @return {void}
+ */
 function readyForAutoRun() {
     runMode = "x";
     scenarioChosen = false;
@@ -160,6 +204,13 @@ function readyForAutoRun() {
     console.log(`${logStyle.fg.white}Type in a valid index (0 to ${scenarios.length - 1}) or the scenario name to choose a scenario ${logStyle.reset}to start the auto run from${logStyle.fg.white}, type in "--" or "++" to choose the previous or the next scenario ${logStyle.reset}to start the auto run from${logStyle.fg.white}, if there is one, or type anything else or press enter to choose scenario ${scenarioIndex} (${scenarios[scenarioIndex].name}) by default ${logStyle.reset}to start the auto run from${logStyle.reset}`);
 }
 
+/**
+ * Confirms whether to resume auto run after the program enters "n" mode.
+ *
+ * @see runMode
+ * @param {string} line Keyboard input
+ * @return {void}
+ */
 function confirmResumeAutoRun(line) {
     if (line.toLowerCase() === "y") {
         runMode = "a";
@@ -176,6 +227,13 @@ function confirmResumeAutoRun(line) {
     }
 }
 
+/**
+ * Confirms whether to start auto run from "a" or "x" modes.
+ *
+ * @see runMode
+ * @param {string} line Keyboard input
+ * @return {void}
+ */
 function confirmAutoRun(line) {
     if (line.toLowerCase() === "y") {
         if (runMode === "x") {
@@ -213,6 +271,12 @@ function confirmAutoRun(line) {
     willAutoRunResume = false;
 }
 
+/**
+ * Resets parameters after runBackstop.
+ *
+ * @see runBackstop
+ * @return {void}
+ */
 function resetAfterRun() {
     isRunning = false;
     scenarioChosen = false;
@@ -221,7 +285,21 @@ function resetAfterRun() {
     // typeInIndexToChoosePrompt();
 }
 
+/**
+ * Runs a Backstop action on a scenario.
+ *
+ * @param {Object} scenario Scenario to run action on
+ * @param {string} action Action to run (test, approve, reference)
+ * @return {void}
+ */
 function runBackstop(scenario, action = "test") {
+    /**
+     * Handles the outcome of a Backstop action.
+     *
+     * @see runBackstop
+     * @param {boolean} isRunSuccessful Whether the last Backstop action is successful
+     * @return {void}
+     */
     function runNextSteps(isRunSuccessful) {
         lastRunAction = parsedAction;
         isLastRunSuccessful = isRunSuccessful;
@@ -343,12 +421,18 @@ function runBackstop(scenario, action = "test") {
     );
 }
 
+/**
+ * Checks if any scenarios are loaded from the file.
+ */
 if (scenarios.length > 0) {
     chooseRunModePrompt();
 } else {
     process.exit(1);
 }
 
+/**
+ * Handles keyboard input in the console.
+ */
 rl.on('line', (line) => {
     if (scenarios.length <= 0) {
         return;
