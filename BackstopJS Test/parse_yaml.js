@@ -96,24 +96,38 @@ const defaultConfig = {
  * Loads scenarios from a YAML file
  *
  * @param {string} path Path of the YAML config file to load scenarios from
+ * @return {void}
  */
 function loadYamlConfig(path) {
     if (path === "") {
         loadYamlConfig("nyu.yml");
-    } else if (fs.existsSync(path)) {
-        const file = fs.readFileSync(path, "utf8");
-        const parsed = YAML.parse(file);
-        scenarios = parsed.urls;
+        return;
+    }
 
-        if (scenarios.length <= 0) {
-            console.error(`${logStyle.fg.red}No scenarios found. Please choose another file.${logStyle.reset}`);
-        } else {
-            showScenarioList();
-            console.log(`${logStyle.fg.green}${scenarios.length} scenario${scenarios.length === 1 ? "" : "s"} loaded${logStyle.reset}`);
-            chooseRunModePrompt();
+    try {
+        const file = fs.readFileSync(path, "utf8");
+
+        try {
+            const parsed = YAML.parse(file);
+
+            try {
+                scenarios = parsed.urls;
+
+                if (scenarios.length <= 0) {
+                    console.error(`${logStyle.fg.red}No scenarios found in "${path}". Please choose another file.${logStyle.reset}`);
+                } else {
+                    showScenarioList();
+                    console.log(`${logStyle.fg.green}${scenarios.length} scenario${scenarios.length === 1 ? "" : "s"} successfully loaded from "${path}"${logStyle.reset}`);
+                    chooseRunModePrompt();
+                }
+            } catch (e) {
+                console.error(`${logStyle.fg.red}"${path}" is not in the correct format. Please choose another file.${logStyle.reset}`);
+            }
+        } catch (e) {
+            console.error(`${logStyle.fg.red}Unable to parse "${path}". Please check if the file is in the correct YAML format.${logStyle.reset}`);
         }
-    } else {
-        console.error(`${logStyle.fg.red}File does not exist at "${path}". Please type in a valid path.${logStyle.reset}`);
+    } catch (e) {
+        console.error(`${logStyle.fg.red}Unable to read file at "${path}". Please check if the file exist.${logStyle.reset}`);
     }
 }
 
