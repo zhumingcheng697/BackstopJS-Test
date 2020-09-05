@@ -108,6 +108,7 @@ function loadYamlConfig(path) {
         if (scenarios.length <= 0) {
             console.error(`${logStyle.fg.red}No scenarios found. Please choose another file.${logStyle.reset}`);
         } else {
+            showScenarioList();
             console.log(`${logStyle.fg.green}${scenarios.length} scenario${scenarios.length === 1 ? "" : "s"} loaded${logStyle.reset}`);
             chooseRunModePrompt();
         }
@@ -116,13 +117,23 @@ function loadYamlConfig(path) {
     }
 }
 
+function showScenarioList() {
+    console.table(scenarios.map((scenario) => scenario.name));
+}
+
 function chooseRunModePrompt() {
     console.log(`${logStyle.fg.white}Run in ${logStyle.reset}"auto" (a)${logStyle.fg.white} or ${logStyle.reset}"manual" (m)${logStyle.fg.white} mode?${logStyle.reset}`);
 }
 
 function typeInIndexToChoosePrompt() {
-    console.log(`${logStyle.fg.green}Type in "auto run" at any time to start auto run${logStyle.reset}`);
+    console.log(`${logStyle.fg.yellow}Type in "auto run" at any time to start auto run${logStyle.reset}`);
+    console.log(`${logStyle.fg.yellow}Type in "show list" to see a list of all scenarios${logStyle.reset}`);
     console.log(`${logStyle.fg.white}Type in a valid index (0 to ${scenarios.length - 1}) or the scenario name to choose a scenario, type in "--" or "++" to choose the previous or the next scenario, if there is one, or type anything else or press enter to choose ${logStyle.reset}scenario ${scenarioIndex} (${scenarios[scenarioIndex].name})${logStyle.fg.white} by default${logStyle.reset}`);
+}
+
+function typeInIndexToAutoRunPrompt() {
+    console.log(`${logStyle.fg.yellow}Type in "show list" to see a list of all scenarios${logStyle.reset}`);
+    console.log(`${logStyle.fg.white}Type in a valid index (0 to ${scenarios.length - 1}) or the scenario name to choose a scenario to ${logStyle.reset}start the auto run from${logStyle.fg.white}, type in "--" or "++" to choose the previous or the next scenario to ${logStyle.reset}start the auto run from${logStyle.fg.white}, if there is one, or type anything else or press enter to choose ${logStyle.reset}scenario ${scenarioIndex} (${scenarios[scenarioIndex].name})${logStyle.fg.white} by default to ${logStyle.reset}start the auto run from${logStyle.reset}`);
 }
 
 function typeInKeywordToStartPrompt() {
@@ -220,7 +231,7 @@ function readyForAutoRun() {
     scenarioChosen = false;
     scenarioConfirmed = false;
     console.log(`${logStyle.fg.green}Switching to auto mode${logStyle.reset}`);
-    console.log(`${logStyle.fg.white}Type in a valid index (0 to ${scenarios.length - 1}) or the scenario name to choose a scenario to ${logStyle.reset}start the auto run from${logStyle.fg.white}, type in "--" or "++" to choose the previous or the next scenario to ${logStyle.reset}start the auto run from${logStyle.fg.white}, if there is one, or type anything else or press enter to choose ${logStyle.reset}scenario ${scenarioIndex} (${scenarios[scenarioIndex].name})${logStyle.fg.white} by default to ${logStyle.reset}start the auto run from${logStyle.reset}`);
+    typeInIndexToAutoRunPrompt();
 }
 
 /**
@@ -463,7 +474,12 @@ rl.on('line', (line) => {
             if (line.toLowerCase() === "auto run") {
                 readyForAutoRun();
             } else if (!scenarioChosen) {
-                chooseScenario(line);
+                if (line.toLowerCase() === "show list") {
+                    showScenarioList();
+                    typeInIndexToChoosePrompt();
+                } else {
+                    chooseScenario(line);
+                }
             } else if (!scenarioConfirmed) {
                 confirmScenario(line);
             } else {
@@ -471,7 +487,12 @@ rl.on('line', (line) => {
             }
         } else if (runMode === "x") {
             if (!scenarioChosen) {
-                chooseScenario(line);
+                if (line.toLowerCase() === "show list") {
+                    showScenarioList();
+                    typeInIndexToAutoRunPrompt();
+                } else {
+                    chooseScenario(line);
+                }
             } else {
                 confirmAutoRun(line);
             }
