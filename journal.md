@@ -60,6 +60,8 @@
 
 - Added the functionality to choose the `.yml` file to load the scenarios from (assuming the `.yml` file is in the same format as `nyu.yml`)
 
+- Greatly improved the safeness of loading config files
+
 - Added the functionality to show a list of all the scenario names by typing `show list` into the console
 
 - Improved the readability of console logs
