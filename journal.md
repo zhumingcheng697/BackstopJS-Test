@@ -50,8 +50,16 @@
 
 - Added the functionality to resume auto runs when the user pauses it by typing anything during the run
 
-- Added the functionality to start auto run from a specific scenario (uses the same logic of choosing scenario by index or by name in manual mode)
+- Added the functionality to start auto run from a specific scenario (uses the same logic of choosing scenario by index or by name in manual mode) by typing `auto run` into the console
 
 - Added documentation to most functions and important code blocks
 
 - Fixed multiple bugs related to scenario-choosing and state-tracking
+
+### Friday: September 4, 2020 (1 hour)
+
+- Added the functionality to choose the `.yml` file to load the scenarios from (assuming the `.yml` file is in the same format as `nyu.yml`)
+
+- Added the functionality to show a list of all the scenario names by typing `show list` into the console
+
+- Improved the readability of console logs

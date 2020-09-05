@@ -118,7 +118,7 @@ function loadYamlConfig(path) {
 }
 
 function showScenarioList() {
-    console.table(scenarios.map((scenario) => scenario.name));
+    console.table(scenarios, ["name"]);
 }
 
 function chooseRunModePrompt() {
