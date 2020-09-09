@@ -40,19 +40,19 @@
     >
     >   - If `backstop reference` failed for the previous scenario, the process stops and automatically fallbacks to manual mode, as a failed `backstop reference` likely indicates networking issues
     >
-    >   - The user is able to pause (and will be able to resume) the automatic testing process
+    >   - The user is able to pause (and since September 3, resume) the automatic testing process
     >
     >   - Once all the scenarios have been tested, the program will be automatically switched to manual mode
     >
     > In manual mode, the user first chooses a scenario based on its index or name, and then chooses whether to run `backstop reference`, `backstop test`, or `backstop approve` for that scenario
     >
-    > The user will be able to switch from manual mode to auto mode in the future (currently only the other way around is supported)
+    > The user will be able to switch from manual mode to auto mode in the future (added on September 3)
 
 ### Thursday: September 3, 2020 (3 hours) 
 
 - Added the functionality to resume auto runs when the user pauses it by typing anything during the run
 
-- Added the functionality to start auto run from a specific scenario (uses the same logic of choosing scenario by index or by name in manual mode) by typing `auto run` into the console
+- Added the functionality to start auto run from a specific scenario (using the same logic of choosing scenario by index or by name in manual mode) by typing `auto run` into the console
 
 - Added documentation to most functions and important code blocks
 
@@ -62,7 +62,7 @@
 
 - Added the functionality to choose the `.yml` file to load the scenarios from (assuming the `.yml` file is in the same format as `nyu.yml`)
 
-- Greatly improved the safeness of loading config files
+- Greatly improved the safety of loading config files
 
 - Added the functionality to show a list of all the scenario names by typing `show list` into the console
 
@@ -72,6 +72,10 @@
 
 ### Tuesday: September 8, 2020 (3 hours)
 
-- Added the functionality to start approving all scenarios from a specific scenario (uses the same logic of choosing scenario by index or by name in manual mode) by typing `approve all` into the console
+- Added the functionality to start approving all scenarios from a specific scenario (using the same logic of choosing scenario by index or by name in manual mode) by typing `approve all` into the console
+
+    > Under the special case of running `approve all`, contrary to earlier claims, the `backstop approve` command will always be run even if no necessary reference and/or test files exist and `backstop reference` or `backstop test`is run first
+
+- Added the functionality to resume auto approvals when the user pauses it by typing anything during the run
 
 - Fixed several bugs that only arise under special cases like single-scenario files or when auto run is paused when running at the last scenario
