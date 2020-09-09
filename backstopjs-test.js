@@ -548,7 +548,7 @@ function runBackstop(scenario, action = "test", originalAction = "", alwaysAppro
             referenceUrl: (scenario["url2"] || ""),
             readyEvent: "",
             readySelector: "",
-            delay: parseInt(scenario.delay || "0") * 1000,
+            delay: (parseInt(scenario.delay || "0") || 0) * 1000,
             hideSelectors: [],
             removeSelectors: [],
             hoverSelector: "",
