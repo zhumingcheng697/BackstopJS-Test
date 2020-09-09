@@ -544,8 +544,8 @@ function runBackstop(scenario, action = "test", originalAction = "", alwaysAppro
         {
             label: name,
             cookiePath: "",
-            url: scenario.url1,
-            referenceUrl: scenario.url2,
+            url: scenario["url1"],
+            referenceUrl: scenario["url2"],
             readyEvent: "",
             readySelector: "",
             delay: parseInt(scenario.delay || "0") === 0 ? 0 : 3000,
@@ -567,8 +567,7 @@ function runBackstop(scenario, action = "test", originalAction = "", alwaysAppro
             runNextSteps(true);
         }).catch(() => {
             runNextSteps(false);
-        }
-    );
+        });
 }
 
 console.log(`${logStyle.fg.white}Please type in the path of the YAML config file to load, or press enter to choose ${logStyle.reset}nyu.yml${logStyle.fg.white} by default${logStyle.reset}`);
@@ -584,10 +583,10 @@ rl.on('line', (line) => {
 
     if (runMode === "r") {
         runMode = "nr";
-    }
-
-    if (runMode === "p") {
+        return;
+    } else if (runMode === "p") {
         runMode = "np";
+        return;
     }
 
     if (!isRunning) {
