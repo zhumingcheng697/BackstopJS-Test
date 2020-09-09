@@ -1,5 +1,7 @@
 # Journal
 
+## Week 1
+
 ### Monday: August 31, 2020 (4 hours)
 
 - Installed [BackstopJS](https://github.com/garris/BackstopJS) node module, initiated Backstop environment, and tested Backstop on [my site](https://zhumingcheng697.github.io/Portfolio-Site/) and the [NYU home page](https://www.nyu.edu/) using the provided `backstop.json`
@@ -65,3 +67,11 @@
 - Added the functionality to show a list of all the scenario names by typing `show list` into the console
 
 - Improved the readability of console logs
+
+## Week 2
+
+### Tuesday: September 8, 2020 (3 hours)
+
+- Added the functionality to start approving all scenarios from a specific scenario (uses the same logic of choosing scenario by index or by name in manual mode) by typing `approve all` into the console
+
+- Fixed several bugs that only arise under special cases like single-scenario files or when auto run is paused when running at the last scenario
