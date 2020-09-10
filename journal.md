@@ -79,3 +79,13 @@
 - Added the functionality to resume auto approvals when the user pauses it by typing anything during the run
 
 - Fixed several bugs that only arise under special cases like single-scenario files or when auto run is paused when running at the last scenario
+
+### Wednesday: September 9, 2020 (2 hours)
+
+- Added `README.md`
+
+- Added `package.json`
+
+- Added support for scenarios with no reference urls
+
+- Reorganized file structure
