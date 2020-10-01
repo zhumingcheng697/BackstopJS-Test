@@ -3,6 +3,9 @@ const YAML = require('yaml');
 const backstop = require('backstopjs');
 const readline = require('readline');
 
+const logStyle = require("./switch-browser").logStyle;
+const puppeteerProduct = require("./switch-browser").puppeteerProduct();
+
 /**
  * Keeps track of the current state of the program.
  *
@@ -31,44 +34,6 @@ let scenarioIndex = 0;
 let tempScenarioIndex = 0;
 
 /**
- * Makes the console logs colorful.
- *
- * @link https://stackoverflow.com/a/40560590
- * @type {Object}
- */
-const logStyle = {
-    reset: "\x1b[0m",
-    bright: "\x1b[1m",
-    dim: "\x1b[2m",
-    underscore: "\x1b[4m",
-    blink: "\x1b[5m",
-    reverse: "\x1b[7m",
-    hidden: "\x1b[8m",
-    fg: {
-        black: "\x1b[30m",
-        red: "\x1b[31m",
-        green: "\x1b[32m",
-        yellow: "\x1b[33m",
-        blue: "\x1b[34m",
-        magenta: "\x1b[35m",
-        cyan: "\x1b[36m",
-        white: "\x1b[37m",
-        crimson: "\x1b[38m"
-    },
-    bg: {
-        black: "\x1b[40m",
-        red: "\x1b[41m",
-        green: "\x1b[42m",
-        yellow: "\x1b[43m",
-        blue: "\x1b[44m",
-        magenta: "\x1b[45m",
-        cyan: "\x1b[46m",
-        white: "\x1b[47m",
-        crimson: "\x1b[48m"
-    }
-};
-
-/**
  * Reads the keyboard input from the console.
  *
  * @link http://logan.tw/posts/2015/12/12/read-lines-from-stdin-in-nodejs/
@@ -93,7 +58,7 @@ const defaultConfig = {
     asyncCaptureLimit: 20,
     asyncCompareLimit: 100,
     debug: false,
-    debugWindow: false
+    debugWindow: true
 };
 
 /**
@@ -570,73 +535,84 @@ function runBackstop(scenario, action = "test", originalAction = "", alwaysAppro
         });
 }
 
-console.log(`${logStyle.fg.white}Please type in the path of the YAML config file to load, or press enter to choose ${logStyle.reset}nyu.yml${logStyle.fg.white} by default${logStyle.reset}`);
-
 /**
- * Handles keyboard input in the console.
+ * Self-invoking main function.
+ *
+ * @return {void}
  */
-rl.on('line', (line) => {
-    if (scenarios.length <= 0) {
-        loadYamlConfig(line);
-        return;
+(function main() {
+    if (puppeteerProduct) {
+        defaultConfig.engineOptions.product = puppeteerProduct;
     }
 
-    if (runMode === "r") {
-        runMode = "nr";
-        return;
-    } else if (runMode === "p") {
-        runMode = "np";
-        return;
-    }
+    console.log(`${logStyle.fg.white}Please type in the path of the YAML config file to load, or press enter to choose ${logStyle.reset}nyu.yml${logStyle.fg.white} by default${logStyle.reset}`);
 
-    if (!isRunning) {
-        if (runMode === "") {
-            chooseRunMode(line);
-        } else if (runMode === "a") {
-            confirmAutoRun(line);
-        } else if (runMode === "m") {
-            if (line.toLowerCase() === "auto run") {
-                readyForAutoRun();
-            } else if (line.toLowerCase() === "approve all") {
-                readyForApproveAll();
-            } else if (!scenarioChosen) {
-                if (line.toLowerCase() === "show list") {
-                    showScenarioList();
-                    typeInIndexToChoosePrompt();
-                } else {
-                    chooseScenario(line);
-                }
-            } else if (!scenarioConfirmed) {
-                confirmScenario(line);
-            } else {
-                runBackstop(scenarios[scenarioIndex], line);
-            }
-        } else if (runMode === "xr") {
-            if (!scenarioChosen) {
-                if (line.toLowerCase() === "show list") {
-                    showScenarioList();
-                    typeInIndexToAutoRunPrompt();
-                } else {
-                    chooseScenario(line);
-                }
-            } else {
-                confirmAutoRun(line);
-            }
-        } else if (runMode === "xp") {
-            if (!scenarioChosen) {
-                if (line.toLowerCase() === "show list") {
-                    showScenarioList();
-                    typeInIndexToApproveAllPrompt();
-                } else {
-                    chooseScenario(line);
-                }
-            } else {
-                confirmApproveAll(line);
-            }
-        } else if (runMode === "nr") {
-            confirmResumeAutoRun(line);
-        } else if (runMode === "np") {
-            confirmResumeApproveAll(line);
+    /**
+     * Handles keyboard input in the console.
+     */
+    rl.on('line', (line) => {
+        if (scenarios.length <= 0) {
+            loadYamlConfig(line);
+            return;
         }
-    }
-});
+
+        if (runMode === "r") {
+            runMode = "nr";
+            return;
+        } else if (runMode === "p") {
+            runMode = "np";
+            return;
+        }
+
+        if (!isRunning) {
+            if (runMode === "") {
+                chooseRunMode(line);
+            } else if (runMode === "a") {
+                confirmAutoRun(line);
+            } else if (runMode === "m") {
+                if (line.toLowerCase() === "auto run") {
+                    readyForAutoRun();
+                } else if (line.toLowerCase() === "approve all") {
+                    readyForApproveAll();
+                } else if (!scenarioChosen) {
+                    if (line.toLowerCase() === "show list") {
+                        showScenarioList();
+                        typeInIndexToChoosePrompt();
+                    } else {
+                        chooseScenario(line);
+                    }
+                } else if (!scenarioConfirmed) {
+                    confirmScenario(line);
+                } else {
+                    runBackstop(scenarios[scenarioIndex], line);
+                }
+            } else if (runMode === "xr") {
+                if (!scenarioChosen) {
+                    if (line.toLowerCase() === "show list") {
+                        showScenarioList();
+                        typeInIndexToAutoRunPrompt();
+                    } else {
+                        chooseScenario(line);
+                    }
+                } else {
+                    confirmAutoRun(line);
+                }
+            } else if (runMode === "xp") {
+                if (!scenarioChosen) {
+                    if (line.toLowerCase() === "show list") {
+                        showScenarioList();
+                        typeInIndexToApproveAllPrompt();
+                    } else {
+                        chooseScenario(line);
+                    }
+                } else {
+                    confirmApproveAll(line);
+                }
+            } else if (runMode === "nr") {
+                confirmResumeAutoRun(line);
+            } else if (runMode === "np") {
+                confirmResumeApproveAll(line);
+            }
+        }
+    });
+})();
