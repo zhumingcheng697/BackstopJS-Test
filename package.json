@@ -1,6 +1,11 @@
 {
   "name": "backstopjs-test",
-  "version": "1.0.0",
+  "version": "1.1.0",
+  "license": "CC-BY-NC-SA-4.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zhumingcheng697/BackstopJS-Test.git"
+  },
   "dependencies": {
     "backstopjs": "^5.0.4",
     "yaml": "^1.10.0"
