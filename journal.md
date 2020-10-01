@@ -89,3 +89,15 @@
 - Added support for scenarios with no reference urls
 
 - Reorganized file structure
+
+## Week 5
+
+### Wednesday: September 30, 2020 (6 hours)
+
+- Researched on the possibility of running BackstopJS in a Firefox environment
+
+- Experimented with the Firefox version of Puppeteer
+
+- Added ability to check which version of Puppeteer is installed (Chrome, Firefox, or other unknown)
+
+- Experimented with exporting and importing custom variables and functions
