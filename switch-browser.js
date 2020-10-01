@@ -1,64 +1,16 @@
 const fs = require('fs');
 
-/**
- * Makes the console logs colorful.
- *
- * @link https://stackoverflow.com/a/40560590
- * @type {Object}
- */
-const logStyle = {
-    reset: "\x1b[0m",
-    bright: "\x1b[1m",
-    dim: "\x1b[2m",
-    underscore: "\x1b[4m",
-    blink: "\x1b[5m",
-    reverse: "\x1b[7m",
-    hidden: "\x1b[8m",
-    fg: {
-        black: "\x1b[30m",
-        red: "\x1b[31m",
-        green: "\x1b[32m",
-        yellow: "\x1b[33m",
-        blue: "\x1b[34m",
-        magenta: "\x1b[35m",
-        cyan: "\x1b[36m",
-        white: "\x1b[37m",
-        crimson: "\x1b[38m"
-    },
-    bg: {
-        black: "\x1b[40m",
-        red: "\x1b[41m",
-        green: "\x1b[42m",
-        yellow: "\x1b[43m",
-        blue: "\x1b[44m",
-        magenta: "\x1b[45m",
-        cyan: "\x1b[46m",
-        white: "\x1b[47m",
-        crimson: "\x1b[48m"
-    }
-};
+const helper = require("./helper")
+const rl = helper.rl();
+const logStyle = helper.logStyle;
+
+const firefoxKey = "PUPPETEER_PRODUCT=firefox";
+const installAllCmd = "npm install";
+const installPuppeteerCmd = "npm install puppeteer";
 
 /**
- * Checks which version of Puppeteer has been installed.
+ * Current product of the installed puppeteer
  *
- * @return {string}
+ * @type {string}
  */
-function puppeteerProduct() {
-    if (fs.existsSync("node_modules/puppeteer/.local-chromium")) {
-        console.log(`${logStyle.fg.green}Chrome version of Puppeteer found${logStyle.reset}`);
-        return "chrome";
-    } else if (fs.existsSync("node_modules/puppeteer/.local-firefox")) {
-        console.log(`${logStyle.fg.green}Firefox version of Puppeteer found${logStyle.reset}`);
-        return "firefox";
-    } else if (fs.existsSync("node_modules/puppeteer")) {
-        console.error(`${logStyle.fg.red}An unknown version of Puppeteer found${logStyle.reset}`);
-        return "";
-    } else {
-        console.error(`${logStyle.fg.red}Puppeteer not found${logStyle.reset}`);
-        process.exit(1);
-        return "";
-    }
-}
-
-module.exports.logStyle = logStyle;
-module.exports.puppeteerProduct = puppeteerProduct;
+let currentPuppeteerProduct = helper.puppeteerProduct();

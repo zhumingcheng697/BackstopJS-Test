@@ -1,10 +1,12 @@
 const fs = require('fs');
 const YAML = require('yaml');
 const backstop = require('backstopjs');
-const readline = require('readline');
+// const readline = require('readline');
 
-const logStyle = require("./switch-browser").logStyle;
-const puppeteerProduct = require("./switch-browser").puppeteerProduct();
+const helper = require("./helper");
+const rl = helper.rl();
+const logStyle = helper.logStyle;
+const puppeteerProduct = helper.puppeteerProduct();
 
 /**
  * Keeps track of the current state of the program.
@@ -32,17 +34,6 @@ let scenarioChosen = false;
 let scenarioConfirmed = false;
 let scenarioIndex = 0;
 let tempScenarioIndex = 0;
-
-/**
- * Reads the keyboard input from the console.
- *
- * @link http://logan.tw/posts/2015/12/12/read-lines-from-stdin-in-nodejs/
- */
-let rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout,
-    terminal: false
-});
 
 /**
  * Default Backstop configuration for all runs.
