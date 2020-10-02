@@ -101,3 +101,17 @@
 - Added ability to check which version of Puppeteer is installed (Chrome, Firefox, or other unknown)
 
 - Experimented with exporting and importing custom variables and functions
+
+### Thursday: October 1, 2020 (5 hours)
+
+- Experimented with the [`child_process`](https://nodejs.org/api/child_process.html) module and its `exec` method
+
+- Added support for switching Puppeteer versions (between Chromium and Firefox)
+
+- Added ability to store Backstop files for different Puppeteer versions and different browsers under different directories
+
+- Added support for running `backstopjs-test.js` via `npm start` and `switch-browser.js` via `npm run switch`
+
+- Updated `package.json` and `package-lock.json`
+
+- Updated `README.md`

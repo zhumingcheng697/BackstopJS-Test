@@ -20,6 +20,8 @@
     >
     > If the necessary reference files do not exist before `backstop test` is run, `backstop reference` will be run automatically.
 
+- Easily switch between Chromium and Firefox testing environments
+
 ## How to Set Up
 
 1. Clone this repo.
@@ -37,7 +39,28 @@
     $ node backstopjs-test.js
     ```
    
+    or
+   
+    ```
+    $ npm start
+    ```
+   
 4. Follow the instructions and start testing!
+
+## How to Switch Testing Browsers
+
+1. Run the script `switch-browser.js`.
+    ```
+    $ node switch-browser.js
+    ```
+    
+    or
+    
+    ```
+    $ npm run switch
+    ```
+
+2. Wait for the download to finish and start testing!
 
 ## Commands
 
@@ -55,4 +78,4 @@
 - `urls[n].url1` - Required. Testing URL.
 - `urls[n].url2` - Optional. Reference URL.
 - `urls[n].delay` - Optional. Number of seconds to wait before running tests.
-- `urls[n].screen_sizes` - Required. An array containing the screen sizes that should be tested for each testing scenario. Each element should be formatted as `${screen_width}X${screen_height}`, such as `1920X1080`.
+- `urls[n].screen_sizes` - Required. An array containing the screen sizes that should be tested for each testing scenario. Each element should be formatted as `<screen_width>X<screen_height>`, such as `1920X1080`.
