@@ -6,7 +6,7 @@ const backstop = require('backstopjs');
 const helper = require("./helper");
 const rl = helper.rl();
 const logStyle = helper.logStyle;
-const puppeteerProduct = helper.puppeteerProduct();
+const puppeteerProduct = helper.puppeteerProduct().toLowerCase();
 
 /**
  * Keeps track of the current state of the program.

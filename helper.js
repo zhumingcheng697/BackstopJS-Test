@@ -55,21 +55,38 @@ function rl() {
 /**
  * Checks which version of Puppeteer has been installed.
  *
+ * @param {boolean} log Whether to log the found Puppeteer version
+ * @param {boolean} exit Whether to exit the process if no Puppeteer is found
  * @return {string}
  */
-function puppeteerProduct() {
+function puppeteerProduct(log = true, exit = true) {
     if (fs.existsSync("node_modules/puppeteer/.local-chromium")) {
-        console.log(`${logStyle.fg.green}Chrome version of Puppeteer found${logStyle.reset}`);
-        return "chrome";
+        if (log) {
+            console.log(`${logStyle.fg.green}Chrome version of Puppeteer found${logStyle.reset}`);
+        }
+
+        return "Chrome";
     } else if (fs.existsSync("node_modules/puppeteer/.local-firefox")) {
-        console.log(`${logStyle.fg.green}Firefox version of Puppeteer found${logStyle.reset}`);
-        return "firefox";
+        if (log) {
+            console.log(`${logStyle.fg.green}Firefox version of Puppeteer found${logStyle.reset}`);
+        }
+
+        return "Firefox";
     } else if (fs.existsSync("node_modules/puppeteer")) {
-        console.error(`${logStyle.fg.red}An unknown version of Puppeteer found${logStyle.reset}`);
+        if (log) {
+            console.error(`${logStyle.fg.red}An unknown version of Puppeteer found${logStyle.reset}`);
+        }
+
         return "";
     } else {
-        console.error(`${logStyle.fg.red}Puppeteer not found${logStyle.reset}`);
-        process.exit(1);
+        if (log) {
+            console.error(`${logStyle.fg.red}Puppeteer not found${logStyle.reset}`);
+        }
+
+        if (exit) {
+            process.exit(1);
+        }
+
         return "";
     }
 }
