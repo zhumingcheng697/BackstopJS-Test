@@ -34,7 +34,7 @@ function swapPuppeteer() {
                 console.error(`${logStyle.fg.red}File "node_modules/backstopjs/package.json" not found${logStyle.reset}`);
             } else {
                 try {
-                    let parsedPackageJson = JSON.parse(data);
+                    const parsedPackageJson = JSON.parse(data);
 
                     if (parsedPackageJson["dependencies"]) {
                         if (debugMode) {

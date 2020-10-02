@@ -1,7 +1,6 @@
 const fs = require('fs');
 const YAML = require('yaml');
 const backstop = require('backstopjs');
-// const readline = require('readline');
 
 const helper = require("./helper");
 const rl = helper.rl();
@@ -49,7 +48,7 @@ const defaultConfig = {
     asyncCaptureLimit: 20,
     asyncCompareLimit: 100,
     debug: false,
-    debugWindow: true
+    debugWindow: false
 };
 
 /**
@@ -156,12 +155,12 @@ function chooseScenario(line) {
             tempScenarioIndex = scenarioIndex - 1;
         }
     } else {
-        let foundIndex = scenarios.map((el) => el.name.toLowerCase()).indexOf(line.toLowerCase())
+        const foundIndex = scenarios.map((el) => el.name.toLowerCase()).indexOf(line.toLowerCase());
         if (foundIndex >= 0) {
             tempScenarioIndex = foundIndex;
         } else {
-            let parsedInt = parseInt(line);
-            let parsedIndex = isNaN(parsedInt) ? -1 : parsedInt;
+            const parsedInt = parseInt(line);
+            const parsedIndex = isNaN(parsedInt) ? -1 : parsedInt;
             if (parsedIndex.toString() === line && parsedIndex >= 0 && parsedIndex < scenarios.length) {
                 tempScenarioIndex = parsedIndex;
             } else {
@@ -241,8 +240,8 @@ function confirmResumeAutoRun(line) {
     if (line.toLowerCase() === "y") {
         runMode = "a";
         willAutoRunResume = true;
-        let length = scenarios.length - scenarioIndex - ((lastRunAction === "reference" && isLastRunSuccessful) ? 0 : 1);
-        let startIndex = scenarioIndex + ((lastRunAction === "reference" && isLastRunSuccessful) ? 0 : 1);
+        const length = scenarios.length - scenarioIndex - ((lastRunAction === "reference" && isLastRunSuccessful) ? 0 : 1);
+        const startIndex = scenarioIndex + ((lastRunAction === "reference" && isLastRunSuccessful) ? 0 : 1);
         console.warn(`${logStyle.fg.red}All the rest ${length} scenario${length === 1 ? "" : "s"} starting from scenario ${startIndex} (${scenarios[startIndex].name}) will be tested in order. Press enter at any time to stop the next test once the program starts running. Continue? (y/n)${logStyle.reset}`);
     } else if (line.toLowerCase() === "n") {
         runMode = "m";
@@ -266,8 +265,8 @@ function confirmResumeApproveAll(line) {
         runMode = "xp";
         willApproveAllResume = true;
         scenarioChosen = true;
-        let length = scenarios.length - scenarioIndex - ((lastRunAction !== "approve") ? 0 : 1);
-        let startIndex = scenarioIndex + ((lastRunAction !== "approve") ? 0 : 1);
+        const length = scenarios.length - scenarioIndex - ((lastRunAction !== "approve") ? 0 : 1);
+        const startIndex = scenarioIndex + ((lastRunAction !== "approve") ? 0 : 1);
         console.warn(`${logStyle.fg.red}All the rest ${length} scenario${length === 1 ? "" : "s"} starting from scenario ${startIndex} (${scenarios[startIndex].name}) will be approved in order. Press enter at any time to stop the next test once the program starts running. Continue? (y/n)${logStyle.reset}`);
     } else if (line.toLowerCase() === "n") {
         runMode = "m";
@@ -445,22 +444,23 @@ function runBackstop(scenario, action = "test", originalAction = "", alwaysAppro
 
     let parsedAction = action.toLowerCase();
     const name = scenario.name.replace(/\s/g, "_");
+    const pathSuffix = `${puppeteerProduct || "unknown_browser"}/${name}`;
 
     isRunning = true;
 
     if (["test", "t"].includes(parsedAction)) {
-        if (fs.existsSync(`backstop_data/bitmaps_reference/${name}`)) {
+        if (fs.existsSync(`backstop_data/bitmaps_reference/${pathSuffix}`)) {
             parsedAction = "test";
         } else {
             console.error(`${logStyle.fg.red}No previous references exist for scenario ${scenarioIndex} (${scenario.name})${logStyle.reset}`);
             parsedAction = "reference";
         }
     } else if (["approve", "a"].includes(parsedAction)) {
-        if (fs.existsSync(`backstop_data/bitmaps_test/${name}`)) {
+        if (fs.existsSync(`backstop_data/bitmaps_test/${pathSuffix}`)) {
             parsedAction = "approve";
         } else {
             console.error(`${logStyle.fg.red}No previous tests exist for scenario ${scenarioIndex} (${scenario.name})${logStyle.reset}`);
-            if (fs.existsSync(`backstop_data/bitmaps_reference/${name}`)) {
+            if (fs.existsSync(`backstop_data/bitmaps_reference/${pathSuffix}`)) {
                 parsedAction = "test";
             } else {
                 console.error(`${logStyle.fg.red}No previous references exist for scenario ${scenarioIndex} (${scenario.name})${logStyle.reset}`);
@@ -477,7 +477,7 @@ function runBackstop(scenario, action = "test", originalAction = "", alwaysAppro
 
     console.log(`${logStyle.fg.green}Running ${parsedAction.toUpperCase()} for scenario ${scenarioIndex} (${scenario.name})${logStyle.reset}`);
 
-    let config = Object.assign({}, defaultConfig);
+    const config = Object.assign({}, defaultConfig);
 
     config.viewports = scenario["screen_sizes"].map((screenSizeStr) => {
         const match = screenSizeStr.match(/([1-9][0-9]*)x([1-9][0-9]*)/);
@@ -489,11 +489,11 @@ function runBackstop(scenario, action = "test", originalAction = "", alwaysAppro
     });
 
     config.paths = {
-        bitmaps_reference: `backstop_data/bitmaps_reference/${name}`,
-        bitmaps_test: `backstop_data/bitmaps_test/${name}`,
-        engine_scripts: `backstop_data/engine_scripts/${name}`,
-        html_report: `backstop_data/html_report/${name}`,
-        ci_report: `backstop_data/ci_report/${name}`
+        bitmaps_reference: `backstop_data/bitmaps_reference/${pathSuffix}`,
+        bitmaps_test: `backstop_data/bitmaps_test/${pathSuffix}`,
+        engine_scripts: `backstop_data/engine_scripts/${pathSuffix}`,
+        html_report: `backstop_data/html_report/${pathSuffix}`,
+        ci_report: `backstop_data/ci_report/${pathSuffix}`
     };
 
     config.scenarios = [
