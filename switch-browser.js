@@ -143,9 +143,9 @@ function swapPuppeteer() {
      */
     function reinstallPuppeteer(handler = () => {}) {
         accessPackageJson((packageJson) => {
-            packageJson["dependencies"]["puppeteer"] = "^5.3.0";
+            packageJson["dependencies"]["puppeteer"] = "^3.0.0";
             if (debugMode) {
-                console.log(`${logStyle.fg.white}Setting "puppeteer" to "^5.3.0" in "dependencies"${logStyle.reset}`);
+                console.log(`${logStyle.fg.white}Setting "puppeteer" to "^3.0.0" in "dependencies"${logStyle.reset}`);
             }
 
             writeToPackageJson(packageJson, () => {

@@ -47,7 +47,7 @@
    
 4. Follow the instructions and start testing!
 
-## How to Switch Testing Browsers
+## How to Switch Testing Environments
 
 1. Run the script `switch-browser.js`.
     ```
