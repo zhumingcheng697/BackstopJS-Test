@@ -9,5 +9,9 @@
   "dependencies": {
     "backstopjs": "^5.0.4",
     "yaml": "^1.10.0"
+  },
+  "scripts": {
+    "start": "node backstopjs-test.js",
+    "switch": "node switch-browser.js"
   }
 }
