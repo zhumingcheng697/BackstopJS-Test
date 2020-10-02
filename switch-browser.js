@@ -1,8 +1,8 @@
 const fs = require('fs');
 const { exec } = require('child_process');
 
-const helper = require("./helper")
-// const rl = helper.rl();
+const helper = require("./helper");
+const rl = helper.rl();
 const logStyle = helper.logStyle;
 
 const debugMode = false;
@@ -44,7 +44,7 @@ function swapPuppeteer() {
                         action(parsedPackageJson);
                         return;
                     } else {
-                        console.error(`${logStyle.fg.red}Field "dependencies" not found${logStyle.reset}`)
+                        console.error(`${logStyle.fg.red}Field "dependencies" not found${logStyle.reset}`);
                     }
                 } catch (e) {
                     console.error(`${logStyle.fg.red}File "node_modules/backstopjs/package.json" cannot be parsed${logStyle.reset}`);
@@ -119,9 +119,15 @@ function swapPuppeteer() {
             }
 
             writeToPackageJson(packageJson, () => {
-                console.log(`${logStyle.reverse}Uninstalling "puppeteer" and its dependencies${logStyle.reset}`);
+                process.stdout.write(`${logStyle.reverse}Uninstalling "puppeteer" and its dependencies`);
+
+                const intervalId = setInterval(() => {
+                    process.stdout.write(".");
+                }, 1000);
 
                 execute(`${installCmd}`, () => {
+                    clearInterval(intervalId);
+                    process.stdout.write(`${logStyle.reset}\n`);
                     console.log(`${logStyle.fg.green}${currentProduct ? `${currentProduct} version of ` : ""}Puppeteer uninstalled successfully${logStyle.reset}`);
                     handler();
                 });
@@ -143,10 +149,16 @@ function swapPuppeteer() {
             }
 
             writeToPackageJson(packageJson, () => {
-                console.log(`${logStyle.reverse}Reinstalling "puppeteer" and its dependencies${logStyle.reset}`);
+                process.stdout.write(`${logStyle.reverse}Reinstalling "puppeteer" and its dependencies`);
+
+                const intervalId = setInterval(() => {
+                    process.stdout.write(".");
+                }, 1000);
 
                 execute(currentProduct === "Chrome" ? `${firefoxKey} ${installCmd}` : `${installCmd}`, () => {
                     currentProduct = helper.puppeteerProduct(false);
+                    clearInterval(intervalId);
+                    process.stdout.write(`${logStyle.reset}\n`);
                     console.log(`${logStyle.fg.green}${currentProduct ? `${currentProduct} version of ` : ""}Puppeteer reinstalled successfully${logStyle.reset}`);
                     handler();
                 });
@@ -155,9 +167,28 @@ function swapPuppeteer() {
     }
 
     uninstallPuppeteer(() => {
-        reinstallPuppeteer();
+        reinstallPuppeteer(() => {
+            process.exit(0);
+        });
     });
 }
 
-swapPuppeteer();
-// process.stdout.write(`${logStyle.fg.r}Reinstalling "puppeteer" and its dependencies${logStyle.reset}`);
+/**
+ * Self-invoking main function.
+ *
+ * @return {void}
+ */
+(function main() {
+    console.log(`${logStyle.fg.white}Switch to ${currentProduct === "Chrome" ? "Firefox" : "Chrome"} version?${logStyle.reset} (y/n)`);
+
+    rl.on('line', (line) => {
+        if (line.toUpperCase() === "Y") {
+            swapPuppeteer();
+            rl.close();
+        } else if (line.toUpperCase() === "N") {
+            process.exit(0);
+        } else {
+            console.error(`${logStyle.fg.red}Please type in a valid keyword. (y/n)${logStyle.reset}`);
+        }
+    });
+})();
