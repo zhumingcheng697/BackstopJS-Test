@@ -1,6 +1,6 @@
 # BackstopJS-Test
 
-**A Script that Parses YAML Config Files and Automates [BackstopJS](https://github.com/garris/BackstopJS) Tests in Chrome or Firefox Environments.**
+**A Script that Parses YAML Config Files and Automates [BackstopJS](https://github.com/garris/BackstopJS) Tests in Chrome or Firefox Environment.**
 
 ## Features
 
