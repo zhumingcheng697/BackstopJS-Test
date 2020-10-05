@@ -1,7 +1,11 @@
 const fs = require('fs');
 const YAML = require('yaml');
 const backstop = require('backstopjs');
-const readline = require('readline');
+
+const helper = require("./helper");
+const rl = helper.rl();
+const logStyle = helper.logStyle;
+const puppeteerProduct = helper.puppeteerProduct().toLowerCase();
 
 /**
  * Keeps track of the current state of the program.
@@ -29,55 +33,6 @@ let scenarioChosen = false;
 let scenarioConfirmed = false;
 let scenarioIndex = 0;
 let tempScenarioIndex = 0;
-
-/**
- * Makes the console logs colorful.
- *
- * @link https://stackoverflow.com/a/40560590
- * @type {Object}
- */
-const logStyle = {
-    reset: "\x1b[0m",
-    bright: "\x1b[1m",
-    dim: "\x1b[2m",
-    underscore: "\x1b[4m",
-    blink: "\x1b[5m",
-    reverse: "\x1b[7m",
-    hidden: "\x1b[8m",
-    fg: {
-        black: "\x1b[30m",
-        red: "\x1b[31m",
-        green: "\x1b[32m",
-        yellow: "\x1b[33m",
-        blue: "\x1b[34m",
-        magenta: "\x1b[35m",
-        cyan: "\x1b[36m",
-        white: "\x1b[37m",
-        crimson: "\x1b[38m"
-    },
-    bg: {
-        black: "\x1b[40m",
-        red: "\x1b[41m",
-        green: "\x1b[42m",
-        yellow: "\x1b[43m",
-        blue: "\x1b[44m",
-        magenta: "\x1b[45m",
-        cyan: "\x1b[46m",
-        white: "\x1b[47m",
-        crimson: "\x1b[48m"
-    }
-};
-
-/**
- * Reads the keyboard input from the console.
- *
- * @link http://logan.tw/posts/2015/12/12/read-lines-from-stdin-in-nodejs/
- */
-let rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout,
-    terminal: false
-});
 
 /**
  * Default Backstop configuration for all runs.
@@ -200,12 +155,12 @@ function chooseScenario(line) {
             tempScenarioIndex = scenarioIndex - 1;
         }
     } else {
-        let foundIndex = scenarios.map((el) => el.name.toLowerCase()).indexOf(line.toLowerCase())
+        const foundIndex = scenarios.map((el) => el.name.toLowerCase()).indexOf(line.toLowerCase());
         if (foundIndex >= 0) {
             tempScenarioIndex = foundIndex;
         } else {
-            let parsedInt = parseInt(line);
-            let parsedIndex = isNaN(parsedInt) ? -1 : parsedInt;
+            const parsedInt = parseInt(line);
+            const parsedIndex = isNaN(parsedInt) ? -1 : parsedInt;
             if (parsedIndex.toString() === line && parsedIndex >= 0 && parsedIndex < scenarios.length) {
                 tempScenarioIndex = parsedIndex;
             } else {
@@ -285,8 +240,8 @@ function confirmResumeAutoRun(line) {
     if (line.toLowerCase() === "y") {
         runMode = "a";
         willAutoRunResume = true;
-        let length = scenarios.length - scenarioIndex - ((lastRunAction === "reference" && isLastRunSuccessful) ? 0 : 1);
-        let startIndex = scenarioIndex + ((lastRunAction === "reference" && isLastRunSuccessful) ? 0 : 1);
+        const length = scenarios.length - scenarioIndex - ((lastRunAction === "reference" && isLastRunSuccessful) ? 0 : 1);
+        const startIndex = scenarioIndex + ((lastRunAction === "reference" && isLastRunSuccessful) ? 0 : 1);
         console.warn(`${logStyle.fg.red}All the rest ${length} scenario${length === 1 ? "" : "s"} starting from scenario ${startIndex} (${scenarios[startIndex].name}) will be tested in order. Press enter at any time to stop the next test once the program starts running. Continue? (y/n)${logStyle.reset}`);
     } else if (line.toLowerCase() === "n") {
         runMode = "m";
@@ -310,8 +265,8 @@ function confirmResumeApproveAll(line) {
         runMode = "xp";
         willApproveAllResume = true;
         scenarioChosen = true;
-        let length = scenarios.length - scenarioIndex - ((lastRunAction !== "approve") ? 0 : 1);
-        let startIndex = scenarioIndex + ((lastRunAction !== "approve") ? 0 : 1);
+        const length = scenarios.length - scenarioIndex - ((lastRunAction !== "approve") ? 0 : 1);
+        const startIndex = scenarioIndex + ((lastRunAction !== "approve") ? 0 : 1);
         console.warn(`${logStyle.fg.red}All the rest ${length} scenario${length === 1 ? "" : "s"} starting from scenario ${startIndex} (${scenarios[startIndex].name}) will be approved in order. Press enter at any time to stop the next test once the program starts running. Continue? (y/n)${logStyle.reset}`);
     } else if (line.toLowerCase() === "n") {
         runMode = "m";
@@ -489,22 +444,23 @@ function runBackstop(scenario, action = "test", originalAction = "", alwaysAppro
 
     let parsedAction = action.toLowerCase();
     const name = scenario.name.replace(/\s/g, "_");
+    const pathSuffix = `${puppeteerProduct || "unknown_browser"}/${name}`;
 
     isRunning = true;
 
     if (["test", "t"].includes(parsedAction)) {
-        if (fs.existsSync(`backstop_data/bitmaps_reference/${name}`)) {
+        if (fs.existsSync(`backstop_data/bitmaps_reference/${pathSuffix}`)) {
             parsedAction = "test";
         } else {
             console.error(`${logStyle.fg.red}No previous references exist for scenario ${scenarioIndex} (${scenario.name})${logStyle.reset}`);
             parsedAction = "reference";
         }
     } else if (["approve", "a"].includes(parsedAction)) {
-        if (fs.existsSync(`backstop_data/bitmaps_test/${name}`)) {
+        if (fs.existsSync(`backstop_data/bitmaps_test/${pathSuffix}`)) {
             parsedAction = "approve";
         } else {
             console.error(`${logStyle.fg.red}No previous tests exist for scenario ${scenarioIndex} (${scenario.name})${logStyle.reset}`);
-            if (fs.existsSync(`backstop_data/bitmaps_reference/${name}`)) {
+            if (fs.existsSync(`backstop_data/bitmaps_reference/${pathSuffix}`)) {
                 parsedAction = "test";
             } else {
                 console.error(`${logStyle.fg.red}No previous references exist for scenario ${scenarioIndex} (${scenario.name})${logStyle.reset}`);
@@ -521,7 +477,7 @@ function runBackstop(scenario, action = "test", originalAction = "", alwaysAppro
 
     console.log(`${logStyle.fg.green}Running ${parsedAction.toUpperCase()} for scenario ${scenarioIndex} (${scenario.name})${logStyle.reset}`);
 
-    let config = Object.assign({}, defaultConfig);
+    const config = Object.assign({}, defaultConfig);
 
     config.viewports = scenario["screen_sizes"].map((screenSizeStr) => {
         const match = screenSizeStr.match(/([1-9][0-9]*)x([1-9][0-9]*)/);
@@ -533,11 +489,11 @@ function runBackstop(scenario, action = "test", originalAction = "", alwaysAppro
     });
 
     config.paths = {
-        bitmaps_reference: `backstop_data/bitmaps_reference/${name}`,
-        bitmaps_test: `backstop_data/bitmaps_test/${name}`,
-        engine_scripts: `backstop_data/engine_scripts/${name}`,
-        html_report: `backstop_data/html_report/${name}`,
-        ci_report: `backstop_data/ci_report/${name}`
+        bitmaps_reference: `backstop_data/bitmaps_reference/${pathSuffix}`,
+        bitmaps_test: `backstop_data/bitmaps_test/${pathSuffix}`,
+        engine_scripts: `backstop_data/engine_scripts/${pathSuffix}`,
+        html_report: `backstop_data/html_report/${pathSuffix}`,
+        ci_report: `backstop_data/ci_report/${pathSuffix}`
     };
 
     config.scenarios = [
@@ -570,73 +526,84 @@ function runBackstop(scenario, action = "test", originalAction = "", alwaysAppro
         });
 }
 
-console.log(`${logStyle.fg.white}Please type in the path of the YAML config file to load, or press enter to choose ${logStyle.reset}nyu.yml${logStyle.fg.white} by default${logStyle.reset}`);
-
 /**
- * Handles keyboard input in the console.
+ * Self-invoking main function.
+ *
+ * @return {void}
  */
-rl.on('line', (line) => {
-    if (scenarios.length <= 0) {
-        loadYamlConfig(line);
-        return;
+(function main() {
+    if (puppeteerProduct) {
+        defaultConfig.engineOptions.product = puppeteerProduct;
     }
 
-    if (runMode === "r") {
-        runMode = "nr";
-        return;
-    } else if (runMode === "p") {
-        runMode = "np";
-        return;
-    }
+    console.log(`${logStyle.fg.white}Please type in the path of the YAML config file to load, or press enter to choose ${logStyle.reset}nyu.yml${logStyle.fg.white} by default${logStyle.reset}`);
 
-    if (!isRunning) {
-        if (runMode === "") {
-            chooseRunMode(line);
-        } else if (runMode === "a") {
-            confirmAutoRun(line);
-        } else if (runMode === "m") {
-            if (line.toLowerCase() === "auto run") {
-                readyForAutoRun();
-            } else if (line.toLowerCase() === "approve all") {
-                readyForApproveAll();
-            } else if (!scenarioChosen) {
-                if (line.toLowerCase() === "show list") {
-                    showScenarioList();
-                    typeInIndexToChoosePrompt();
-                } else {
-                    chooseScenario(line);
-                }
-            } else if (!scenarioConfirmed) {
-                confirmScenario(line);
-            } else {
-                runBackstop(scenarios[scenarioIndex], line);
-            }
-        } else if (runMode === "xr") {
-            if (!scenarioChosen) {
-                if (line.toLowerCase() === "show list") {
-                    showScenarioList();
-                    typeInIndexToAutoRunPrompt();
-                } else {
-                    chooseScenario(line);
-                }
-            } else {
-                confirmAutoRun(line);
-            }
-        } else if (runMode === "xp") {
-            if (!scenarioChosen) {
-                if (line.toLowerCase() === "show list") {
-                    showScenarioList();
-                    typeInIndexToApproveAllPrompt();
-                } else {
-                    chooseScenario(line);
-                }
-            } else {
-                confirmApproveAll(line);
-            }
-        } else if (runMode === "nr") {
-            confirmResumeAutoRun(line);
-        } else if (runMode === "np") {
-            confirmResumeApproveAll(line);
+    /**
+     * Handles keyboard input in the console.
+     */
+    rl.on('line', (line) => {
+        if (scenarios.length <= 0) {
+            loadYamlConfig(line);
+            return;
         }
-    }
-});
+
+        if (runMode === "r") {
+            runMode = "nr";
+            return;
+        } else if (runMode === "p") {
+            runMode = "np";
+            return;
+        }
+
+        if (!isRunning) {
+            if (runMode === "") {
+                chooseRunMode(line);
+            } else if (runMode === "a") {
+                confirmAutoRun(line);
+            } else if (runMode === "m") {
+                if (line.toLowerCase() === "auto run") {
+                    readyForAutoRun();
+                } else if (line.toLowerCase() === "approve all") {
+                    readyForApproveAll();
+                } else if (!scenarioChosen) {
+                    if (line.toLowerCase() === "show list") {
+                        showScenarioList();
+                        typeInIndexToChoosePrompt();
+                    } else {
+                        chooseScenario(line);
+                    }
+                } else if (!scenarioConfirmed) {
+                    confirmScenario(line);
+                } else {
+                    runBackstop(scenarios[scenarioIndex], line);
+                }
+            } else if (runMode === "xr") {
+                if (!scenarioChosen) {
+                    if (line.toLowerCase() === "show list") {
+                        showScenarioList();
+                        typeInIndexToAutoRunPrompt();
+                    } else {
+                        chooseScenario(line);
+                    }
+                } else {
+                    confirmAutoRun(line);
+                }
+            } else if (runMode === "xp") {
+                if (!scenarioChosen) {
+                    if (line.toLowerCase() === "show list") {
+                        showScenarioList();
+                        typeInIndexToApproveAllPrompt();
+                    } else {
+                        chooseScenario(line);
+                    }
+                } else {
+                    confirmApproveAll(line);
+                }
+            } else if (runMode === "nr") {
+                confirmResumeAutoRun(line);
+            } else if (runMode === "np") {
+                confirmResumeApproveAll(line);
+            }
+        }
+    });
+})();
