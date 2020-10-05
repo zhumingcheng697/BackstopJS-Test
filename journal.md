@@ -115,3 +115,15 @@
 - Updated `package.json` and `package-lock.json`
 
 - Updated `README.md`
+
+## Week 6
+
+### Monday: October 5, 2020 (1 hour)
+
+- Added ability to ask which version to install when an unknown version of Puppeteer is found or no Puppeteer is found
+
+- Updated `README.md`
+
+- Merged `firefox-test` into `master` branch
+
+- Created `v1.0.0` and `v1.0.1` releases
