@@ -19,9 +19,10 @@ let currentProduct = helper.puppeteerProduct(true, false);
 /**
  * Swaps the Puppeteer product version.
  *
+ * @param {string} product The version of Puppeteer to switch to
  * @return {void}
  */
-function swapPuppeteer() {
+function swapPuppeteer(product = "") {
     /**
      * Accesses "package.json" in backstopjs and takes a given action.
      *
@@ -155,7 +156,7 @@ function swapPuppeteer() {
                     process.stdout.write(".");
                 }, 1000);
 
-                execute(currentProduct === "Chrome" ? `${firefoxKey} ${installCmd}` : `${installCmd}`, () => {
+                execute((currentProduct === "Chrome" || product === "Firefox") ? `${firefoxKey} ${installCmd}` : `${installCmd}`, () => {
                     currentProduct = helper.puppeteerProduct(false);
                     clearInterval(intervalId);
                     process.stdout.write(`${logStyle.reset}\n`);
@@ -179,16 +180,32 @@ function swapPuppeteer() {
  * @return {void}
  */
 (function main() {
-    console.log(`${logStyle.fg.white}Switch to ${currentProduct === "Chrome" ? "Firefox" : "Chrome"} version?${logStyle.reset} (y/n)`);
+    if (currentProduct) {
+        console.log(`${logStyle.fg.white}Switch to ${currentProduct === "Chrome" ? "Firefox" : "Chrome"} version?${logStyle.reset} (y/n)`);
+    } else {
+        console.log(`${logStyle.fg.white}Install ${logStyle.reset}Chrome (c)${logStyle.fg.white} version or ${logStyle.reset}Firefox (f)${logStyle.fg.white} version?${logStyle.reset} (chrome/firefox/c/f)`);
+    }
 
     rl.on('line', (line) => {
-        if (line.toUpperCase() === "Y") {
-            swapPuppeteer();
-            rl.close();
-        } else if (line.toUpperCase() === "N") {
-            process.exit(0);
+        if (currentProduct) {
+            if (line.toUpperCase() === "Y") {
+                swapPuppeteer();
+                rl.close();
+            } else if (line.toUpperCase() === "N") {
+                process.exit(0);
+            } else {
+                console.error(`${logStyle.fg.red}Please type in a valid keyword. (y/n)${logStyle.reset}`);
+            }
         } else {
-            console.error(`${logStyle.fg.red}Please type in a valid keyword. (y/n)${logStyle.reset}`);
+            if (["chrome", "c"].includes(line.toLowerCase())) {
+                swapPuppeteer("Chrome");
+                rl.close();
+            } else if (["firefox", "f"].includes(line.toLowerCase())) {
+                swapPuppeteer("Firefox");
+                rl.close();
+            } else {
+                console.error(`${logStyle.fg.red}Please type in a valid keyword. (chrome/firefox/c/f)${logStyle.reset}`);
+            }
         }
     });
 })();
