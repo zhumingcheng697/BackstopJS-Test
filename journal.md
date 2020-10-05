@@ -126,4 +126,6 @@
 
 - Merged `firefox-test` into `master` branch
 
+- Renamed `switch-browser.js` to `switch-environment.js`
+
 - Created `v1.0.0` and `v1.0.1` releases

@@ -12,6 +12,6 @@
   },
   "scripts": {
     "start": "node backstopjs-test.js",
-    "switch": "node switch-browser.js"
+    "switch": "node switch-environment.js"
   }
 }

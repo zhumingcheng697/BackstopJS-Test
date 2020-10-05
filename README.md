@@ -51,9 +51,9 @@
 
 ## How to Switch Testing Environments
 
-1. Run the script `switch-browser.js`.
+1. Run the script `switch-environment.js`.
     ```
-    $ node switch-browser.js
+    $ node switch-environment.js
     ```
     
     or
@@ -64,7 +64,7 @@
 
 2. Wait for the download to finish and start testing!
 
-    > If you have accidentally terminated `switch-browser.js` before it finishes running, don’t worry, simply run it again. The script will ask you which environment (Chrome or Firefox) to install.
+    > If you have accidentally terminated `switch-environment.js` before it finishes running, don’t worry, simply run it again. The script will ask you which environment (Chrome or Firefox) to install.
 
 ## Commands
 
