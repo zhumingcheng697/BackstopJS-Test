@@ -61,6 +61,15 @@
     ```
     $ npm run switch
     ```
+   
+   > If you want to see the full realtime output of the scripts, set the environment variable `DEBUG_MODE` to any truthy value. Remember that environment variables are handled as `string`s, so anything other than ` ` (empty spaces, which will ignored by the shell) will result to `true`.
+    > ```
+    > $ DEBUG_MODE=1 node switch-environment.js
+    > ```
+    > or
+    > ```
+    > $ DEBUG_MODE=1 npm run switch
+    > ```
 
 2. Wait for the download to finish and start testing!
 
