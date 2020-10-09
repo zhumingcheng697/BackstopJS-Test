@@ -1,6 +1,6 @@
-const fs = require('fs');
-const YAML = require('yaml');
-const backstop = require('backstopjs');
+const fs = require("fs");
+const YAML = require("yaml");
+const backstop = require("backstopjs");
 
 const helper = require("./helper");
 const rl = helper.rl();

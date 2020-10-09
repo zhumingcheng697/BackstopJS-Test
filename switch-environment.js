@@ -1,11 +1,11 @@
-const fs = require('fs');
-const { exec } = require('child_process');
+const fs = require("fs");
+const { spawn } = require("child_process");
 
 const helper = require("./helper");
 const rl = helper.rl();
 const logStyle = helper.logStyle;
 
-const debugMode = false;
+const debugMode = !!process.env.DEBUG_MODE;
 const firefoxKey = "PUPPETEER_PRODUCT=firefox";
 const installCmd = "npm install";
 
@@ -86,24 +86,17 @@ function swapPuppeteer(product = "") {
      * @return {void}
      */
     function execute(cmd, handler = () => {}) {
-        exec(cmd, (error, stdout, stderr) => {
-            if (error) {
-                console.error(`${logStyle.fg.red}${error}${logStyle.reset}`);
-                process.exit(1);
-            }
-
-            if (debugMode) {
-                if (stdout) {
-                    console.log(stdout);
-                }
-
-                if (stderr) {
-                    console.warn(stderr);
-                }
-            }
-
-            handler();
+        const child = spawn(cmd, {
+            shell: true,
+            stdio: debugMode ? "inherit" : "pipe"
         });
+
+        child.on("error", (err) => {
+            console.error(`${logStyle.fg.red}${err}${logStyle.reset}`);
+            process.exit(1);
+        });
+
+        child.on("exit", handler);
     }
 
     /**
@@ -122,7 +115,7 @@ function swapPuppeteer(product = "") {
             writeToPackageJson(packageJson, () => {
                 process.stdout.write(`${logStyle.reverse}Uninstalling "puppeteer" and its dependencies`);
 
-                const intervalId = setInterval(() => {
+                const intervalId = debugMode ? 0 : setInterval(() => {
                     process.stdout.write(".");
                 }, 1000);
 
@@ -152,7 +145,7 @@ function swapPuppeteer(product = "") {
             writeToPackageJson(packageJson, () => {
                 process.stdout.write(`${logStyle.reverse}Reinstalling "puppeteer" and its dependencies`);
 
-                const intervalId = setInterval(() => {
+                const intervalId = debugMode ? 0 : setInterval(() => {
                     process.stdout.write(".");
                 }, 1000);
 
@@ -186,7 +179,7 @@ function swapPuppeteer(product = "") {
         console.log(`${logStyle.fg.white}Install ${logStyle.reset}Chrome (c)${logStyle.fg.white} version or ${logStyle.reset}Firefox (f)${logStyle.fg.white} version?${logStyle.reset} (chrome/firefox/c/f)`);
     }
 
-    rl.on('line', (line) => {
+    rl.on("line", (line) => {
         if (currentProduct) {
             if (line.toUpperCase() === "Y") {
                 swapPuppeteer();

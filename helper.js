@@ -1,5 +1,5 @@
-const fs = require('fs');
-const readline = require('readline');
+const fs = require("fs");
+const readline = require("readline");
 
 /**
  * Makes the console logs colorful.
