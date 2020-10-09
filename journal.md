@@ -129,3 +129,11 @@
 - Renamed `switch-browser.js` to `switch-environment.js`
 
 - Created `v1.0.0` and `v1.0.1` releases
+
+### Thursday: October 8, 2020 (2 hours)
+
+- Replaced `exec` with more efficient and flexible `spawn`
+
+- Added ability to use environment variable to determine `debugMode` when running `switch-environment.js`.
+
+- Updated `README.md`

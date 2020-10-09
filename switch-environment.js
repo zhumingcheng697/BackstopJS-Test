@@ -113,7 +113,9 @@ function swapPuppeteer(product = "") {
             }
 
             writeToPackageJson(packageJson, () => {
-                process.stdout.write(`${logStyle.reverse}Uninstalling "puppeteer" and its dependencies`);
+                if (!debugMode) {
+                    process.stdout.write(`${logStyle.reverse}Uninstalling "puppeteer" and its dependencies`);
+                }
 
                 const intervalId = debugMode ? 0 : setInterval(() => {
                     process.stdout.write(".");
@@ -143,7 +145,9 @@ function swapPuppeteer(product = "") {
             }
 
             writeToPackageJson(packageJson, () => {
-                process.stdout.write(`${logStyle.reverse}Reinstalling "puppeteer" and its dependencies`);
+                if (!debugMode) {
+                    process.stdout.write(`${logStyle.reverse}Reinstalling "puppeteer" and its dependencies`);
+                }
 
                 const intervalId = debugMode ? 0 : setInterval(() => {
                     process.stdout.write(".");
