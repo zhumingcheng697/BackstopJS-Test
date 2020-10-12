@@ -76,7 +76,7 @@ function loadYamlConfig(path) {
                     console.error(`${logStyle.fg.red}No scenarios found in "${path}". Please choose another file.${logStyle.reset}`);
                 } else {
                     showScenarioList();
-                    console.log(`${logStyle.fg.green}${scenarios.length} scenario${scenarios.length === 1 ? "" : "s"} successfully loaded from "${path}"${logStyle.reset}`);
+                    console.log(`${logStyle.fg.green}${scenarios.length} scenario${scenarios.length === 1 ? "" : "s"} successfully loaded from "${path}".${logStyle.reset}`);
                     chooseRunModePrompt();
                 }
             } catch (e) {
@@ -99,20 +99,20 @@ function chooseRunModePrompt() {
 }
 
 function typeInIndexToChoosePrompt() {
-    console.log(`${logStyle.fg.yellow}Type in "auto run" at any time to start auto run${logStyle.reset}`);
-    console.log(`${logStyle.fg.yellow}Type in "approve all" at any time to approve all scenarios${logStyle.reset}`);
-    console.log(`${logStyle.fg.yellow}Type in "show list" to see a list of all scenarios${logStyle.reset}`);
-    console.log(`${logStyle.fg.white}Type in a valid index (0 to ${scenarios.length - 1}) or the scenario name to choose a scenario, type in "--" or "++" to choose the previous or the next scenario, if there is one, or type anything else or press enter to choose ${logStyle.reset}scenario ${scenarioIndex} (${scenarios[scenarioIndex].name})${logStyle.fg.white} by default${logStyle.reset}`);
+    console.log(`${logStyle.fg.yellow}Type in "auto run" at any time to start auto run.${logStyle.reset}`);
+    console.log(`${logStyle.fg.yellow}Type in "approve all" at any time to approve all scenarios.${logStyle.reset}`);
+    console.log(`${logStyle.fg.yellow}Type in "show list" to see a list of all scenarios.${logStyle.reset}`);
+    console.log(`${logStyle.fg.white}Type in a valid index (0 to ${scenarios.length - 1}) or the scenario name to choose a scenario, type in "--" or "++" to choose the previous or the next scenario, if there is one, or type anything else or press enter to choose ${logStyle.reset}scenario ${scenarioIndex} (${scenarios[scenarioIndex].name})${logStyle.fg.white} by default.${logStyle.reset}`);
 }
 
 function typeInIndexToAutoRunPrompt() {
-    console.log(`${logStyle.fg.yellow}Type in "show list" to see a list of all scenarios${logStyle.reset}`);
-    console.log(`${logStyle.fg.white}Type in a valid index (0 to ${scenarios.length - 1}) or the scenario name to choose a scenario to ${logStyle.reset}start the auto run from${logStyle.fg.white}, type in "--" or "++" to choose the previous or the next scenario to ${logStyle.reset}start the auto run from${logStyle.fg.white}, if there is one, or type anything else or press enter to choose ${logStyle.reset}scenario ${scenarioIndex} (${scenarios[scenarioIndex].name})${logStyle.fg.white} by default to ${logStyle.reset}start the auto run from${logStyle.reset}`);
+    console.log(`${logStyle.fg.yellow}Type in "show list" to see a list of all scenarios.${logStyle.reset}`);
+    console.log(`${logStyle.fg.white}Type in a valid index (0 to ${scenarios.length - 1}) or the scenario name to choose a scenario to ${logStyle.reset}start the auto run from${logStyle.fg.white}, type in "--" or "++" to choose the previous or the next scenario to ${logStyle.reset}start the auto run from${logStyle.fg.white}, if there is one, or type anything else or press enter to choose ${logStyle.reset}scenario ${scenarioIndex} (${scenarios[scenarioIndex].name})${logStyle.fg.white} by default to ${logStyle.reset}start the auto run from.${logStyle.reset}`);
 }
 
 function typeInIndexToApproveAllPrompt() {
-    console.log(`${logStyle.fg.yellow}Type in "show list" to see a list of all scenarios${logStyle.reset}`);
-    console.log(`${logStyle.fg.white}Type in a valid index (0 to ${scenarios.length - 1}) or the scenario name to choose a scenario to ${logStyle.reset}start approving from${logStyle.fg.white}, type in "--" or "++" to choose the previous or the next scenario to ${logStyle.reset}start approving from${logStyle.fg.white}, if there is one, or type anything else or press enter to choose ${logStyle.reset}scenario ${scenarioIndex} (${scenarios[scenarioIndex].name})${logStyle.fg.white} by default to ${logStyle.reset}start approving from${logStyle.reset}`);
+    console.log(`${logStyle.fg.yellow}Type in "show list" to see a list of all scenarios.${logStyle.reset}`);
+    console.log(`${logStyle.fg.white}Type in a valid index (0 to ${scenarios.length - 1}) or the scenario name to choose a scenario to ${logStyle.reset}start approving from${logStyle.fg.white}, type in "--" or "++" to choose the previous or the next scenario to ${logStyle.reset}start approving from${logStyle.fg.white}, if there is one, or type anything else or press enter to choose ${logStyle.reset}scenario ${scenarioIndex} (${scenarios[scenarioIndex].name})${logStyle.fg.white} by default to ${logStyle.reset}start approving from.${logStyle.reset}`);
 }
 
 function typeInKeywordToStartPrompt() {
@@ -128,11 +128,11 @@ function typeInKeywordToStartPrompt() {
 function chooseRunMode(line) {
     if (["auto", "a"].includes(line.toLowerCase())) {
         runMode = "a";
-        console.log(`${logStyle.fg.green}Running in auto mode${logStyle.reset}`);
+        console.log(`${logStyle.fg.green}Running in auto mode.${logStyle.reset}`);
         console.warn(`${logStyle.fg.red}All ${scenarios.length} scenario${scenarios.length === 1 ? "" : "s"} will be tested in order. Press enter at any time to stop the next test once the program starts running. Continue? (y/n)${logStyle.reset}`);
     } else if (["manual", "m"].includes(line.toLowerCase())) {
         runMode = "m";
-        console.log(`${logStyle.fg.green}Running in manual mode${logStyle.reset}`);
+        console.log(`${logStyle.fg.green}Running in manual mode.${logStyle.reset}`);
         typeInIndexToChoosePrompt();
     } else {
         console.error(`${logStyle.fg.red}Please type in a valid keyword. (auto/manual/a/m)${logStyle.reset}`);
@@ -170,7 +170,7 @@ function chooseScenario(line) {
     }
 
     if (runMode === "m") {
-        console.log(`${logStyle.fg.white}Scenario ${tempScenarioIndex} (${scenarios[tempScenarioIndex].name}) chosen. Continue? ${logStyle.reset}(y/n)${logStyle.reset}`);
+        console.log(`${logStyle.fg.white}Scenario ${tempScenarioIndex} (${scenarios[tempScenarioIndex].name}) chosen. Continue? ${logStyle.reset}(y/n)`);
     } else if (runMode === "xr") {
         console.warn(`${logStyle.fg.red}All ${scenarios.length - tempScenarioIndex} scenario${scenarios.length - tempScenarioIndex === 1 ? "" : "s"} starting from scenario ${tempScenarioIndex} (${scenarios[tempScenarioIndex].name}) will be tested in order. Press enter at any time to stop the next test once the program starts running. Continue? (y/n)${logStyle.reset}`);
     } else if (runMode === "xp") {
@@ -211,7 +211,7 @@ function readyForAutoRun() {
     runMode = "xr";
     scenarioChosen = false;
     scenarioConfirmed = false;
-    console.log(`${logStyle.fg.green}Starting auto run${logStyle.reset}`);
+    console.log(`${logStyle.fg.green}Starting auto run.${logStyle.reset}`);
     typeInIndexToAutoRunPrompt();
 }
 
@@ -225,7 +225,7 @@ function readyForApproveAll() {
     runMode = "xp";
     scenarioChosen = false;
     scenarioConfirmed = false;
-    console.log(`${logStyle.fg.green}Starting approve all${logStyle.reset}`);
+    console.log(`${logStyle.fg.green}Starting approve all.${logStyle.reset}`);
     typeInIndexToApproveAllPrompt();
 }
 
@@ -246,7 +246,7 @@ function confirmResumeAutoRun(line) {
     } else if (line.toLowerCase() === "n") {
         runMode = "m";
         willAutoRunResume = false;
-        console.log(`${logStyle.fg.green}Running in manual mode${logStyle.reset}`);
+        console.log(`${logStyle.fg.green}Running in manual mode.${logStyle.reset}`);
         typeInIndexToChoosePrompt();
     } else {
         console.error(`${logStyle.fg.red}Please type in a valid keyword. (y/n)${logStyle.reset}`);
@@ -271,7 +271,7 @@ function confirmResumeApproveAll(line) {
     } else if (line.toLowerCase() === "n") {
         runMode = "m";
         willApproveAllResume = false;
-        console.log(`${logStyle.fg.green}Running in manual mode${logStyle.reset}`);
+        console.log(`${logStyle.fg.green}Running in manual mode.${logStyle.reset}`);
         typeInIndexToChoosePrompt();
     } else {
         console.error(`${logStyle.fg.red}Please type in a valid keyword. (y/n)${logStyle.reset}`);
@@ -296,10 +296,10 @@ function confirmAutoRun(line) {
 
         if (scenarioIndex !== 0 && willAutoRunResume) {
             if (lastRunAction === "reference" && isLastRunSuccessful) {
-                console.log(`${logStyle.fg.green}Resuming automatic run starting from the previous scenario, scenario ${scenarioIndex} (${scenarios[scenarioIndex].name})${logStyle.reset}`);
+                console.log(`${logStyle.fg.green}Resuming automatic run starting from the previous scenario, scenario ${scenarioIndex} (${scenarios[scenarioIndex].name}).${logStyle.reset}`);
             } else {
                 scenarioIndex += 1
-                console.log(`${logStyle.fg.green}Resuming automatic run starting from the next scenario, scenario ${scenarioIndex} (${scenarios[scenarioIndex].name})${logStyle.reset}`);
+                console.log(`${logStyle.fg.green}Resuming automatic run starting from the next scenario, scenario ${scenarioIndex} (${scenarios[scenarioIndex].name}).${logStyle.reset}`);
             }
         }
 
@@ -312,7 +312,7 @@ function confirmAutoRun(line) {
         }
 
         runMode = "m";
-        console.log(`${logStyle.fg.green}Switched to manual mode${logStyle.reset}`);
+        console.log(`${logStyle.fg.green}Switched to manual mode.${logStyle.reset}`);
         typeInIndexToChoosePrompt();
     } else {
         console.error(`${logStyle.fg.red}Please type in a valid keyword. (y/n)${logStyle.reset}`);
@@ -340,10 +340,10 @@ function confirmApproveAll(line) {
 
         if (scenarioIndex !== 0 && willApproveAllResume) {
             if (lastRunAction === "reference" && isLastRunSuccessful) {
-                console.log(`${logStyle.fg.green}Resuming approve all starting from the previous scenario, scenario ${scenarioIndex} (${scenarios[scenarioIndex].name})${logStyle.reset}`);
+                console.log(`${logStyle.fg.green}Resuming approve all starting from the previous scenario, scenario ${scenarioIndex} (${scenarios[scenarioIndex].name}).${logStyle.reset}`);
             } else {
                 scenarioIndex += 1
-                console.log(`${logStyle.fg.green}Resuming approve all starting from the next scenario, scenario ${scenarioIndex} (${scenarios[scenarioIndex].name})${logStyle.reset}`);
+                console.log(`${logStyle.fg.green}Resuming approve all starting from the next scenario, scenario ${scenarioIndex} (${scenarios[scenarioIndex].name}).${logStyle.reset}`);
             }
         }
 
@@ -356,7 +356,7 @@ function confirmApproveAll(line) {
         }
 
         runMode = "m";
-        console.log(`${logStyle.fg.green}Switched to manual mode${logStyle.reset}`);
+        console.log(`${logStyle.fg.green}Switched to manual mode.${logStyle.reset}`);
         typeInIndexToChoosePrompt();
     } else {
         console.error(`${logStyle.fg.red}Please type in a valid keyword. (y/n)${logStyle.reset}`);
@@ -401,9 +401,9 @@ function runBackstop(scenario, action = "test", originalAction = "", alwaysAppro
         isLastRunSuccessful = isRunSuccessful;
 
         if (isRunSuccessful) {
-            console.log(`${logStyle.fg.green}${parsedAction.toUpperCase()} succeeded for scenario ${scenarioIndex} (${scenario.name})${logStyle.reset}`);
+            console.log(`${logStyle.fg.green}${parsedAction.toUpperCase()} succeeded for scenario ${scenarioIndex} (${scenario.name}).${logStyle.reset}`);
         } else {
-            console.error(`${logStyle.fg.red}${parsedAction.toUpperCase()} failed for scenario ${scenarioIndex} (${scenario.name})${logStyle.reset}`);
+            console.error(`${logStyle.fg.red}${parsedAction.toUpperCase()} failed for scenario ${scenarioIndex} (${scenario.name}).${logStyle.reset}`);
         }
 
         if (isRunSuccessful && !["nr", "np"].includes(runMode) && parsedAction === "reference" && ["t", "a"].includes((originalAction || action).toLowerCase().charAt(0))) {
@@ -416,20 +416,20 @@ function runBackstop(scenario, action = "test", originalAction = "", alwaysAppro
             } else if (!isRunSuccessful && parsedAction === "reference") {
                 resetAfterRun();
                 runMode = "m";
-                console.log(`${logStyle.fg.red}Automatically switched to manual mode${logStyle.reset}`);
+                console.log(`${logStyle.fg.red}Automatically switched to manual mode.${logStyle.reset}`);
             } else if (scenarioIndex === scenarios.length - 1 && (!["nr", "np"].includes(runMode) || runMode === "nr" && parsedAction === "test" || runMode === "np" && parsedAction === "approve")) {
                 resetAfterRun();
                 runMode = "m";
-                console.log(`${logStyle.fg.green}All runs completed${logStyle.reset}`);
-                console.log(`${logStyle.fg.green}Automatically switched to manual mode${logStyle.reset}`);
+                console.log(`${logStyle.fg.green}All runs completed.${logStyle.reset}`);
+                console.log(`${logStyle.fg.green}Automatically switched to manual mode.${logStyle.reset}`);
             } else {
                 if (runMode === "r") {
                     scenarioIndex += 1;
-                    console.log(`${logStyle.fg.green}Automatically starting test for next scenario, scenario ${scenarioIndex} (${scenarios[scenarioIndex].name})${logStyle.reset}`);
+                    console.log(`${logStyle.fg.green}Automatically starting test for next scenario, scenario ${scenarioIndex} (${scenarios[scenarioIndex].name}).${logStyle.reset}`);
                     runBackstop(scenarios[scenarioIndex]);
                 } else if (runMode === "p") {
                     scenarioIndex += 1;
-                    console.log(`${logStyle.fg.green}Automatically starting approval for next scenario, scenario ${scenarioIndex} (${scenarios[scenarioIndex].name})${logStyle.reset}`);
+                    console.log(`${logStyle.fg.green}Automatically starting approval for next scenario, scenario ${scenarioIndex} (${scenarios[scenarioIndex].name}).${logStyle.reset}`);
                     runBackstop(scenarios[scenarioIndex], "approve", "approve", true);
                 } else if (runMode === "nr") {
                     isRunning = false;
@@ -443,7 +443,7 @@ function runBackstop(scenario, action = "test", originalAction = "", alwaysAppro
     }
 
     let parsedAction = action.toLowerCase();
-    const name = scenario.name.replace(/\s/g, "_");
+    const name = scenario.name.replace(/\s+/g, "_");
     const pathSuffix = `${puppeteerProduct || "unknown_browser"}/${name}`;
 
     isRunning = true;
@@ -452,18 +452,18 @@ function runBackstop(scenario, action = "test", originalAction = "", alwaysAppro
         if (fs.existsSync(`backstop_data/bitmaps_reference/${pathSuffix}`)) {
             parsedAction = "test";
         } else {
-            console.error(`${logStyle.fg.red}No previous references exist for scenario ${scenarioIndex} (${scenario.name})${logStyle.reset}`);
+            console.error(`${logStyle.fg.red}No previous references exist for scenario ${scenarioIndex} (${scenario.name}).${logStyle.reset}`);
             parsedAction = "reference";
         }
     } else if (["approve", "a"].includes(parsedAction)) {
         if (fs.existsSync(`backstop_data/bitmaps_test/${pathSuffix}`)) {
             parsedAction = "approve";
         } else {
-            console.error(`${logStyle.fg.red}No previous tests exist for scenario ${scenarioIndex} (${scenario.name})${logStyle.reset}`);
+            console.error(`${logStyle.fg.red}No previous tests exist for scenario ${scenarioIndex} (${scenario.name}).${logStyle.reset}`);
             if (fs.existsSync(`backstop_data/bitmaps_reference/${pathSuffix}`)) {
                 parsedAction = "test";
             } else {
-                console.error(`${logStyle.fg.red}No previous references exist for scenario ${scenarioIndex} (${scenario.name})${logStyle.reset}`);
+                console.error(`${logStyle.fg.red}No previous references exist for scenario ${scenarioIndex} (${scenario.name}).${logStyle.reset}`);
                 parsedAction = "reference";
             }
         }
@@ -475,16 +475,16 @@ function runBackstop(scenario, action = "test", originalAction = "", alwaysAppro
         return;
     }
 
-    console.log(`${logStyle.fg.green}Running ${parsedAction.toUpperCase()} for scenario ${scenarioIndex} (${scenario.name})${logStyle.reset}`);
+    console.log(`${logStyle.fg.green}Running ${parsedAction.toUpperCase()} for scenario ${scenarioIndex} (${scenario.name}).${logStyle.reset}`);
 
     const config = Object.assign({}, defaultConfig);
 
     config.viewports = scenario["screen_sizes"].map((screenSizeStr) => {
-        const match = screenSizeStr.match(/([1-9][0-9]*)x([1-9][0-9]*)/);
+        const match = screenSizeStr.match(/^([1-9][0-9]*)x([1-9][0-9]*)$/i);
         return {
             label: screenSizeStr,
-            width: parseInt(match[1]),
-            height: parseInt(match[2])
+            width: match ? parseInt(match[1]) : 1920,
+            height: match ? parseInt(match[2]) : 1080
         };
     });
 
@@ -536,7 +536,7 @@ function runBackstop(scenario, action = "test", originalAction = "", alwaysAppro
         defaultConfig.engineOptions.product = puppeteerProduct;
     }
 
-    console.log(`${logStyle.fg.white}Please type in the path of the YAML config file to load, or press enter to choose ${logStyle.reset}nyu.yml${logStyle.fg.white} by default${logStyle.reset}`);
+    console.log(`${logStyle.fg.white}Please type in the path of the YAML config file to load, or press enter to choose ${logStyle.reset}nyu.yml${logStyle.fg.white} by default.${logStyle.reset}`);
 
     /**
      * Handles keyboard input in the console.

@@ -32,23 +32,23 @@ function swapPuppeteer(product = "") {
     function accessPackageJson(action) {
         fs.readFile("node_modules/backstopjs/package.json", "utf-8", (err, data) => {
             if (err) {
-                console.error(`${logStyle.fg.red}File "node_modules/backstopjs/package.json" not found${logStyle.reset}`);
+                console.error(`${logStyle.fg.red}File "node_modules/backstopjs/package.json" not found.${logStyle.reset}`);
             } else {
                 try {
                     const parsedPackageJson = JSON.parse(data);
 
                     if (parsedPackageJson["dependencies"]) {
                         if (debugMode) {
-                            console.log(`${logStyle.fg.green}File "node_modules/backstopjs/package.json" parsed successfully${logStyle.reset}`);
+                            console.log(`${logStyle.fg.green}File "node_modules/backstopjs/package.json" parsed successfully.${logStyle.reset}`);
                         }
 
                         action(parsedPackageJson);
                         return;
                     } else {
-                        console.error(`${logStyle.fg.red}Field "dependencies" not found${logStyle.reset}`);
+                        console.error(`${logStyle.fg.red}Field "dependencies" not found.${logStyle.reset}`);
                     }
                 } catch (e) {
-                    console.error(`${logStyle.fg.red}File "node_modules/backstopjs/package.json" cannot be parsed${logStyle.reset}`);
+                    console.error(`${logStyle.fg.red}File "node_modules/backstopjs/package.json" cannot be parsed.${logStyle.reset}`);
                 }
             }
 
@@ -70,7 +70,7 @@ function swapPuppeteer(product = "") {
                 process.exit(1);
             } else {
                 if (debugMode) {
-                    console.log(`${logStyle.fg.green}File "node_modules/backstopjs/package.json" saved successfully${logStyle.reset}`);
+                    console.log(`${logStyle.fg.green}File "node_modules/backstopjs/package.json" saved successfully.${logStyle.reset}`);
                 }
 
                 handler();
@@ -109,22 +109,22 @@ function swapPuppeteer(product = "") {
         accessPackageJson((packageJson) => {
             delete packageJson["dependencies"]["puppeteer"];
             if (debugMode) {
-                console.log(`${logStyle.fg.white}Removing "puppeteer" from "dependencies"${logStyle.reset}`);
+                console.log(`${logStyle.fg.white}Removing "puppeteer" from "dependencies".${logStyle.reset}`);
             }
 
             writeToPackageJson(packageJson, () => {
                 if (!debugMode) {
-                    process.stdout.write(`${logStyle.reverse}Uninstalling "puppeteer" and its dependencies`);
+                    process.stdout.write(`${logStyle.reverse}Uninstalling "puppeteer" and its dependencies.${logStyle.reset}`);
                 }
 
                 const intervalId = debugMode ? 0 : setInterval(() => {
-                    process.stdout.write(".");
+                    process.stdout.write(`${logStyle.reverse}.${logStyle.reset}`);
                 }, 1000);
 
                 execute(`${installCmd}`, () => {
                     clearInterval(intervalId);
-                    process.stdout.write(`${logStyle.reset}\n`);
-                    console.log(`${logStyle.fg.green}${currentProduct ? `${currentProduct} version of ` : ""}Puppeteer uninstalled successfully${logStyle.reset}`);
+                    process.stdout.write(`\n`);
+                    console.log(`${logStyle.fg.green}${currentProduct ? `${currentProduct} version of ` : ""}Puppeteer uninstalled successfully.${logStyle.reset}`);
                     handler();
                 });
             });
@@ -141,23 +141,23 @@ function swapPuppeteer(product = "") {
         accessPackageJson((packageJson) => {
             packageJson["dependencies"]["puppeteer"] = "^3.0.0";
             if (debugMode) {
-                console.log(`${logStyle.fg.white}Setting "puppeteer" to "^3.0.0" in "dependencies"${logStyle.reset}`);
+                console.log(`${logStyle.fg.white}Setting "puppeteer" to "^3.0.0" in "dependencies".${logStyle.reset}`);
             }
 
             writeToPackageJson(packageJson, () => {
                 if (!debugMode) {
-                    process.stdout.write(`${logStyle.reverse}Reinstalling "puppeteer" and its dependencies`);
+                    process.stdout.write(`${logStyle.reverse}Reinstalling "puppeteer" and its dependencies.${logStyle.reset}`);
                 }
 
                 const intervalId = debugMode ? 0 : setInterval(() => {
-                    process.stdout.write(".");
+                    process.stdout.write(`${logStyle.reverse}.${logStyle.reset}`);
                 }, 1000);
 
                 execute((currentProduct === "Chrome" || product === "Firefox") ? `${firefoxKey} ${installCmd}` : `${installCmd}`, () => {
                     currentProduct = helper.puppeteerProduct(false);
                     clearInterval(intervalId);
-                    process.stdout.write(`${logStyle.reset}\n`);
-                    console.log(`${logStyle.fg.green}${currentProduct ? `${currentProduct} version of ` : ""}Puppeteer reinstalled successfully${logStyle.reset}`);
+                    process.stdout.write(`\n`);
+                    console.log(`${logStyle.fg.green}${currentProduct ? `${currentProduct} version of ` : ""}Puppeteer reinstalled successfully.${logStyle.reset}`);
                     handler();
                 });
             });

@@ -62,25 +62,25 @@ function rl() {
 function puppeteerProduct(log = true, exit = true) {
     if (fs.existsSync("node_modules/puppeteer/.local-chromium")) {
         if (log) {
-            console.log(`${logStyle.fg.green}Chrome version of Puppeteer found${logStyle.reset}`);
+            console.log(`${logStyle.fg.green}Chrome version of Puppeteer found.${logStyle.reset}`);
         }
 
         return "Chrome";
     } else if (fs.existsSync("node_modules/puppeteer/.local-firefox")) {
         if (log) {
-            console.log(`${logStyle.fg.green}Firefox version of Puppeteer found${logStyle.reset}`);
+            console.log(`${logStyle.fg.green}Firefox version of Puppeteer found.${logStyle.reset}`);
         }
 
         return "Firefox";
     } else if (fs.existsSync("node_modules/puppeteer")) {
         if (log) {
-            console.error(`${logStyle.fg.red}An unknown version of Puppeteer found${logStyle.reset}`);
+            console.error(`${logStyle.fg.red}An unknown version of Puppeteer found.${logStyle.reset}`);
         }
 
         return "";
     } else {
         if (log) {
-            console.error(`${logStyle.fg.red}Puppeteer not found${logStyle.reset}`);
+            console.error(`${logStyle.fg.red}Puppeteer not found.${logStyle.reset}`);
         }
 
         if (exit) {
