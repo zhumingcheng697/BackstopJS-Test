@@ -137,3 +137,15 @@
 - Added ability to use environment variable to determine `debugMode` when running `switch-environment.js`.
 
 - Updated `README.md`
+
+## Week 7
+
+### Monday: October 12, 2020 (1 hour)
+
+- Prevented interrupted console logs from contaminating the rest of the console output
+
+- Improved safety when parsing screen sizes
+
+- Uniformed console log format
+
+- Updated `README.md`

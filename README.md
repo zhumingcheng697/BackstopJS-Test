@@ -47,7 +47,7 @@
    
 4. Follow the instructions and start testing!
 
-    > If you are running in a Firefox environment, you may receive the warning `***WARNING! CHROME VERSION 62 OR GREATER IS REQUIRED. PLEASE UPDATE YOUR CHROME APP!***`. This is because BackstopJS currently does not have native Firefox support and only recognizes the version number of Chrome, but you may safely ignore this warning.
+    > If you are running in a Firefox environment, you may receive the warning `***WARNING! CHROME VERSION 62 OR GREATER IS REQUIRED. PLEASE UPDATE YOUR CHROME APP!***`. This is because BackstopJS currently does not have native Firefox support and only looks for Chrome version number, but you may safely ignore this warning.
 
 ## How to Switch Testing Environments
 
@@ -91,4 +91,4 @@
 - `urls[n].url1` - Required. Testing URL.
 - `urls[n].url2` - Optional. Reference URL.
 - `urls[n].delay` - Optional. Number of seconds to wait before running tests.
-- `urls[n].screen_sizes` - Required. An array containing the screen sizes that should be tested for each testing scenario. Each element should be formatted as `<screen_width>X<screen_height>`, such as `1920X1080`.
+- `urls[n].screen_sizes` - Required. An array containing the screen sizes that should be tested for each testing scenario. Each element should be formatted as `<screen_width>x<screen_height>`, such as `1920x1080`.
