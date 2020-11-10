@@ -1,7 +1,13 @@
 {
   "name": "backstopjs-test",
   "version": "1.0.1",
+  "description": "A Script that Parses YAML Config Files and Automates BackstopJS Tests in Chrome or Firefox Environment",
   "license": "CC-BY-NC-SA-4.0",
+  "author": {
+    "name": "McCoy Zhu",
+    "email": "mccoy.zhu@nyu.edu",
+    "url": "https://github.com/zhumingcheng697"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/zhumingcheng697/BackstopJS-Test.git"
