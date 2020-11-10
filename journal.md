@@ -149,3 +149,9 @@
 - Uniformed console log format
 
 - Updated `README.md`
+
+## Week 11
+
+### Monday: November 9, 2020 (0 hours)
+
+- Updated `package.json`
