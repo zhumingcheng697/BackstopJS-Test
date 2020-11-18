@@ -1,6 +1,6 @@
 # BackstopJS-Test
 
-**A Script that Parses YAML Config Files and Automates [BackstopJS](https://github.com/garris/BackstopJS) Tests in Chrome or Firefox Environment.**
+**A Script that Parses YAML Config Files and Automates [BackstopJS](https://github.com/garris/BackstopJS) Tests in Chrome, Firefox, or WebKit Environment.**
 
 ## Features
 
@@ -20,7 +20,7 @@
     >
     > If the necessary reference files do not exist before `backstop test` is run, `backstop reference` will be run automatically.
 
-- Easily switch between Chrome and Firefox testing environments
+- Easily choose between Chrome, Firefox, and WebKit testing environments
 
 ## How to Set Up
 
@@ -46,34 +46,6 @@
     ```
    
 4. Follow the instructions and start testing!
-
-    > If you are running in a Firefox environment, you may receive the warning `***WARNING! CHROME VERSION 62 OR GREATER IS REQUIRED. PLEASE UPDATE YOUR CHROME APP!***`. This is because BackstopJS currently does not have native Firefox support and only looks for Chrome version number, but you may safely ignore this warning.
-
-## How to Switch Testing Environments
-
-1. Run the script `switch-environment.js`.
-    ```
-    $ node switch-environment.js
-    ```
-    
-    or
-    
-    ```
-    $ npm run switch
-    ```
-   
-   > If you want to see the full realtime output of the scripts, set the environment variable `DEBUG_MODE` to any truthy value. Remember that environment variables are handled as `string`s, so anything other than empty spaces (which will ignored by the shell) will result to `true`.
-    > ```
-    > $ DEBUG_MODE=1 node switch-environment.js
-    > ```
-    > or
-    > ```
-    > $ DEBUG_MODE=1 npm run switch
-    > ```
-
-2. Wait for the download to finish and start testing!
-
-    > If you have accidentally terminated `switch-environment.js` before it finishes running, don’t worry, simply run it again. The script will ask you which environment (Chrome or Firefox) to install.
 
 ## Commands
 

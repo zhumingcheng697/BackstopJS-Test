@@ -17,7 +17,6 @@
     "yaml": "^1.10.0"
   },
   "scripts": {
-    "start": "node backstopjs-test.js",
-    "switch": "node switch-environment.js"
+    "start": "node backstopjs-test.js"
   }
 }
