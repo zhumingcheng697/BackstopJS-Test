@@ -1,6 +1,6 @@
 # BackstopJS-Test
 
-**A Script that Parses YAML Config Files and Automates [BackstopJS](https://github.com/garris/BackstopJS) Tests in Chrome, Firefox, or WebKit Environment.**
+**A Script that Parses YAML Config Files and Automates [BackstopJS](https://github.com/garris/BackstopJS) Tests in Chromium, Firefox, or WebKit Environment.**
 
 ## Features
 
@@ -20,7 +20,7 @@
     >
     > If the necessary reference files do not exist before `backstop test` is run, `backstop reference` will be run automatically.
 
-- Easily choose between Chrome, Firefox, and WebKit testing environments
+- Easily choose between Chromium, Firefox, and WebKit testing environments
 
 ## How to Set Up
 

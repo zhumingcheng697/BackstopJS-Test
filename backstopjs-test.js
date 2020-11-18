@@ -4,6 +4,23 @@ const readline = require("readline");
 const backstop = require("backstop-playwright");
 
 /**
+ * Default Backstop configuration for all runs.
+ *
+ * @type {Object}
+ */
+const defaultConfig = {
+    report: ["browser"],
+    engine: "playwright",
+    engineOptions: {
+        "args": ["--no-sandbox"]
+    },
+    asyncCaptureLimit: 20,
+    asyncCompareLimit: 100,
+    debug: false,
+    debugWindow: false
+};
+
+/**
  * Makes the console logs colorful.
  *
  * @link https://stackoverflow.com/a/40560590
@@ -59,7 +76,7 @@ const rl = readline.createInterface({
  */
 const BrowserType = {
     unset: "",
-    chrome: "chrome",
+    chromium: "chromium",
     firefox: "firefox",
     webkit: "webkit"
 }
@@ -92,23 +109,6 @@ let scenarioIndex = 0;
 let tempScenarioIndex = 0;
 
 /**
- * Default Backstop configuration for all runs.
- *
- * @type {Object}
- */
-const defaultConfig = {
-    report: ["browser"],
-    engine: "playwright",
-    engineOptions: {
-        "args": ["--no-sandbox"]
-    },
-    asyncCaptureLimit: 20,
-    asyncCompareLimit: 100,
-    debug: false,
-    debugWindow: false
-};
-
-/**
  * Chooses browser type to run tests against.
  *
  * @param {string} line Keyboard input
@@ -118,13 +118,13 @@ function chooseBrowserType(line) {
     if (BrowserType[line.toLowerCase()]) {
         defaultConfig.engineOptions.browserType = BrowserType[line.toLowerCase()];
     } else if (line.toLowerCase() === "c") {
-        defaultConfig.engineOptions.browserType = BrowserType.chrome;
+        defaultConfig.engineOptions.browserType = BrowserType.chromium;
     } else if (line.toLowerCase() === "f") {
         defaultConfig.engineOptions.browserType = BrowserType.firefox;
     } else if (line.toLowerCase() === "w") {
         defaultConfig.engineOptions.browserType = BrowserType.webkit;
     } else {
-        console.error(`${logStyle.fg.red}Please type in a valid keyword. (chrome/firefox/webkit/c/f/w)${logStyle.reset}`);
+        console.error(`${logStyle.fg.red}Please type in a valid keyword. (chromium/firefox/webkit/c/f/w)${logStyle.reset}`);
         return;
     }
 
@@ -612,7 +612,7 @@ function runBackstop(scenario, action = "test", originalAction = "", alwaysAppro
  * @return {void}
  */
 (function main() {
-    console.log(`${logStyle.fg.white}Choose ${logStyle.reset}"chrome" (c)${logStyle.fg.white}, ${logStyle.reset}"firefox" (f)${logStyle.fg.white}, or ${logStyle.reset}"webkit" (w)${logStyle.fg.white} as browser type?${logStyle.reset}`);
+    console.log(`${logStyle.fg.white}Choose ${logStyle.reset}"chromium" (c)${logStyle.fg.white}, ${logStyle.reset}"firefox" (f)${logStyle.fg.white}, or ${logStyle.reset}"webkit" (w)${logStyle.fg.white} as browser type?${logStyle.reset}`);
 
     /**
      * Handles keyboard input in the console.
