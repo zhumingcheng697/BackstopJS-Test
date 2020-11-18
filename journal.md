@@ -155,3 +155,15 @@
 ### Monday: November 9, 2020 (0 hours)
 
 - Updated `package.json`
+
+## Week 12
+
+### Tuesday: November 17, 2020 (3 hours)
+
+- Migrated from [`BackstopJS`](https://github.com/garris/BackstopJS) to [`Backstop-Playwright`](https://github.com/zhumingcheng697/Backstop-Playwright)
+
+- Removed the use of `helper.js`
+
+- Updated `README.md`
+
+- Rerun all tests
