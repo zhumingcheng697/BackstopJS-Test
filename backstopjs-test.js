@@ -1,11 +1,68 @@
 const fs = require("fs");
 const YAML = require("yaml");
-const backstop = require("backstopjs");
+const readline = require("readline");
+const backstop = require("backstop-playwright");
 
-const helper = require("./helper");
-const rl = helper.rl();
-const logStyle = helper.logStyle;
-const puppeteerProduct = helper.puppeteerProduct().toLowerCase();
+/**
+ * Makes the console logs colorful.
+ *
+ * @link https://stackoverflow.com/a/40560590
+ * @type {Object}
+ */
+const logStyle = {
+    reset: "\x1b[0m",
+    bright: "\x1b[1m",
+    dim: "\x1b[2m",
+    underscore: "\x1b[4m",
+    blink: "\x1b[5m",
+    reverse: "\x1b[7m",
+    hidden: "\x1b[8m",
+    fg: {
+        black: "\x1b[30m",
+        red: "\x1b[31m",
+        green: "\x1b[32m",
+        yellow: "\x1b[33m",
+        blue: "\x1b[34m",
+        magenta: "\x1b[35m",
+        cyan: "\x1b[36m",
+        white: "\x1b[37m",
+        crimson: "\x1b[38m"
+    },
+    bg: {
+        black: "\x1b[40m",
+        red: "\x1b[41m",
+        green: "\x1b[42m",
+        yellow: "\x1b[43m",
+        blue: "\x1b[44m",
+        magenta: "\x1b[45m",
+        cyan: "\x1b[46m",
+        white: "\x1b[47m",
+        crimson: "\x1b[48m"
+    }
+};
+
+/**
+ * Reads the keyboard input from the console.
+ *
+ * @link http://logan.tw/posts/2015/12/12/read-lines-from-stdin-in-nodejs/
+ */
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+    terminal: false
+});
+
+/**
+ * Available browser types.
+ *
+ * @type {Object.<string, string>}
+ */
+const BrowserType = {
+    unset: "",
+    chrome: "chrome",
+    firefox: "firefox",
+    webkit: "webkit"
+}
 
 /**
  * Keeps track of the current state of the program.
@@ -41,7 +98,7 @@ let tempScenarioIndex = 0;
  */
 const defaultConfig = {
     report: ["browser"],
-    engine: "puppeteer",
+    engine: "playwright",
     engineOptions: {
         "args": ["--no-sandbox"]
     },
@@ -50,6 +107,29 @@ const defaultConfig = {
     debug: false,
     debugWindow: false
 };
+
+/**
+ * Chooses browser type to run tests against.
+ *
+ * @param {string} line Keyboard input
+ * @return {void}
+ */
+function chooseBrowserType(line) {
+    if (BrowserType[line.toLowerCase()]) {
+        defaultConfig.engineOptions.browserType = BrowserType[line.toLowerCase()];
+    } else if (line.toLowerCase() === "c") {
+        defaultConfig.engineOptions.browserType = BrowserType.chrome;
+    } else if (line.toLowerCase() === "f") {
+        defaultConfig.engineOptions.browserType = BrowserType.firefox;
+    } else if (line.toLowerCase() === "w") {
+        defaultConfig.engineOptions.browserType = BrowserType.webkit;
+    } else {
+        console.error(`${logStyle.fg.red}Please type in a valid keyword. (chrome/firefox/webkit/c/f/w)${logStyle.reset}`);
+        return;
+    }
+
+    console.log(`${logStyle.fg.green}Chosen ${defaultConfig.engineOptions.browserType} as browser type.${logStyle.reset}\n${logStyle.fg.white}Please type in the path of the YAML config file to load, or press enter to choose ${logStyle.reset}nyu.yml${logStyle.fg.white} by default.${logStyle.reset}`);
+}
 
 /**
  * Loads scenarios from a YAML file
@@ -444,7 +524,7 @@ function runBackstop(scenario, action = "test", originalAction = "", alwaysAppro
 
     let parsedAction = action.toLowerCase();
     const name = scenario.name.replace(/\s+/g, "_");
-    const pathSuffix = `${puppeteerProduct || "unknown_browser"}/${name}`;
+    const pathSuffix = `${defaultConfig.engineOptions.browserType}/${name}`;
 
     isRunning = true;
 
@@ -532,16 +612,17 @@ function runBackstop(scenario, action = "test", originalAction = "", alwaysAppro
  * @return {void}
  */
 (function main() {
-    if (puppeteerProduct) {
-        defaultConfig.engineOptions.product = puppeteerProduct;
-    }
-
-    console.log(`${logStyle.fg.white}Please type in the path of the YAML config file to load, or press enter to choose ${logStyle.reset}nyu.yml${logStyle.fg.white} by default.${logStyle.reset}`);
+    console.log(`${logStyle.fg.white}Choose ${logStyle.reset}"chrome" (c)${logStyle.fg.white}, ${logStyle.reset}"firefox" (f)${logStyle.fg.white}, or ${logStyle.reset}"webkit" (w)${logStyle.fg.white} as browser type?${logStyle.reset}`);
 
     /**
      * Handles keyboard input in the console.
      */
     rl.on('line', (line) => {
+        if (!defaultConfig.engineOptions.browserType) {
+            chooseBrowserType(line);
+            return;
+        }
+
         if (scenarios.length <= 0) {
             loadYamlConfig(line);
             return;

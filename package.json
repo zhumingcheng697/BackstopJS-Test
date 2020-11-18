@@ -13,7 +13,7 @@
     "url": "https://github.com/zhumingcheng697/BackstopJS-Test.git"
   },
   "dependencies": {
-    "backstopjs": "^5.0.4",
+    "backstop-playwright": "^0.0",
     "yaml": "^1.10.0"
   },
   "scripts": {
