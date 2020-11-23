@@ -63,4 +63,4 @@
 - `urls[n].url1` - **Required.** Testing URL.
 - `urls[n].url2` - **Optional.** Reference URL.
 - `urls[n].delay` - **Optional.** Number of seconds to wait before running tests. *Defaults to `0` if unset.*
-- `urls[n].screen_sizes` - **Optional.** An array containing the screen sizes that should be tested for each testing scenario. Each element should be formatted as `<screen_width>x<screen_height>`, such as `1920x1080`. *Defaults to `["320x2500", "480x2500", "690x2500", "930x2500", "1200x2500"]` if unset.*
+- `urls[n].screen_sizes` - **Optional.** An array containing the screen sizes that should be tested for each testing scenario. Each element should be formatted as `<screen_width>x<screen_height>`, such as `1920x1080`. *Defaults to `320x2500`, `480x2500`, `690x2500`, `930x2500`, and `1200x2500` if unset.*
