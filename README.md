@@ -57,10 +57,10 @@
 
 ## Properties in the YAML Config File
 
-`urls` - Required. An array where all the testing scenarios reside.
+`urls` - **Required.** An array where all the testing scenarios reside.
 
-- `urls[n].name` - Required. A **unique** name or identifier of each testing scenario.
-- `urls[n].url1` - Required. Testing URL.
-- `urls[n].url2` - Optional. Reference URL.
-- `urls[n].delay` - Optional. Number of seconds to wait before running tests.
-- `urls[n].screen_sizes` - Required. An array containing the screen sizes that should be tested for each testing scenario. Each element should be formatted as `<screen_width>x<screen_height>`, such as `1920x1080`.
+- `urls[n].name` - **Required.** A *unique* name or identifier of each testing scenario.
+- `urls[n].url1` - **Required.** Testing URL.
+- `urls[n].url2` - **Optional.** Reference URL.
+- `urls[n].delay` - **Optional.** Number of seconds to wait before running tests. *Defaults to `0` if unset.*
+- `urls[n].screen_sizes` - **Optional.** An array containing the screen sizes that should be tested for each testing scenario. Each element should be formatted as `<screen_width>x<screen_height>`, such as `1920x1080`. *Defaults to `["320x2500", "480x2500", "690x2500", "930x2500", "1200x2500"]` if unset.*

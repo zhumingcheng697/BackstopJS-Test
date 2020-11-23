@@ -559,8 +559,8 @@ function runBackstop(scenario, action = "test", originalAction = "", alwaysAppro
 
     const config = Object.assign({}, defaultConfig);
 
-    config.viewports = scenario["screen_sizes"].map((screenSizeStr) => {
-        const match = screenSizeStr.match(/^([1-9][0-9]*)x([1-9][0-9]*)$/i);
+    config.viewports = (scenario["screen_sizes"] || ["320x2500", "480x2500", "690x2500", "930x2500", "1200x2500"]).map((screenSizeStr) => {
+        const match = typeof screenSizeStr === "string" && screenSizeStr.match(/^([1-9][0-9]*)x([1-9][0-9]*)$/i);
         return {
             label: screenSizeStr,
             width: match ? parseInt(match[1]) : 1920,
@@ -584,7 +584,7 @@ function runBackstop(scenario, action = "test", originalAction = "", alwaysAppro
             referenceUrl: (scenario["url2"] || ""),
             readyEvent: "",
             readySelector: "",
-            delay: (parseInt(scenario.delay || "0") || 0) * 1000,
+            delay: (parseFloat(scenario.delay || "0") || 0) * 1000,
             hideSelectors: [],
             removeSelectors: [],
             hoverSelector: "",
