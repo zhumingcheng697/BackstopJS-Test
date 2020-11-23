@@ -167,3 +167,11 @@
 - Updated `README.md`
 
 - Rerun all tests
+
+## Week 13
+
+### Monday: November 23, 2020 (2 hours)
+
+- Updated `nyu.yml`
+
+- Added support for default screen sizes
