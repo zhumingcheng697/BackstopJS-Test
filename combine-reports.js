@@ -1,43 +1,8 @@
 const fs = require("fs");
 
-
-/**
- * Makes the console logs colorful.
- *
- * @link https://stackoverflow.com/a/40560590
- * @type {Object}
- */
-const logStyle = {
-    reset: "\x1b[0m",
-    bright: "\x1b[1m",
-    dim: "\x1b[2m",
-    underscore: "\x1b[4m",
-    blink: "\x1b[5m",
-    reverse: "\x1b[7m",
-    hidden: "\x1b[8m",
-    fg: {
-        black: "\x1b[30m",
-        red: "\x1b[31m",
-        green: "\x1b[32m",
-        yellow: "\x1b[33m",
-        blue: "\x1b[34m",
-        magenta: "\x1b[35m",
-        cyan: "\x1b[36m",
-        white: "\x1b[37m",
-        crimson: "\x1b[38m"
-    },
-    bg: {
-        black: "\x1b[40m",
-        red: "\x1b[41m",
-        green: "\x1b[42m",
-        yellow: "\x1b[43m",
-        blue: "\x1b[44m",
-        magenta: "\x1b[45m",
-        cyan: "\x1b[46m",
-        white: "\x1b[47m",
-        crimson: "\x1b[48m"
-    }
-};
+const logRed = "\x1b[31m";
+const logGreen = "\x1b[32m";
+const logReset = "\x1b[0m";
 
 /**
  * Combines all config.js reports into one file
@@ -88,7 +53,7 @@ function combineReports() {
                     }
                 }
             } catch (e) {
-                console.error(`${logStyle.fg.red}Failed to copy files from ${srcDir} to ${destDir}:\n${e}${logStyle.reset}`);
+                console.error(`${logRed}Failed to copy files from ${srcDir} to ${destDir}:\n${e}${logReset}`);
             }
         }
     }
@@ -127,7 +92,8 @@ function combineReports() {
             try {
                 fs.writeFileSync(`${outputPath}/config.js`, outputConfig);
             } catch (e) {
-                console.error(`${logStyle.fg.red}Failed to write ${browserType} test files to ${outputPath}:\n${e}${logStyle.reset}`);
+                console.error(`${logRed}Failed to write ${browserType} test files to ${outputPath}:\n${e}${logReset}`);
+                return;
             }
 
             const fileSource = "node_modules/backstop-playwright/compare/output";
@@ -135,15 +101,25 @@ function combineReports() {
                 try {
                     copyNewFiles(fileSource, outputPath);
                 } catch (e) {
-                    console.error(`${logStyle.fg.red}An error occurred when copying source files:\n${e}${logStyle.reset}`);
+                    console.error(`${logRed}An error occurred when copying source files:\n${e}${logReset}`);
+                    return;
                 }
             } else {
-                console.error(`${logStyle.fg.red}Source files missing from "node_modules/backstop-playwright/compare/output"${logStyle.reset}`);
+                console.error(`${logRed}Source files missing from "node_modules/backstop-playwright/compare/output"${logReset}`);
+                return;
             }
         } catch (e) {
-            console.error(`${logStyle.fg.red}An error occurred when accessing ${browserType} test files:\n${e}${logStyle.reset}`);
+            console.error(`${logRed}An error occurred when accessing ${browserType} test files:\n${e}${logReset}`);
+            return;
         }
     }
+
+    console.log(`${logGreen}Combined report generated successfully${logReset}`);
 }
 
-combineReports();
+
+if (require.main === module) {
+    combineReports();
+}
+
+module.exports = combineReports;
