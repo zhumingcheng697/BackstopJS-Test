@@ -2,6 +2,7 @@ const fs = require("fs");
 const YAML = require("yaml");
 const readline = require("readline");
 const backstop = require("backstop-playwright");
+const combineReports = require("./combine-reports");
 
 /**
  * Default Backstop configuration for all runs.
@@ -181,6 +182,7 @@ function chooseRunModePrompt() {
 function typeInIndexToChoosePrompt() {
     console.log(`${logStyle.fg.yellow}Type in "auto run" at any time to start auto run.${logStyle.reset}`);
     console.log(`${logStyle.fg.yellow}Type in "approve all" at any time to approve all scenarios.${logStyle.reset}`);
+    console.log(`${logStyle.fg.yellow}Type in "combine reports" at any time to combine all previously failed tests into one html report.${logStyle.reset}`);
     console.log(`${logStyle.fg.yellow}Type in "show list" to see a list of all scenarios.${logStyle.reset}`);
     console.log(`${logStyle.fg.white}Type in a valid index (0 to ${scenarios.length - 1}) or the scenario name to choose a scenario, type in "--" or "++" to choose the previous or the next scenario, if there is one, or type anything else or press enter to choose ${logStyle.reset}scenario ${scenarioIndex} (${scenarios[scenarioIndex].name})${logStyle.fg.white} by default.${logStyle.reset}`);
 }
@@ -501,6 +503,7 @@ function runBackstop(scenario, action = "test", originalAction = "", alwaysAppro
                 resetAfterRun();
                 runMode = "m";
                 console.log(`${logStyle.fg.green}All runs completed.${logStyle.reset}`);
+                combineReports();
                 console.log(`${logStyle.fg.green}Automatically switched to manual mode.${logStyle.reset}`);
             } else {
                 if (runMode === "r") {
@@ -647,6 +650,9 @@ function runBackstop(scenario, action = "test", originalAction = "", alwaysAppro
                     readyForAutoRun();
                 } else if (line.toLowerCase() === "approve all") {
                     readyForApproveAll();
+                } else if (line.toLowerCase() === "combine reports") {
+                    combineReports();
+                    typeInIndexToChoosePrompt();
                 } else if (!scenarioChosen) {
                     if (line.toLowerCase() === "show list") {
                         showScenarioList();
