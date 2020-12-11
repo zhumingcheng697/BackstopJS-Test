@@ -22,6 +22,8 @@
 
 - Easily choose between Chromium, Firefox, and WebKit testing environments
 
+- Combine all failed test results into one html report
+
 ## How to Set Up
 
 1. Clone this repo.
@@ -52,6 +54,8 @@
 - `auto run` - Start running `test` on parsed testing scenarios automatically.
 
 - `approve all` - Start running `approve` on parsed testing scenarios automatically.
+
+- `combine reports` - Generate an html report by combining results of all previously failed tests.
 
 - `show list` - See a list of all the parsed testing scenarios.
 
