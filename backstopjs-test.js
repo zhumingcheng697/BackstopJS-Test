@@ -79,7 +79,7 @@ const BrowserType = {
     chromium: "chromium",
     firefox: "firefox",
     webkit: "webkit"
-}
+};
 
 /**
  * Keeps track of the current state of the program.
@@ -378,7 +378,7 @@ function confirmAutoRun(line) {
             if (lastRunAction === "reference" && isLastRunSuccessful) {
                 console.log(`${logStyle.fg.green}Resuming automatic run starting from the previous scenario, scenario ${scenarioIndex} (${scenarios[scenarioIndex].name}).${logStyle.reset}`);
             } else {
-                scenarioIndex += 1
+                scenarioIndex += 1;
                 console.log(`${logStyle.fg.green}Resuming automatic run starting from the next scenario, scenario ${scenarioIndex} (${scenarios[scenarioIndex].name}).${logStyle.reset}`);
             }
         }
@@ -422,7 +422,7 @@ function confirmApproveAll(line) {
             if (lastRunAction === "reference" && isLastRunSuccessful) {
                 console.log(`${logStyle.fg.green}Resuming approve all starting from the previous scenario, scenario ${scenarioIndex} (${scenarios[scenarioIndex].name}).${logStyle.reset}`);
             } else {
-                scenarioIndex += 1
+                scenarioIndex += 1;
                 console.log(`${logStyle.fg.green}Resuming approve all starting from the next scenario, scenario ${scenarioIndex} (${scenarios[scenarioIndex].name}).${logStyle.reset}`);
             }
         }
@@ -593,15 +593,16 @@ function runBackstop(scenario, action = "test", originalAction = "", alwaysAppro
             selectors: [],
             selectorExpansion: true,
             expect: 0,
-            misMatchThreshold : 0.1,
+            misMatchThreshold: 0.1,
             requireSameDimensions: true
         }
     ];
 
-    backstop(parsedAction, {config: config})
+    backstop(parsedAction, { config: config })
         .then(() => {
             runNextSteps(true);
-        }).catch(() => {
+        })
+        .catch(() => {
             runNextSteps(false);
         });
 }
@@ -617,7 +618,7 @@ function runBackstop(scenario, action = "test", originalAction = "", alwaysAppro
     /**
      * Handles keyboard input in the console.
      */
-    rl.on('line', (line) => {
+    rl.on("line", (line) => {
         if (!defaultConfig.engineOptions.browserType) {
             chooseBrowserType(line);
             return;
