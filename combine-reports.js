@@ -71,7 +71,18 @@ function combineReports(browsers = ["chromium", "firefox", "webkit"]) {
         }
     }
 
-    for (const browserType of browsers.filter((browser) => !!BrowserName[browser])) {
+    browsers = browsers.reduce((prev, curr) => {
+        if (BrowserName[curr.toLowerCase()]) {
+            prev.push(curr.toLowerCase())
+        }
+        return prev
+    }, []);
+
+    if (!browsers.length) {
+        browsers = ["chromium", "firefox", "webkit"];
+    }
+
+    for (const browserType of browsers) {
         try {
             const pathForBrowser = `backstop_data/html_report/${browserType}`;
             const testsForBrowser = [];
