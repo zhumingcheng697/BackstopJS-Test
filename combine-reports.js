@@ -73,9 +73,16 @@ function combineReports(browsers = []) {
 
     browsers = browsers.reduce((prev, curr) => {
         if (BrowserName[curr.toLowerCase()]) {
-            prev.push(curr.toLowerCase())
+            prev.push(curr.toLowerCase());
+        } else if (curr.toLowerCase() === "c") {
+            prev.push("chromium")
+        } else if (curr.toLowerCase() === "f") {
+            prev.push("firefox")
+        } else if (curr.toLowerCase() === "w") {
+            prev.push("webkit")
         }
-        return prev
+
+        return prev;
     }, []);
 
     if (!browsers.length) {
@@ -144,7 +151,7 @@ function combineReports(browsers = []) {
 
 
 if (require.main === module) {
-    combineReports();
+    combineReports(process.argv.slice(2));
 }
 
 module.exports = combineReports;
