@@ -62,7 +62,7 @@
     $ npm run combine
     ```
    
-    > You can also pass in the browser environments for which to combine the reports in the CLI.
+    > You can also pass in the browser environments for which to combine the reports in the command.
     > ```
     > $ node combine-reports.js chromium firefox
     > ```
