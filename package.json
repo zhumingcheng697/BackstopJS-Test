@@ -1,6 +1,6 @@
 {
   "name": "backstopjs-test",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "A Script that Parses YAML Config Files and Automates BackstopJS Tests in Chromium, Firefox, or WebKit Environment",
   "license": "CC-BY-NC-SA-4.0",
   "author": {
@@ -14,9 +14,11 @@
   },
   "dependencies": {
     "backstop-playwright": "^0.0",
+    "open": "^7.3.0",
     "yaml": "^1.10.0"
   },
   "scripts": {
-    "start": "node backstopjs-test.js"
+    "start": "node backstopjs-test.js",
+    "combine": "node combine-reports.js"
   }
 }

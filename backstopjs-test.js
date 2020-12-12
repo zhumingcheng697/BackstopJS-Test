@@ -2,6 +2,7 @@ const fs = require("fs");
 const YAML = require("yaml");
 const readline = require("readline");
 const backstop = require("backstop-playwright");
+const combineReports = require("./combine-reports");
 
 /**
  * Default Backstop configuration for all runs.
@@ -9,7 +10,6 @@ const backstop = require("backstop-playwright");
  * @type {Object}
  */
 const defaultConfig = {
-    report: ["browser"],
     engine: "playwright",
     engineOptions: {
         "args": ["--no-sandbox"]
@@ -79,7 +79,7 @@ const BrowserType = {
     chromium: "chromium",
     firefox: "firefox",
     webkit: "webkit"
-}
+};
 
 /**
  * Keeps track of the current state of the program.
@@ -181,6 +181,7 @@ function chooseRunModePrompt() {
 function typeInIndexToChoosePrompt() {
     console.log(`${logStyle.fg.yellow}Type in "auto run" at any time to start auto run.${logStyle.reset}`);
     console.log(`${logStyle.fg.yellow}Type in "approve all" at any time to approve all scenarios.${logStyle.reset}`);
+    console.log(`${logStyle.fg.yellow}Type in "combine reports" at any time to combine all previously failed tests into one html report.${logStyle.reset}`);
     console.log(`${logStyle.fg.yellow}Type in "show list" to see a list of all scenarios.${logStyle.reset}`);
     console.log(`${logStyle.fg.white}Type in a valid index (0 to ${scenarios.length - 1}) or the scenario name to choose a scenario, type in "--" or "++" to choose the previous or the next scenario, if there is one, or type anything else or press enter to choose ${logStyle.reset}scenario ${scenarioIndex} (${scenarios[scenarioIndex].name})${logStyle.fg.white} by default.${logStyle.reset}`);
 }
@@ -310,6 +311,22 @@ function readyForApproveAll() {
 }
 
 /**
+ * Switches back to manual mode from auto run or approve all.
+ *
+ * @param {boolean} openReport Whether to open and combine reports
+ * @return {void}
+ */
+function switchBackToManualMode(openReport) {
+    runMode = "m";
+    willApproveAllResume = false;
+    if (openReport) {
+        combineReports([defaultConfig.engineOptions.browserType]);
+    }
+    console.log(`${logStyle.fg.green}Running in manual mode.${logStyle.reset}`);
+    typeInIndexToChoosePrompt();
+}
+
+/**
  * Confirms whether to resume auto run after the program enters "nr" mode.
  *
  * @see runMode
@@ -324,10 +341,7 @@ function confirmResumeAutoRun(line) {
         const startIndex = scenarioIndex + ((lastRunAction === "reference" && isLastRunSuccessful) ? 0 : 1);
         console.warn(`${logStyle.fg.red}All the rest ${length} scenario${length === 1 ? "" : "s"} starting from scenario ${startIndex} (${scenarios[startIndex].name}) will be tested in order. Press enter at any time to stop the next test once the program starts running. Continue? (y/n)${logStyle.reset}`);
     } else if (line.toLowerCase() === "n") {
-        runMode = "m";
-        willAutoRunResume = false;
-        console.log(`${logStyle.fg.green}Running in manual mode.${logStyle.reset}`);
-        typeInIndexToChoosePrompt();
+        switchBackToManualMode(true);
     } else {
         console.error(`${logStyle.fg.red}Please type in a valid keyword. (y/n)${logStyle.reset}`);
     }
@@ -349,10 +363,7 @@ function confirmResumeApproveAll(line) {
         const startIndex = scenarioIndex + ((lastRunAction !== "approve") ? 0 : 1);
         console.warn(`${logStyle.fg.red}All the rest ${length} scenario${length === 1 ? "" : "s"} starting from scenario ${startIndex} (${scenarios[startIndex].name}) will be approved in order. Press enter at any time to stop the next test once the program starts running. Continue? (y/n)${logStyle.reset}`);
     } else if (line.toLowerCase() === "n") {
-        runMode = "m";
-        willApproveAllResume = false;
-        console.log(`${logStyle.fg.green}Running in manual mode.${logStyle.reset}`);
-        typeInIndexToChoosePrompt();
+        switchBackToManualMode(false);
     } else {
         console.error(`${logStyle.fg.red}Please type in a valid keyword. (y/n)${logStyle.reset}`);
     }
@@ -378,7 +389,7 @@ function confirmAutoRun(line) {
             if (lastRunAction === "reference" && isLastRunSuccessful) {
                 console.log(`${logStyle.fg.green}Resuming automatic run starting from the previous scenario, scenario ${scenarioIndex} (${scenarios[scenarioIndex].name}).${logStyle.reset}`);
             } else {
-                scenarioIndex += 1
+                scenarioIndex += 1;
                 console.log(`${logStyle.fg.green}Resuming automatic run starting from the next scenario, scenario ${scenarioIndex} (${scenarios[scenarioIndex].name}).${logStyle.reset}`);
             }
         }
@@ -422,7 +433,7 @@ function confirmApproveAll(line) {
             if (lastRunAction === "reference" && isLastRunSuccessful) {
                 console.log(`${logStyle.fg.green}Resuming approve all starting from the previous scenario, scenario ${scenarioIndex} (${scenarios[scenarioIndex].name}).${logStyle.reset}`);
             } else {
-                scenarioIndex += 1
+                scenarioIndex += 1;
                 console.log(`${logStyle.fg.green}Resuming approve all starting from the next scenario, scenario ${scenarioIndex} (${scenarios[scenarioIndex].name}).${logStyle.reset}`);
             }
         }
@@ -469,59 +480,6 @@ function resetAfterRun() {
  * @return {void}
  */
 function runBackstop(scenario, action = "test", originalAction = "", alwaysApprove = false) {
-    /**
-     * Handles the outcome of a Backstop action.
-     *
-     * @see runBackstop
-     * @param {boolean} isRunSuccessful Whether the last Backstop action is successful
-     * @return {void}
-     */
-    function runNextSteps(isRunSuccessful) {
-        lastRunAction = parsedAction;
-        isLastRunSuccessful = isRunSuccessful;
-
-        if (isRunSuccessful) {
-            console.log(`${logStyle.fg.green}${parsedAction.toUpperCase()} succeeded for scenario ${scenarioIndex} (${scenario.name}).${logStyle.reset}`);
-        } else {
-            console.error(`${logStyle.fg.red}${parsedAction.toUpperCase()} failed for scenario ${scenarioIndex} (${scenario.name}).${logStyle.reset}`);
-        }
-
-        if (isRunSuccessful && !["nr", "np"].includes(runMode) && parsedAction === "reference" && ["t", "a"].includes((originalAction || action).toLowerCase().charAt(0))) {
-            runBackstop(scenario, "test", (originalAction || action), alwaysApprove);
-        } else if (alwaysApprove && !["nr", "np"].includes(runMode) && parsedAction === "test" && ["a"].includes((originalAction || action).toLowerCase().charAt(0))) {
-            runBackstop(scenario, "approve", (originalAction || action), alwaysApprove);
-        } else {
-            if (runMode === "m") {
-                resetAfterRun();
-            } else if (!isRunSuccessful && parsedAction === "reference") {
-                resetAfterRun();
-                runMode = "m";
-                console.log(`${logStyle.fg.red}Automatically switched to manual mode.${logStyle.reset}`);
-            } else if (scenarioIndex === scenarios.length - 1 && (!["nr", "np"].includes(runMode) || runMode === "nr" && parsedAction === "test" || runMode === "np" && parsedAction === "approve")) {
-                resetAfterRun();
-                runMode = "m";
-                console.log(`${logStyle.fg.green}All runs completed.${logStyle.reset}`);
-                console.log(`${logStyle.fg.green}Automatically switched to manual mode.${logStyle.reset}`);
-            } else {
-                if (runMode === "r") {
-                    scenarioIndex += 1;
-                    console.log(`${logStyle.fg.green}Automatically starting test for next scenario, scenario ${scenarioIndex} (${scenarios[scenarioIndex].name}).${logStyle.reset}`);
-                    runBackstop(scenarios[scenarioIndex]);
-                } else if (runMode === "p") {
-                    scenarioIndex += 1;
-                    console.log(`${logStyle.fg.green}Automatically starting approval for next scenario, scenario ${scenarioIndex} (${scenarios[scenarioIndex].name}).${logStyle.reset}`);
-                    runBackstop(scenarios[scenarioIndex], "approve", "approve", true);
-                } else if (runMode === "nr") {
-                    isRunning = false;
-                    console.warn(`${logStyle.fg.red}Automatic run stopped due to your keyboard input. Resume the rest of the tests? (y/n)${logStyle.reset}`);
-                } else if (runMode === "np") {
-                    isRunning = false;
-                    console.warn(`${logStyle.fg.red}Automatic approval stopped due to your keyboard input. Resume the rest of the tests? (y/n)${logStyle.reset}`);
-                }
-            }
-        }
-    }
-
     let parsedAction = action.toLowerCase();
     const name = scenario.name.replace(/\s+/g, "_");
     const pathSuffix = `${defaultConfig.engineOptions.browserType}/${name}`;
@@ -559,6 +517,8 @@ function runBackstop(scenario, action = "test", originalAction = "", alwaysAppro
 
     const config = Object.assign({}, defaultConfig);
 
+    config.report = (runMode === "m" ? ["browser"] : []);
+
     config.viewports = (scenario["screen_sizes"] || ["320x2500", "480x2500", "690x2500", "930x2500", "1200x2500"]).map((screenSizeStr) => {
         const match = typeof screenSizeStr === "string" && screenSizeStr.match(/^([1-9][0-9]*)x([1-9][0-9]*)$/i);
         return {
@@ -593,15 +553,73 @@ function runBackstop(scenario, action = "test", originalAction = "", alwaysAppro
             selectors: [],
             selectorExpansion: true,
             expect: 0,
-            misMatchThreshold : 0.1,
+            misMatchThreshold: 0.1,
             requireSameDimensions: true
         }
     ];
 
-    backstop(parsedAction, {config: config})
+    /**
+     * Handles the outcome of a Backstop action.
+     *
+     * @see runBackstop
+     * @param {boolean} isRunSuccessful Whether the last Backstop action is successful
+     * @return {void}
+     */
+    function runNextSteps(isRunSuccessful) {
+        lastRunAction = parsedAction;
+        isLastRunSuccessful = isRunSuccessful;
+
+        if (isRunSuccessful) {
+            console.log(`${logStyle.fg.green}${parsedAction.toUpperCase()} succeeded for scenario ${scenarioIndex} (${scenario.name}).${logStyle.reset}`);
+        } else {
+            console.error(`${logStyle.fg.red}${parsedAction.toUpperCase()} failed for scenario ${scenarioIndex} (${scenario.name}).${logStyle.reset}`);
+        }
+
+        if (isRunSuccessful && !["nr", "np"].includes(runMode) && parsedAction === "reference" && ["t", "a"].includes((originalAction || action).toLowerCase().charAt(0))) {
+            runBackstop(scenario, "test", (originalAction || action), alwaysApprove);
+        } else if (alwaysApprove && !["nr", "np"].includes(runMode) && parsedAction === "test" && ["a"].includes((originalAction || action).toLowerCase().charAt(0))) {
+            runBackstop(scenario, "approve", (originalAction || action), alwaysApprove);
+        } else {
+            if (runMode === "m") {
+                resetAfterRun();
+            } else if (!isRunSuccessful && parsedAction === "reference") {
+                resetAfterRun();
+                runMode = "m";
+                combineReports([defaultConfig.engineOptions.browserType]);
+                console.log(`${logStyle.fg.red}Automatically switched to manual mode.${logStyle.reset}`);
+            } else if (scenarioIndex === scenarios.length - 1 && (!["nr", "np"].includes(runMode) || runMode === "nr" && parsedAction === "test" || runMode === "np" && parsedAction === "approve")) {
+                resetAfterRun();
+                runMode = "m";
+                console.log(`${logStyle.fg.green}All runs completed.${logStyle.reset}`);
+                if (parsedAction !== "approve") {
+                    combineReports([defaultConfig.engineOptions.browserType]);
+                }
+                console.log(`${logStyle.fg.green}Automatically switched to manual mode.${logStyle.reset}`);
+            } else {
+                if (runMode === "r") {
+                    scenarioIndex += 1;
+                    console.log(`${logStyle.fg.green}Automatically starting test for next scenario, scenario ${scenarioIndex} (${scenarios[scenarioIndex].name}).${logStyle.reset}`);
+                    runBackstop(scenarios[scenarioIndex]);
+                } else if (runMode === "p") {
+                    scenarioIndex += 1;
+                    console.log(`${logStyle.fg.green}Automatically starting approval for next scenario, scenario ${scenarioIndex} (${scenarios[scenarioIndex].name}).${logStyle.reset}`);
+                    runBackstop(scenarios[scenarioIndex], "approve", "approve", true);
+                } else if (runMode === "nr") {
+                    isRunning = false;
+                    console.warn(`${logStyle.fg.red}Automatic run stopped due to your keyboard input. Resume the rest of the tests? (y/n)${logStyle.reset}`);
+                } else if (runMode === "np") {
+                    isRunning = false;
+                    console.warn(`${logStyle.fg.red}Automatic approval stopped due to your keyboard input. Resume the rest of the tests? (y/n)${logStyle.reset}`);
+                }
+            }
+        }
+    }
+
+    backstop(parsedAction, { config: config })
         .then(() => {
             runNextSteps(true);
-        }).catch(() => {
+        })
+        .catch(() => {
             runNextSteps(false);
         });
 }
@@ -617,7 +635,7 @@ function runBackstop(scenario, action = "test", originalAction = "", alwaysAppro
     /**
      * Handles keyboard input in the console.
      */
-    rl.on('line', (line) => {
+    rl.on("line", (line) => {
         if (!defaultConfig.engineOptions.browserType) {
             chooseBrowserType(line);
             return;
@@ -646,6 +664,9 @@ function runBackstop(scenario, action = "test", originalAction = "", alwaysAppro
                     readyForAutoRun();
                 } else if (line.toLowerCase() === "approve all") {
                     readyForApproveAll();
+                } else if (line.toLowerCase() === "combine reports") {
+                    combineReports([defaultConfig.engineOptions.browserType]);
+                    typeInIndexToChoosePrompt();
                 } else if (!scenarioChosen) {
                     if (line.toLowerCase() === "show list") {
                         showScenarioList();
