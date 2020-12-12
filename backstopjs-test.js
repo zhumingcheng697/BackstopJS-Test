@@ -10,7 +10,6 @@ const combineReports = require("./combine-reports");
  * @type {Object}
  */
 const defaultConfig = {
-    report: ["browser"],
     engine: "playwright",
     engineOptions: {
         "args": ["--no-sandbox"]
@@ -503,7 +502,7 @@ function runBackstop(scenario, action = "test", originalAction = "", alwaysAppro
                 resetAfterRun();
                 runMode = "m";
                 console.log(`${logStyle.fg.green}All runs completed.${logStyle.reset}`);
-                combineReports();
+                combineReports([defaultConfig.engineOptions.browserType]);
                 console.log(`${logStyle.fg.green}Automatically switched to manual mode.${logStyle.reset}`);
             } else {
                 if (runMode === "r") {
@@ -561,6 +560,8 @@ function runBackstop(scenario, action = "test", originalAction = "", alwaysAppro
     console.log(`${logStyle.fg.green}Running ${parsedAction.toUpperCase()} for scenario ${scenarioIndex} (${scenario.name}).${logStyle.reset}`);
 
     const config = Object.assign({}, defaultConfig);
+
+    config.report = (runMode === "m" ? ["browser"] : []);
 
     config.viewports = (scenario["screen_sizes"] || ["320x2500", "480x2500", "690x2500", "930x2500", "1200x2500"]).map((screenSizeStr) => {
         const match = typeof screenSizeStr === "string" && screenSizeStr.match(/^([1-9][0-9]*)x([1-9][0-9]*)$/i);
@@ -651,7 +652,7 @@ function runBackstop(scenario, action = "test", originalAction = "", alwaysAppro
                 } else if (line.toLowerCase() === "approve all") {
                     readyForApproveAll();
                 } else if (line.toLowerCase() === "combine reports") {
-                    combineReports();
+                    combineReports([defaultConfig.engineOptions.browserType]);
                     typeInIndexToChoosePrompt();
                 } else if (!scenarioChosen) {
                     if (line.toLowerCase() === "show list") {
