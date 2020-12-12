@@ -311,6 +311,22 @@ function readyForApproveAll() {
 }
 
 /**
+ * Switches back to manual mode from auto run or approve all.
+ *
+ * @param {boolean} openReport Whether to open and combine reports
+ * @return {void}
+ */
+function switchBackToManualMode(openReport) {
+    runMode = "m";
+    willApproveAllResume = false;
+    if (openReport) {
+        combineReports([defaultConfig.engineOptions.browserType]);
+    }
+    console.log(`${logStyle.fg.green}Running in manual mode.${logStyle.reset}`);
+    typeInIndexToChoosePrompt();
+}
+
+/**
  * Confirms whether to resume auto run after the program enters "nr" mode.
  *
  * @see runMode
@@ -325,10 +341,7 @@ function confirmResumeAutoRun(line) {
         const startIndex = scenarioIndex + ((lastRunAction === "reference" && isLastRunSuccessful) ? 0 : 1);
         console.warn(`${logStyle.fg.red}All the rest ${length} scenario${length === 1 ? "" : "s"} starting from scenario ${startIndex} (${scenarios[startIndex].name}) will be tested in order. Press enter at any time to stop the next test once the program starts running. Continue? (y/n)${logStyle.reset}`);
     } else if (line.toLowerCase() === "n") {
-        runMode = "m";
-        willAutoRunResume = false;
-        console.log(`${logStyle.fg.green}Running in manual mode.${logStyle.reset}`);
-        typeInIndexToChoosePrompt();
+        switchBackToManualMode(true);
     } else {
         console.error(`${logStyle.fg.red}Please type in a valid keyword. (y/n)${logStyle.reset}`);
     }
@@ -350,10 +363,7 @@ function confirmResumeApproveAll(line) {
         const startIndex = scenarioIndex + ((lastRunAction !== "approve") ? 0 : 1);
         console.warn(`${logStyle.fg.red}All the rest ${length} scenario${length === 1 ? "" : "s"} starting from scenario ${startIndex} (${scenarios[startIndex].name}) will be approved in order. Press enter at any time to stop the next test once the program starts running. Continue? (y/n)${logStyle.reset}`);
     } else if (line.toLowerCase() === "n") {
-        runMode = "m";
-        willApproveAllResume = false;
-        console.log(`${logStyle.fg.green}Running in manual mode.${logStyle.reset}`);
-        typeInIndexToChoosePrompt();
+        switchBackToManualMode(false);
     } else {
         console.error(`${logStyle.fg.red}Please type in a valid keyword. (y/n)${logStyle.reset}`);
     }
@@ -497,12 +507,15 @@ function runBackstop(scenario, action = "test", originalAction = "", alwaysAppro
             } else if (!isRunSuccessful && parsedAction === "reference") {
                 resetAfterRun();
                 runMode = "m";
+                combineReports([defaultConfig.engineOptions.browserType]);
                 console.log(`${logStyle.fg.red}Automatically switched to manual mode.${logStyle.reset}`);
             } else if (scenarioIndex === scenarios.length - 1 && (!["nr", "np"].includes(runMode) || runMode === "nr" && parsedAction === "test" || runMode === "np" && parsedAction === "approve")) {
                 resetAfterRun();
                 runMode = "m";
                 console.log(`${logStyle.fg.green}All runs completed.${logStyle.reset}`);
-                combineReports([defaultConfig.engineOptions.browserType]);
+                if (parsedAction !== "approve") {
+                    combineReports([defaultConfig.engineOptions.browserType]);
+                }
                 console.log(`${logStyle.fg.green}Automatically switched to manual mode.${logStyle.reset}`);
             } else {
                 if (runMode === "r") {
