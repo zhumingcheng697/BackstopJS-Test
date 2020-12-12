@@ -22,7 +22,7 @@ const BrowserName = {
  * @param browsers {string[]}
  * @returns {void}
  */
-function combineReports(browsers = ["chromium", "firefox", "webkit"]) {
+function combineReports(browsers = []) {
     /**
      * Extracts tests from config.
      *
