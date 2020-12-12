@@ -1,15 +1,28 @@
 const fs = require("fs");
+const open = require("open");
 
 const logRed = "\x1b[31m";
 const logGreen = "\x1b[32m";
 const logReset = "\x1b[0m";
 
 /**
+ * Browser names.
+ *
+ * @type {Object.<string, string>}
+ */
+const BrowserName = {
+    chromium: "Chromium",
+    firefox: "Firefox",
+    webkit: "WebKit"
+};
+
+/**
  * Combines all config.js reports into one file
  *
+ * @param browsers {string[]}
  * @returns {void}
  */
-function combineReports() {
+function combineReports(browsers = ["chromium", "firefox", "webkit"]) {
     /**
      * Extracts tests from config.
      *
@@ -58,7 +71,7 @@ function combineReports() {
         }
     }
 
-    for (const browserType of ["chromium", "firefox", "webkit"]) {
+    for (const browserType of browsers.filter((browser) => !!BrowserName[browser])) {
         try {
             const pathForBrowser = `backstop_data/html_report/${browserType}`;
             const testsForBrowser = [];
@@ -86,7 +99,7 @@ function combineReports() {
             }
 
             const outputConfig = `report({
-  "testSuite": "BackstopJS",
+  "testSuite": "${BrowserName[browserType]}",
   "tests": [` + testsForBrowser.join(",") + `]
 });`;
             try {
@@ -100,6 +113,7 @@ function combineReports() {
             if (fs.existsSync(fileSource)) {
                 try {
                     copyNewFiles(fileSource, outputPath);
+                    open(`${outputPath}/index.html`);
                 } catch (e) {
                     console.error(`${logRed}An error occurred when copying source files:\n${e}${logReset}`);
                     return;
