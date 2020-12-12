@@ -49,6 +49,32 @@
    
 4. Follow the instructions and start testing!
 
+## How to Combine Reports
+
+1. Run the script `combine-reports.js`.
+    ```
+    $ node combine-reports.js
+    ```
+
+    or
+
+    ```
+    $ npm run combine
+    ```
+   
+    > You can also pass in the browser environments for which to combine the reports in the CLI.
+    > ```
+    > $ node combine-reports.js chromium firefox
+    > ```
+    >
+    > or
+    >
+    > ```
+    > $ npm run combine webkit
+    > ```
+
+2. Wait for the combined report to open.
+
 ## Commands
 
 - `auto run` - Start running `test` on parsed testing scenarios automatically.
