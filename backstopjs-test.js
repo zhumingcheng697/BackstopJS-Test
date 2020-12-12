@@ -480,63 +480,6 @@ function resetAfterRun() {
  * @return {void}
  */
 function runBackstop(scenario, action = "test", originalAction = "", alwaysApprove = false) {
-    /**
-     * Handles the outcome of a Backstop action.
-     *
-     * @see runBackstop
-     * @param {boolean} isRunSuccessful Whether the last Backstop action is successful
-     * @return {void}
-     */
-    function runNextSteps(isRunSuccessful) {
-        lastRunAction = parsedAction;
-        isLastRunSuccessful = isRunSuccessful;
-
-        if (isRunSuccessful) {
-            console.log(`${logStyle.fg.green}${parsedAction.toUpperCase()} succeeded for scenario ${scenarioIndex} (${scenario.name}).${logStyle.reset}`);
-        } else {
-            console.error(`${logStyle.fg.red}${parsedAction.toUpperCase()} failed for scenario ${scenarioIndex} (${scenario.name}).${logStyle.reset}`);
-        }
-
-        if (isRunSuccessful && !["nr", "np"].includes(runMode) && parsedAction === "reference" && ["t", "a"].includes((originalAction || action).toLowerCase().charAt(0))) {
-            runBackstop(scenario, "test", (originalAction || action), alwaysApprove);
-        } else if (alwaysApprove && !["nr", "np"].includes(runMode) && parsedAction === "test" && ["a"].includes((originalAction || action).toLowerCase().charAt(0))) {
-            runBackstop(scenario, "approve", (originalAction || action), alwaysApprove);
-        } else {
-            if (runMode === "m") {
-                resetAfterRun();
-            } else if (!isRunSuccessful && parsedAction === "reference") {
-                resetAfterRun();
-                runMode = "m";
-                combineReports([defaultConfig.engineOptions.browserType]);
-                console.log(`${logStyle.fg.red}Automatically switched to manual mode.${logStyle.reset}`);
-            } else if (scenarioIndex === scenarios.length - 1 && (!["nr", "np"].includes(runMode) || runMode === "nr" && parsedAction === "test" || runMode === "np" && parsedAction === "approve")) {
-                resetAfterRun();
-                runMode = "m";
-                console.log(`${logStyle.fg.green}All runs completed.${logStyle.reset}`);
-                if (parsedAction !== "approve") {
-                    combineReports([defaultConfig.engineOptions.browserType]);
-                }
-                console.log(`${logStyle.fg.green}Automatically switched to manual mode.${logStyle.reset}`);
-            } else {
-                if (runMode === "r") {
-                    scenarioIndex += 1;
-                    console.log(`${logStyle.fg.green}Automatically starting test for next scenario, scenario ${scenarioIndex} (${scenarios[scenarioIndex].name}).${logStyle.reset}`);
-                    runBackstop(scenarios[scenarioIndex]);
-                } else if (runMode === "p") {
-                    scenarioIndex += 1;
-                    console.log(`${logStyle.fg.green}Automatically starting approval for next scenario, scenario ${scenarioIndex} (${scenarios[scenarioIndex].name}).${logStyle.reset}`);
-                    runBackstop(scenarios[scenarioIndex], "approve", "approve", true);
-                } else if (runMode === "nr") {
-                    isRunning = false;
-                    console.warn(`${logStyle.fg.red}Automatic run stopped due to your keyboard input. Resume the rest of the tests? (y/n)${logStyle.reset}`);
-                } else if (runMode === "np") {
-                    isRunning = false;
-                    console.warn(`${logStyle.fg.red}Automatic approval stopped due to your keyboard input. Resume the rest of the tests? (y/n)${logStyle.reset}`);
-                }
-            }
-        }
-    }
-
     let parsedAction = action.toLowerCase();
     const name = scenario.name.replace(/\s+/g, "_");
     const pathSuffix = `${defaultConfig.engineOptions.browserType}/${name}`;
@@ -614,6 +557,63 @@ function runBackstop(scenario, action = "test", originalAction = "", alwaysAppro
             requireSameDimensions: true
         }
     ];
+
+    /**
+     * Handles the outcome of a Backstop action.
+     *
+     * @see runBackstop
+     * @param {boolean} isRunSuccessful Whether the last Backstop action is successful
+     * @return {void}
+     */
+    function runNextSteps(isRunSuccessful) {
+        lastRunAction = parsedAction;
+        isLastRunSuccessful = isRunSuccessful;
+
+        if (isRunSuccessful) {
+            console.log(`${logStyle.fg.green}${parsedAction.toUpperCase()} succeeded for scenario ${scenarioIndex} (${scenario.name}).${logStyle.reset}`);
+        } else {
+            console.error(`${logStyle.fg.red}${parsedAction.toUpperCase()} failed for scenario ${scenarioIndex} (${scenario.name}).${logStyle.reset}`);
+        }
+
+        if (isRunSuccessful && !["nr", "np"].includes(runMode) && parsedAction === "reference" && ["t", "a"].includes((originalAction || action).toLowerCase().charAt(0))) {
+            runBackstop(scenario, "test", (originalAction || action), alwaysApprove);
+        } else if (alwaysApprove && !["nr", "np"].includes(runMode) && parsedAction === "test" && ["a"].includes((originalAction || action).toLowerCase().charAt(0))) {
+            runBackstop(scenario, "approve", (originalAction || action), alwaysApprove);
+        } else {
+            if (runMode === "m") {
+                resetAfterRun();
+            } else if (!isRunSuccessful && parsedAction === "reference") {
+                resetAfterRun();
+                runMode = "m";
+                combineReports([defaultConfig.engineOptions.browserType]);
+                console.log(`${logStyle.fg.red}Automatically switched to manual mode.${logStyle.reset}`);
+            } else if (scenarioIndex === scenarios.length - 1 && (!["nr", "np"].includes(runMode) || runMode === "nr" && parsedAction === "test" || runMode === "np" && parsedAction === "approve")) {
+                resetAfterRun();
+                runMode = "m";
+                console.log(`${logStyle.fg.green}All runs completed.${logStyle.reset}`);
+                if (parsedAction !== "approve") {
+                    combineReports([defaultConfig.engineOptions.browserType]);
+                }
+                console.log(`${logStyle.fg.green}Automatically switched to manual mode.${logStyle.reset}`);
+            } else {
+                if (runMode === "r") {
+                    scenarioIndex += 1;
+                    console.log(`${logStyle.fg.green}Automatically starting test for next scenario, scenario ${scenarioIndex} (${scenarios[scenarioIndex].name}).${logStyle.reset}`);
+                    runBackstop(scenarios[scenarioIndex]);
+                } else if (runMode === "p") {
+                    scenarioIndex += 1;
+                    console.log(`${logStyle.fg.green}Automatically starting approval for next scenario, scenario ${scenarioIndex} (${scenarios[scenarioIndex].name}).${logStyle.reset}`);
+                    runBackstop(scenarios[scenarioIndex], "approve", "approve", true);
+                } else if (runMode === "nr") {
+                    isRunning = false;
+                    console.warn(`${logStyle.fg.red}Automatic run stopped due to your keyboard input. Resume the rest of the tests? (y/n)${logStyle.reset}`);
+                } else if (runMode === "np") {
+                    isRunning = false;
+                    console.warn(`${logStyle.fg.red}Automatic approval stopped due to your keyboard input. Resume the rest of the tests? (y/n)${logStyle.reset}`);
+                }
+            }
+        }
+    }
 
     backstop(parsedAction, { config: config })
         .then(() => {
