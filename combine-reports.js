@@ -114,7 +114,7 @@ function combineReports(browsers = []) {
                 fs.writeFileSync(`${outputPath}/config.js`, configPrefix);
 
                 if (fs.existsSync(pathForBrowser)) {
-                    let isFirstGroup = false;
+                    let isFirstGroup = true;
                     for (const dir of fs.readdirSync(pathForBrowser, { withFileTypes: true })) {
                         if (dir.isDirectory()) {
                             const pathForConfig = `${pathForBrowser}/${dir.name}/config.js`;
