@@ -75,11 +75,11 @@ function combineReports(browsers = []) {
         if (BrowserName[curr.toLowerCase()]) {
             prev.push(curr.toLowerCase());
         } else if (curr.toLowerCase() === "c") {
-            prev.push("chromium")
+            prev.push("chromium");
         } else if (curr.toLowerCase() === "f") {
-            prev.push("firefox")
+            prev.push("firefox");
         } else if (curr.toLowerCase() === "w") {
-            prev.push("webkit")
+            prev.push("webkit");
         }
 
         return prev;
@@ -104,8 +104,14 @@ function combineReports(browsers = []) {
             const configPrefix = `report({
   "testSuite": "${BrowserName[browserType]}",
   "id": "Combined at ${(new Date()).toLocaleString(undefined, {
-      year: "numeric", month: "short", day: "numeric", weekday: "short", hour: "numeric", minute: "numeric", timeZoneName: "short"
-  })}",
+                year: "numeric",
+                month: "short",
+                day: "numeric",
+                weekday: "short",
+                hour: "numeric",
+                minute: "numeric",
+                timeZoneName: "short"
+            })}",
   "tests": [`;
             const configSuffix = `]
 });`;
