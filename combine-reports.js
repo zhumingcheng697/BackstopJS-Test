@@ -92,21 +92,6 @@ function combineReports(browsers = []) {
     for (const browserType of browsers) {
         try {
             const pathForBrowser = `backstop_data/html_report/${browserType}`;
-            const testsForBrowser = [];
-
-            if (fs.existsSync(pathForBrowser)) {
-                for (const dir of fs.readdirSync(pathForBrowser, { withFileTypes: true })) {
-                    if (dir.isDirectory()) {
-                        const pathForConfig = `${pathForBrowser}/${dir.name}/config.js`;
-
-                        if (fs.existsSync(pathForConfig)) {
-                            const config = fs.readFileSync(pathForConfig, "utf8");
-                            testsForBrowser.push(extractedTests(config));
-                        }
-                    }
-                }
-            }
-
             const outputPath = `combined_report/${browserType}`;
 
             if (!fs.existsSync(outputPath)) {
@@ -116,12 +101,44 @@ function combineReports(browsers = []) {
                 fs.mkdirSync(outputPath);
             }
 
-            const outputConfig = `report({
+            const configPrefix = `report({
   "testSuite": "${BrowserName[browserType]}",
-  "tests": [` + testsForBrowser.join(",") + `]
+  "id": "Combined at ${(new Date()).toLocaleString(undefined, {
+      year: "numeric", month: "short", day: "numeric", weekday: "short", hour: "numeric", minute: "numeric", timeZoneName: "short"
+  })}",
+  "tests": [`;
+            const configSuffix = `]
 });`;
+
             try {
-                fs.writeFileSync(`${outputPath}/config.js`, outputConfig);
+                fs.writeFileSync(`${outputPath}/config.js`, configPrefix);
+
+                if (fs.existsSync(pathForBrowser)) {
+                    let isFirstGroup = false;
+                    for (const dir of fs.readdirSync(pathForBrowser, { withFileTypes: true })) {
+                        if (dir.isDirectory()) {
+                            const pathForConfig = `${pathForBrowser}/${dir.name}/config.js`;
+
+                            if (fs.existsSync(pathForConfig)) {
+                                try {
+                                    const config = fs.readFileSync(pathForConfig, "utf8");
+
+                                    if (isFirstGroup) {
+                                        isFirstGroup = false;
+                                    } else {
+                                        fs.appendFileSync(`${outputPath}/config.js`, ",");
+                                    }
+
+                                    fs.appendFileSync(`${outputPath}/config.js`, extractedTests(config));
+                                } catch (e) {
+                                    console.error(`${logRed}Failed to copy ${browserType} test files from "${pathForConfig}" to ${outputPath}:\n${e}${logReset}`);
+                                }
+                            }
+                        }
+                    }
+                }
+
+                fs.appendFileSync(`${outputPath}/config.js`, configSuffix);
             } catch (e) {
                 console.error(`${logRed}Failed to write ${browserType} test files to ${outputPath}:\n${e}${logReset}`);
                 return;
