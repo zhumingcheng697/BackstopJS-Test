@@ -27,14 +27,16 @@ function combineReports(browsers = []) {
      * Extracts tests from config.
      *
      * @param config {string}
-     * @returns {string}
+     * @returns {string[]}
      */
     function extractedTests(config) {
-        const leftIndex = config.indexOf("[");
-        const rightIndex = config.lastIndexOf("]");
+        let leftIndex = config.indexOf("[");
+        let rightIndex = config.lastIndexOf("]");
+        leftIndex = config.indexOf("{", leftIndex);
+        rightIndex = config.lastIndexOf("}", rightIndex);
 
         const allTests = config.slice(leftIndex + 1, rightIndex).replace(/(?:\.\.\/){3}/g, "../../backstop_data/");
-        return allTests.split(/}[\n\s]*,[\n\s]*{/).filter((test) => test.includes(`"status": "fail"`)).join(`}, {`);
+        return allTests.split(/}[\n\s]*,[\n\s]*{/).filter((test) => test.includes(`"status": "fail"`));
     }
 
     /**
@@ -129,13 +131,17 @@ function combineReports(browsers = []) {
                                 try {
                                     const config = fs.readFileSync(pathForConfig, "utf8");
 
-                                    if (isFirstGroup) {
-                                        isFirstGroup = false;
-                                    } else {
-                                        fs.appendFileSync(`${outputPath}/config.js`, ",");
-                                    }
+                                    for (const failedTest of extractedTests(config)) {
+                                        if (isFirstGroup) {
+                                            isFirstGroup = false;
+                                        } else {
+                                            fs.appendFileSync(`${outputPath}/config.js`, ", ");
+                                        }
 
-                                    fs.appendFileSync(`${outputPath}/config.js`, extractedTests(config));
+                                        fs.appendFileSync(`${outputPath}/config.js`, "{");
+                                        fs.appendFileSync(`${outputPath}/config.js`, failedTest);
+                                        fs.appendFileSync(`${outputPath}/config.js`, "}");
+                                    }
                                 } catch (e) {
                                     console.error(`${logRed}Failed to copy ${browserType} test files from "${pathForConfig}" to ${outputPath}:\n${e}${logReset}`);
                                 }
