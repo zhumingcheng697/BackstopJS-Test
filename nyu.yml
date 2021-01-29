@@ -40,40 +40,20 @@ urls:
     url2: http://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/content-template-with-sidebar.html
 
   - name: Study Abroad Home
-    url1: http://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression//global-study-centers/study-abroad-homepage.html
-    url2: http://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression//global-study-centers/study-abroad-homepage.html
+    url1: http://qacms.home.nyu.edu/sydney.html
+    url2: http://www.nyu.edu/sydney.html
 
   - name: Study Abroad Landing (1)
-    url1: http://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/global-study-centers/study-abroad-homepage/study-abroad-landing.html
-    url2: http://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/global-study-centers/study-abroad-homepage/study-abroad-landing.html
+    url1: http://qacms.home.nyu.edu/sydney/about-us.html
+    url2: http://www.nyu.edu/sydney/about-us.html
 
   - name: Study Abroad Content (1)
-    url1: http://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/global-study-centers/study-abroad-homepage/study-abroad-landing/study-abroad-content.html
-    url2: http://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/global-study-centers/study-abroad-homepage/study-abroad-landing/study-abroad-content.html
+    url1: http://qacms.home.nyu.edu/sydney/student-life/living-in-sydney.html
+    url2: http://www.nyu.edu/sydney/student-life/living-in-sydney.html
 
   - name: Study Abroad Content with Sidebar (1)
-    url1: http://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/global-study-centers/study-abroad-homepage/study-abroad-landing/study-abroad-content-w-sidebar.html
-    url2: http://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/global-study-centers/study-abroad-homepage/study-abroad-landing/study-abroad-content-w-sidebar.html
-
-  - name: Study Abroad Landing (2)
-    url1: http://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/global-study-centers/study-abroad-homepage/study-abroad-landing1.html
-    url2: http://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/global-study-centers/study-abroad-homepage/study-abroad-landing1.html
-
-  - name: Study Abroad Content (2)
-    url1: http://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/global-study-centers/study-abroad-homepage/study-abroad-landing1/study-abroad-content.html
-    url2: http://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/global-study-centers/study-abroad-homepage/study-abroad-landing1/study-abroad-content.html
-
-  - name: Study Abroad Content w Sidebar (2)
-    url1: http://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/global-study-centers/study-abroad-homepage/study-abroad-landing1/study-abroad-content-w-sidebar.html
-    url2: http://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/global-study-centers/study-abroad-homepage/study-abroad-landing1/study-abroad-content-w-sidebar.html
-
-  - name: Study Abroad Landing (3)
-    url1: http://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/global-study-centers/study-abroad-homepage/study-abroad-landing11.html
-    url2: http://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/global-study-centers/study-abroad-homepage/study-abroad-landing11.html
-
-  - name: Study Abroad Content (3)
-    url1: http://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-cosmmunications/test/qa-regression/global-study-centers/study-abroad-homepage/study-abroad-landing11/study-abroad-content.html
-    url2: http://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-cosmmunications/test/qa-regression/global-study-centers/study-abroad-homepage/study-abroad-landing11/study-abroad-content.html
+    url1: http://qacms.home.nyu.edu/sydney/student-life/living-in-sydney/beaches.html
+    url2: http://qacms.home.nyu.edu/sydney/student-life/living-in-sydney/beaches.html
 
   - name: Org Page
     url1: http://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/organization-page.html
