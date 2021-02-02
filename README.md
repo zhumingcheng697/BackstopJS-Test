@@ -22,7 +22,7 @@
 
 - Easily choose between Chromium, Firefox, and WebKit testing environments
 
-- Combine all failed test results into one html report
+- Combine all failed test results into one html report and render a PDF version of it
 
 ## How to Set Up
 
