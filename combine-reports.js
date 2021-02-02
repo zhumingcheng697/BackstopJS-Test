@@ -214,6 +214,7 @@ function combineReports(browsers = []) {
                     generatePDF(filePath, `${outputPath}/report.pdf`)
                         .then(() => {
                             console.log(`${logGreen}PDF report generated successfully for ${BrowserName[browserType]}${logReset}`);
+                            open(`${outputPath}/report.pdf`);
                         }).catch((e) => {
                             console.error(`${logRed}An error occurred when generating PDF report for ${BrowserName[browserType]}:\n${e}${logReset}`);
                         });
