@@ -231,7 +231,7 @@ function combineReports(browsers = []) {
         }
     }
 
-    console.log(`${logGreen}Combined report generated successfully${logReset}`);
+    console.log(`${logGreen}Combined report generated successfully\nGenerating PDF reports${logReset}`);
 }
 
 
