@@ -1,5 +1,7 @@
 const fs = require("fs");
 const open = require("open");
+const path = require("path");
+const playwright = require("playwright");
 
 const logRed = "\x1b[31m";
 const logGreen = "\x1b[32m";
@@ -71,6 +73,52 @@ function combineReports(browsers = []) {
                 console.error(`${logRed}Failed to copy files from ${srcDir} to ${destDir}:\n${e}${logReset}`);
             }
         }
+    }
+
+    /**
+     * Generates a PDF from source and save it to destination
+     *
+     * @param src {string}
+     * @param dest {string}
+     * @returns {void}
+     */
+    async function generatePDF(src, dest) {
+        const browser = await playwright.chromium.launch({
+            ignoreHTTPSErrors: true,
+            headless: true
+        });
+        const page = await browser.newPage();
+        await page.goto(src);
+        await page.emulateMedia({ media: "screen" });
+        const pageSize = await page.evaluate(async () => {
+            const sleep = (ms) => {
+                return new Promise((resolve) => {
+                    setTimeout(resolve, ms);
+                });
+            }
+
+            const header = document.querySelector("#root > div > section.header > div > section");
+            const headerPadding = document.querySelector("#root > div > section.header > div > div");
+            document.body.style.background = "none";
+            document.querySelector("#root > div > section.header").style.background = "#E2E7EA";
+            document.addEventListener("scroll", () => {
+                header.style.position = "relative";
+                header.style.top = "0px";
+                header.style.left = "0px";
+                headerPadding.style.marginBottom = `-${window.getComputedStyle(headerPadding).paddingBottom}`;
+            });
+
+            const distanceToBottom = () => (document.documentElement.scrollHeight - window.innerHeight - document.documentElement.scrollTop);
+            while (distanceToBottom() > 5) {
+                window.scrollBy(0, 150);
+                await sleep(20);
+            }
+            await sleep(100);
+            return { width: document.documentElement.scrollWidth, height: document.documentElement.scrollHeight };
+        });
+
+        await page.pdf({ path: dest, printBackground: true, width: pageSize.width, height: pageSize.height, pageRanges: "1" });
+        await browser.close();
     }
 
     browsers = browsers.reduce((prev, curr) => {
@@ -161,6 +209,14 @@ function combineReports(browsers = []) {
                 try {
                     copyNewFiles(fileSource, outputPath);
                     open(`${outputPath}/index.html`);
+
+                    const filePath = "file://" + path.join(__dirname, `${outputPath}/index.html`);
+                    generatePDF(filePath, `${outputPath}/report.pdf`)
+                        .then(() => {
+                            console.log(`${logGreen}PDF report generated successfully for ${BrowserName[browserType]}${logReset}`);
+                        }).catch((e) => {
+                            console.error(`${logRed}An error occurred when generating PDF report for ${BrowserName[browserType]}:\n${e}${logReset}`);
+                        });
                 } catch (e) {
                     console.error(`${logRed}An error occurred when copying source files:\n${e}${logReset}`);
                     return;
