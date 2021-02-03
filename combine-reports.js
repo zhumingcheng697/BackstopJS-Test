@@ -19,6 +19,13 @@ const BrowserName = {
 };
 
 /**
+ * Whether to render PDF for the report
+ *
+ * @type {boolean}
+ */
+const shouldRenderPDF = !!process.env.PDF;
+
+/**
  * Combines all config.js reports into one file
  *
  * @param browsers {string[]}
@@ -76,13 +83,13 @@ function combineReports(browsers = []) {
     }
 
     /**
-     * Generates a PDF from source and save it to destination
+     * Renders a PDF from source and save it to destination
      *
      * @param src {string}
      * @param dest {string}
      * @returns {void}
      */
-    async function generatePDF(src, dest) {
+    async function renderPDF(src, dest) {
         const browser = await playwright.chromium.launch({
             ignoreHTTPSErrors: true,
             headless: true
@@ -210,14 +217,16 @@ function combineReports(browsers = []) {
                     copyNewFiles(fileSource, outputPath);
                     open(`${outputPath}/index.html`);
 
-                    const filePath = "file://" + path.join(__dirname, `${outputPath}/index.html`);
-                    generatePDF(filePath, `${outputPath}/report.pdf`)
-                        .then(() => {
-                            console.log(`${logGreen}PDF report generated successfully for ${BrowserName[browserType]}${logReset}`);
-                            open(`${outputPath}/report.pdf`);
-                        }).catch((e) => {
-                            console.error(`${logRed}An error occurred when generating PDF report for ${BrowserName[browserType]}:\n${e}${logReset}`);
+                    if (shouldRenderPDF) {
+                        const filePath = "file://" + path.join(__dirname, `${outputPath}/index.html`);
+                        renderPDF(filePath, `${outputPath}/report.pdf`)
+                            .then(() => {
+                                console.log(`${logGreen}PDF report rendered successfully for ${BrowserName[browserType]}${logReset}`);
+                                open(`${outputPath}/report.pdf`);
+                            }).catch((e) => {
+                            console.error(`${logRed}An error occurred when rendering PDF report for ${BrowserName[browserType]}:\n${e}${logReset}`);
                         });
+                    }
                 } catch (e) {
                     console.error(`${logRed}An error occurred when copying source files:\n${e}${logReset}`);
                     return;
@@ -232,7 +241,11 @@ function combineReports(browsers = []) {
         }
     }
 
-    console.log(`${logGreen}Combined report generated successfully\nGenerating PDF reports${logReset}`);
+    console.log(`${logGreen}Combined report generated successfully${logReset}`);
+
+    if (shouldRenderPDF) {
+        console.log(`Rendering PDF report`);
+    }
 }
 
 
