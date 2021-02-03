@@ -102,7 +102,7 @@ function combineReports(browsers = []) {
                 return new Promise((resolve) => {
                     setTimeout(resolve, ms);
                 });
-            }
+            };
 
             const header = document.querySelector("#root > div > section.header > div > section");
             const headerPadding = document.querySelector("#root > div > section.header > div > div");
@@ -124,7 +124,13 @@ function combineReports(browsers = []) {
             return { width: document.documentElement.scrollWidth, height: document.documentElement.scrollHeight };
         });
 
-        await page.pdf({ path: dest, printBackground: true, width: pageSize.width, height: pageSize.height, pageRanges: "1" });
+        await page.pdf({
+            path: dest,
+            printBackground: true,
+            width: pageSize.width,
+            height: pageSize.height,
+            pageRanges: "1"
+        });
         await browser.close();
     }
 
