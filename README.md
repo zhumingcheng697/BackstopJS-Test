@@ -22,7 +22,7 @@
 
 - Easily choose between Chromium, Firefox, and WebKit testing environments
 
-- Combine all failed test results into one html report and render a PDF version of it
+- Combine all failed test results into one html report and optionally render a PDF version of it
 
 ## How to Set Up
 
@@ -71,6 +71,17 @@
     >
     > ```
     > $ npm run combine webkit
+    > ```
+   
+    > To render a PDF version of the report, set the environment variable `PDF` to any truthy value. Remember that environment variables are handled as strings, so anything other than empty spaces (which will ignored by the shell) will result to true. **Keep in mind that the render may take a while and could be computationally heavy if there are many failed test scenarios.**
+    > ```
+    > $ PDF=1 node combine-reports.js
+    > ```
+    >
+    > or
+    >
+    > ```
+    > $ PDF=1 npm run combine
     > ```
 
 2. Wait for the combined report to open.
