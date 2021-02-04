@@ -44,8 +44,7 @@ function combineReports(browsers = []) {
         leftIndex = config.indexOf("{", leftIndex);
         rightIndex = config.lastIndexOf("}", rightIndex);
 
-        const allTests = config.slice(leftIndex + 1, rightIndex).replace(/(?:\.\.\/){3}/g, "../../backstop_data/");
-        return allTests.split(/}[\n\s]*,[\n\s]*{/).filter((test) => test.includes(`"status": "fail"`));
+        return config.slice(leftIndex + 1, rightIndex).replace(/": "(?:\.\.\/){3}/g, `": "../../backstop_data/`).split(/}[\n\s]*,[\n\s]*{/).filter((test) => test.includes(`"status": "fail"`));
     }
 
     /**
