@@ -48,7 +48,7 @@ function combineReports(browsers = []) {
     }
 
     /**
-     * Copies files recursively from source to destination if file does not exist
+     * Copies files recursively from source to destination if file does not exist.
      *
      * @param src {string}
      * @param dest {string}
@@ -82,7 +82,7 @@ function combineReports(browsers = []) {
     }
 
     /**
-     * Renders a PDF from source and save it to destination
+     * Renders a PDF from source and save it to destination.
      *
      * @param src {string}
      * @param dest {string}
