@@ -44,7 +44,7 @@ function combineReports(browsers = []) {
         leftIndex = config.indexOf("{", leftIndex);
         rightIndex = config.lastIndexOf("}", rightIndex);
 
-        return config.slice(leftIndex + 1, rightIndex).replace(/": "(?:\.\.\/){3}/g, `": "../../backstop_data/`).split(/}[\n\s]*,[\n\s]*{/).filter((test) => test.includes(`"status": "fail"`));
+        return config.slice(leftIndex + 1, rightIndex).replace(/": "(?:\.\.\/){3}/g, `": "../../../backstop_data/`).split(/}[\n\s]*,[\n\s]*{/).filter((test) => test.includes(`"status": "fail"`));
     }
 
     /**
@@ -153,19 +153,23 @@ function combineReports(browsers = []) {
 
     for (const browserType of browsers) {
         try {
+            const currentTime = new Date();
             const pathForBrowser = `backstop_data/html_report/${browserType}`;
-            const outputPath = `combined_report/${browserType}`;
+            const outputPath = `combined_report/${browserType}/${currentTime.toISOString().replace(/[:.]/g, `-`)}`;
 
             if (!fs.existsSync(outputPath)) {
-                if (!fs.existsSync("combined_report")) {
-                    fs.mkdirSync("combined_report");
+                if (!fs.existsSync(`combined_report/${browserType}`)) {
+                    if (!fs.existsSync("combined_report")) {
+                        fs.mkdirSync("combined_report");
+                    }
+                    fs.mkdirSync(`combined_report/${browserType}`);
                 }
                 fs.mkdirSync(outputPath);
             }
 
             const configPrefix = `report({
   "testSuite": "${BrowserName[browserType]}",
-  "id": "Combined at ${(new Date()).toLocaleString(undefined, {
+  "id": "Combined at ${currentTime.toLocaleString(undefined, {
                 year: "numeric",
                 month: "short",
                 day: "numeric",
