@@ -13,6 +13,7 @@
     "url": "https://github.com/zhumingcheng697/BackstopJS-Test.git"
   },
   "dependencies": {
+    "aws-sdk": "^2.836.0",
     "backstop-playwright": "^0.0",
     "open": "^7.3.0",
     "playwright": "^1.8.0",
