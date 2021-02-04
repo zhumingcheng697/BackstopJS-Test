@@ -481,7 +481,7 @@ function resetAfterRun() {
  */
 function runBackstop(scenario, action = "test", originalAction = "", alwaysApprove = false) {
     let parsedAction = action.toLowerCase();
-    const name = scenario.name.replace(/\s+/g, "_");
+    const name = scenario.name.replace(/[\s\/\\.]+/g, "_");
     const pathSuffix = `${defaultConfig.engineOptions.browserType}/${name}`;
 
     isRunning = true;
