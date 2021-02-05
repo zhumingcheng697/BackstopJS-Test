@@ -3,7 +3,7 @@ const open = require("open");
 const path = require("path");
 const playwright = require("playwright");
 
-const { logStyle, BrowserName, resolveBrowserList, forEachFile } = require("./helper");
+const { reportSourceFilePath, logStyle, BrowserName, resolveBrowserList, forEachFile } = require("./helper");
 
 /**
  * Whether to render PDF for the report.
@@ -174,10 +174,9 @@ function combineReports(browsers = []) {
                 return;
             }
 
-            const fileSource = "node_modules/backstop-playwright/compare/output";
-            if (fs.existsSync(fileSource)) {
+            if (fs.existsSync(reportSourceFilePath)) {
                 try {
-                    copyNewFiles(fileSource, outputPath);
+                    copyNewFiles(reportSourceFilePath, outputPath);
                     open(`${outputPath}/index.html`);
                     console.log(`${logStyle.fg.green}Combined report generated successfully for ${browserType}${logStyle.reset}`);
 
@@ -196,7 +195,7 @@ function combineReports(browsers = []) {
                     return;
                 }
             } else {
-                console.error(`${logStyle.fg.red}Source files missing from "${fileSource}"${logStyle.reset}`);
+                console.error(`${logStyle.fg.red}Source files missing from "${reportSourceFilePath}"${logStyle.reset}`);
                 return;
             }
         } catch (e) {

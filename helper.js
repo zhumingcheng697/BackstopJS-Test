@@ -1,6 +1,13 @@
 const fs = require("fs");
 
 /**
+ * Path of the report source files in node_modules
+ *
+ * @type {string}
+ */
+const reportSourceFilePath = `node_modules/backstop-playwright/compare/output`;
+
+/**
  * Makes the console logs colorful.
  *
  * @link https://stackoverflow.com/a/40560590
@@ -126,4 +133,4 @@ function forEachFile(dir, callback, recursive = true) {
     }
 }
 
-module.exports = { logStyle, BrowserName, resolveBrowserType, resolveBrowserList, forEachFile };
+module.exports = { reportSourceFilePath, logStyle, BrowserName, resolveBrowserType, resolveBrowserList, forEachFile };
