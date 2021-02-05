@@ -59,7 +59,7 @@ for (const browserType of resolveBrowserList(process.argv.slice(2))) {
             } else if (a.name < b.name) {
                 return 1;
             } else {
-                return 0
+                return 0;
             }
         })[0];
 

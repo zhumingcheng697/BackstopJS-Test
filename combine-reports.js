@@ -196,7 +196,7 @@ function combineReports(browsers = []) {
                     return;
                 }
             } else {
-                console.error(`${logStyle.fg.red}Source files missing from "node_modules/backstop-playwright/compare/output"${logStyle.reset}`);
+                console.error(`${logStyle.fg.red}Source files missing from "${fileSource}"${logStyle.reset}`);
                 return;
             }
         } catch (e) {

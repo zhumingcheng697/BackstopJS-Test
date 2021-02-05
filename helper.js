@@ -97,7 +97,7 @@ function resolveBrowserList(args) {
  * @callback fileCallback
  * @param path {string}
  * @see forEachFile
- * @return void
+ * @return {void}
  */
 
 /**
