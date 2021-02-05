@@ -194,6 +194,7 @@ function combineReports(browsers = []) {
                 try {
                     copyNewFiles(fileSource, outputPath);
                     open(`${outputPath}/index.html`);
+                    console.log(`${logStyle.fg.green}Combined report generated successfully for ${browserType}${logStyle.reset}`);
 
                     if (shouldRenderPDF) {
                         const filePath = "file://" + path.join(__dirname, `${outputPath}/index.html`);
@@ -218,8 +219,6 @@ function combineReports(browsers = []) {
             return;
         }
     }
-
-    console.log(`${logStyle.fg.green}Combined report generated successfully${logStyle.reset}`);
 
     if (shouldRenderPDF) {
         console.log(`${logStyle.fg.white}Rendering PDF report${logStyle.reset}`);

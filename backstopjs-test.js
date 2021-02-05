@@ -4,7 +4,7 @@ const readline = require("readline");
 const backstop = require("backstop-playwright");
 const combineReports = require("./combine-reports");
 
-const { logStyle, resolveBrowserName } = require("./helper");
+const { logStyle, resolveBrowserType } = require("./helper");
 
 /**
  * Default Backstop configuration for all runs.
@@ -67,10 +67,10 @@ let tempScenarioIndex = 0;
  * @return {void}
  */
 function chooseBrowserType(line) {
-    const browserName = resolveBrowserName(line);
+    const browserType = resolveBrowserType(line);
 
-    if (browserName) {
-        defaultConfig.engineOptions.browserType = browserName.toLowerCase();
+    if (browserType) {
+        defaultConfig.engineOptions.browserType = browserType;
     } else {
         console.error(`${logStyle.fg.red}Please type in a valid keyword. (chromium/firefox/webkit/c/f/w)${logStyle.reset}`);
         return;

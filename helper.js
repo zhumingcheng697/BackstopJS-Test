@@ -53,15 +53,15 @@ const BrowserName = {
  * @param line {string}
  * @return {string|null}
  */
-function resolveBrowserName(line) {
+function resolveBrowserType(line) {
     if (BrowserName[line.toLowerCase()]) {
-        return BrowserName[line.toLowerCase()];
+        return BrowserName[line.toLowerCase()].toLowerCase();
     } else if (line.toLowerCase() === "c") {
-        return BrowserName.chromium;
+        return BrowserName.chromium.toLowerCase();
     } else if (line.toLowerCase() === "f") {
-        return BrowserName.firefox;
+        return BrowserName.firefox.toLowerCase();
     } else if (line.toLowerCase() === "w") {
-        return BrowserName.webkit;
+        return BrowserName.webkit.toLowerCase();
     } else {
         return null;
     }
@@ -75,9 +75,9 @@ function resolveBrowserName(line) {
  */
 function resolveBrowserList(args) {
     const result = args.reduce((prev, curr) => {
-        const name = resolveBrowserName(curr);
+        const name = resolveBrowserType(curr);
         if (name) {
-            prev.push(name.toLowerCase());
+            prev.push(name);
         }
         return prev;
     }, []);
@@ -89,4 +89,4 @@ function resolveBrowserList(args) {
     }
 }
 
-module.exports = { logStyle, BrowserName, resolveBrowserName, resolveBrowserList };
+module.exports = { logStyle, BrowserName, resolveBrowserType, resolveBrowserList };
