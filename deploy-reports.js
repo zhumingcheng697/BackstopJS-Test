@@ -106,8 +106,8 @@ for (const browserType of resolveBrowserList(process.argv.slice(2))) {
 
                         const dependencies = config.match(/[^\\]": "(?:\.\.\/)+(?:[^"]|\\")*(?:[^"\\]|\\")"/gi) || [];
                         dependencies.forEach((dir, index) => {
-                            dependencies[index] = dir.slice(dir.indexOf(`../`), -1).replace(/\\"/g, `"`).replace(/\\\\/g, `\\`);
-                            const testPath = latestPath + "/" + dependencies[index]
+                            dependencies[index] = dir.slice(dir.indexOf(`../`), -1).replace(/\\"/g, `"`).replace(/\\\\/g, "\\");
+                            const testPath = latestPath + "/" + dependencies[index];
                             if (!fs.existsSync(testPath)) {
                                 console.log(path.join(testPath));
                             }
