@@ -3,9 +3,7 @@ const open = require("open");
 const path = require("path");
 const playwright = require("playwright");
 
-const logRed = "\x1b[31m";
-const logGreen = "\x1b[32m";
-const logReset = "\x1b[0m";
+const { logStyle } = require("helper");
 
 /**
  * Browser names.
@@ -76,7 +74,7 @@ function combineReports(browsers = []) {
                     }
                 }
             } catch (e) {
-                console.error(`${logRed}Failed to copy files from ${srcDir} to ${destDir}:\n${e}${logReset}`);
+                console.error(`${logStyle.fg.red}Failed to copy files from ${srcDir} to ${destDir}:\n${e}${logStyle.reset}`);
             }
         }
     }
@@ -207,7 +205,7 @@ function combineReports(browsers = []) {
                                         fs.appendFileSync(`${outputPath}/config.js`, "}");
                                     }
                                 } catch (e) {
-                                    console.error(`${logRed}Failed to copy ${browserType} test files from "${pathForConfig}" to ${outputPath}:\n${e}${logReset}`);
+                                    console.error(`${logStyle.fg.red}Failed to copy ${browserType} test files from "${pathForConfig}" to ${outputPath}:\n${e}${logStyle.reset}`);
                                 }
                             }
                         }
@@ -216,7 +214,7 @@ function combineReports(browsers = []) {
 
                 fs.appendFileSync(`${outputPath}/config.js`, configSuffix);
             } catch (e) {
-                console.error(`${logRed}Failed to write ${browserType} test files to ${outputPath}:\n${e}${logReset}`);
+                console.error(`${logStyle.fg.red}Failed to write ${browserType} test files to ${outputPath}:\n${e}${logStyle.reset}`);
                 return;
             }
 
@@ -230,30 +228,30 @@ function combineReports(browsers = []) {
                         const filePath = "file://" + path.join(__dirname, `${outputPath}/index.html`);
                         renderPDF(filePath, `${outputPath}/report.pdf`)
                             .then(() => {
-                                console.log(`${logGreen}PDF report rendered successfully for ${BrowserName[browserType]}${logReset}`);
+                                console.log(`${logStyle.fg.green}PDF report rendered successfully for ${BrowserName[browserType]}${logStyle.reset}`);
                                 open(`${outputPath}/report.pdf`);
                             }).catch((e) => {
-                            console.error(`${logRed}An error occurred when rendering PDF report for ${BrowserName[browserType]}:\n${e}${logReset}`);
+                            console.error(`${logStyle.fg.red}An error occurred when rendering PDF report for ${BrowserName[browserType]}:\n${e}${logStyle.reset}`);
                         });
                     }
                 } catch (e) {
-                    console.error(`${logRed}An error occurred when copying source files:\n${e}${logReset}`);
+                    console.error(`${logStyle.fg.red}An error occurred when copying source files:\n${e}${logStyle.reset}`);
                     return;
                 }
             } else {
-                console.error(`${logRed}Source files missing from "node_modules/backstop-playwright/compare/output"${logReset}`);
+                console.error(`${logStyle.fg.red}Source files missing from "node_modules/backstop-playwright/compare/output"${logStyle.reset}`);
                 return;
             }
         } catch (e) {
-            console.error(`${logRed}An error occurred when accessing ${browserType} test files:\n${e}${logReset}`);
+            console.error(`${logStyle.fg.red}An error occurred when accessing ${browserType} test files:\n${e}${logStyle.reset}`);
             return;
         }
     }
 
-    console.log(`${logGreen}Combined report generated successfully${logReset}`);
+    console.log(`${logStyle.fg.green}Combined report generated successfully${logStyle.reset}`);
 
     if (shouldRenderPDF) {
-        console.log(`Rendering PDF report`);
+        console.log(`${logStyle.fg.white}Rendering PDF report${logStyle.reset}`);
     }
 }
 
