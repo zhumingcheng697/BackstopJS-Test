@@ -3,7 +3,7 @@ const open = require("open");
 const path = require("path");
 const playwright = require("playwright");
 
-const { logStyle, BrowserName } = require("./helper");
+const { logStyle, BrowserName, resolveBrowserList } = require("./helper");
 
 /**
  * Whether to render PDF for the report.
@@ -120,25 +120,7 @@ function combineReports(browsers = []) {
         await browser.close();
     }
 
-    browsers = browsers.reduce((prev, curr) => {
-        if (BrowserName[curr.toLowerCase()]) {
-            prev.push(curr.toLowerCase());
-        } else if (curr.toLowerCase() === "c") {
-            prev.push(BrowserName.chromium.toLowerCase());
-        } else if (curr.toLowerCase() === "f") {
-            prev.push(BrowserName.firefox.toLowerCase());
-        } else if (curr.toLowerCase() === "w") {
-            prev.push(BrowserName.webkit.toLowerCase());
-        }
-
-        return prev;
-    }, []);
-
-    if (!browsers.length) {
-        browsers = Object.keys(BrowserName);
-    }
-
-    for (const browserType of browsers) {
+    for (const browserType of resolveBrowserList(browsers)) {
         try {
             const currentTime = new Date();
             const pathForBrowser = `backstop_data/html_report/${browserType}`;

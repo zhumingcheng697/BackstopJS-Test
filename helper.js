@@ -48,7 +48,7 @@ const BrowserName = {
 };
 
 /**
- * Resolves browser type from line
+ * Resolves one or no browser type.
  *
  * @param line {string}
  * @return {string|null}
@@ -67,4 +67,26 @@ function resolveBrowserName(line) {
     }
 }
 
-module.exports = { logStyle, BrowserName, resolveBrowserName };
+/**
+ * Resolves a list of browser type.
+ *
+ * @param args {string[]}
+ * @return {string[]}
+ */
+function resolveBrowserList(args) {
+    const result = args.reduce((prev, curr) => {
+        const name = resolveBrowserName(curr);
+        if (name) {
+            prev.push(name.toLowerCase());
+        }
+        return prev;
+    }, []);
+
+    if (!result.length) {
+        return Object.keys(BrowserName);
+    } else {
+        return result;
+    }
+}
+
+module.exports = { logStyle, BrowserName, resolveBrowserName, resolveBrowserList };
