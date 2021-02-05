@@ -3,7 +3,7 @@ const open = require("open");
 const path = require("path");
 const playwright = require("playwright");
 
-const { logStyle, BrowserName, resolveBrowserList } = require("./helper");
+const { logStyle, BrowserName, resolveBrowserList, forEachFile } = require("./helper");
 
 /**
  * Whether to render PDF for the report.
@@ -42,30 +42,21 @@ function combineReports(browsers = []) {
      * @returns {void}
      */
     function copyNewFiles(src, dest) {
-        if (!fs.existsSync(src)) {
-            return;
-        }
-
-        if (!fs.existsSync(dest)) {
-            fs.mkdirSync(dest, { recursive: true });
-        }
-
-        for (const dir of fs.readdirSync(src, { withFileTypes: true })) {
-            const srcDir = `${src}/${dir.name}`;
-            const destDir = `${dest}/${dir.name}`;
+        forEachFile(src, (srcDir) => {
+            const destDir = srcDir.replace(src, dest);
 
             try {
-                if (dir.isDirectory()) {
-                    copyNewFiles(srcDir, destDir);
-                } else {
-                    if (!fs.existsSync(destDir)) {
-                        fs.copyFileSync(srcDir, destDir);
-                    }
+                const parentDir = destDir.slice(0, destDir.lastIndexOf("/"));
+                if (!fs.existsSync(parentDir)) {
+                    fs.mkdirSync(parentDir, { recursive: true });
+                }
+                if (!fs.existsSync(destDir)) {
+                    fs.copyFileSync(srcDir, destDir);
                 }
             } catch (e) {
                 console.error(`${logStyle.fg.red}Failed to copy files from ${srcDir} to ${destDir}:\n${e}${logStyle.reset}`);
             }
-        }
+        });
     }
 
     /**

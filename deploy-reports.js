@@ -65,7 +65,7 @@ for (const browserType of resolveBrowserList(process.argv.slice(2))) {
 
         if (latestFolder) {
             console.log(latestFolder);
-            console.log(new Date(latestFolder.name.replace(/(T\d{2})-(\d{2})-(\d{2})-(\d{3}Z)$/, `$1:$2:$3.$4`)));
+            console.log(new Date(latestFolder.name.replace(/(T\d{2})-(\d{2})-(\d{2})-(\d{3}Z)$/, `$1:$2:$3.$4`)).toLocaleString());
             continue;
         }
     }

@@ -1,3 +1,5 @@
+const fs = require("fs");
+
 /**
  * Makes the console logs colorful.
  *
@@ -89,4 +91,39 @@ function resolveBrowserList(args) {
     }
 }
 
-module.exports = { logStyle, BrowserName, resolveBrowserType, resolveBrowserList };
+/**
+ * Callback for forEachFile
+ *
+ * @callback fileCallback
+ * @param path {string}
+ * @see forEachFile
+ * @return void
+ */
+
+/**
+ * Iterates through files in a directory.
+ *
+ * @param dir {string}
+ * @param callback {fileCallback}
+ * @param recursive {boolean}
+ * @return {void}
+ */
+function forEachFile(dir, callback, recursive = true) {
+    if (!fs.existsSync(dir) || !fs.statSync(dir).isDirectory()) {
+        return;
+    }
+
+    for (const subDir of fs.readdirSync(dir, { withFileTypes: true })) {
+        const newDir = `${dir}/${subDir.name}`;
+
+        if (subDir.isDirectory()) {
+            if (recursive) {
+                forEachFile(newDir, callback, true);
+            }
+        } else {
+            callback(newDir);
+        }
+    }
+}
+
+module.exports = { logStyle, BrowserName, resolveBrowserType, resolveBrowserList, forEachFile };
