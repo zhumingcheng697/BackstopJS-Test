@@ -36,4 +36,15 @@ const logStyle = {
     }
 };
 
-module.exports = { logStyle };
+/**
+ * Available browser types.
+ *
+ * @type {Object.<string, string>}
+ */
+const BrowserType = {
+    chromium: "Chromium",
+    firefox: "Firefox",
+    webkit: "WebKit"
+};
+
+module.exports = { logStyle, BrowserType };

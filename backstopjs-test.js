@@ -4,7 +4,7 @@ const readline = require("readline");
 const backstop = require("backstop-playwright");
 const combineReports = require("./combine-reports");
 
-const { logStyle } = require("./helper");
+const { logStyle, BrowserType } = require("./helper");
 
 /**
  * Default Backstop configuration for all runs.
@@ -32,18 +32,6 @@ const rl = readline.createInterface({
     output: process.stdout,
     terminal: false
 });
-
-/**
- * Available browser types.
- *
- * @type {Object.<string, string>}
- */
-const BrowserType = {
-    unset: "",
-    chromium: "chromium",
-    firefox: "firefox",
-    webkit: "webkit"
-};
 
 /**
  * Keeps track of the current state of the program.
@@ -80,13 +68,13 @@ let tempScenarioIndex = 0;
  */
 function chooseBrowserType(line) {
     if (BrowserType[line.toLowerCase()]) {
-        defaultConfig.engineOptions.browserType = BrowserType[line.toLowerCase()];
+        defaultConfig.engineOptions.browserType = line.toLowerCase();
     } else if (line.toLowerCase() === "c") {
-        defaultConfig.engineOptions.browserType = BrowserType.chromium;
+        defaultConfig.engineOptions.browserType = BrowserType.chromium.toLowerCase();
     } else if (line.toLowerCase() === "f") {
-        defaultConfig.engineOptions.browserType = BrowserType.firefox;
+        defaultConfig.engineOptions.browserType = BrowserType.firefox.toLowerCase();
     } else if (line.toLowerCase() === "w") {
-        defaultConfig.engineOptions.browserType = BrowserType.webkit;
+        defaultConfig.engineOptions.browserType = BrowserType.webkit.toLowerCase();
     } else {
         console.error(`${logStyle.fg.red}Please type in a valid keyword. (chromium/firefox/webkit/c/f/w)${logStyle.reset}`);
         return;

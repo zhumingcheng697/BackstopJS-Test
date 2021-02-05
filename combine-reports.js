@@ -3,28 +3,17 @@ const open = require("open");
 const path = require("path");
 const playwright = require("playwright");
 
-const { logStyle } = require("./helper");
+const { logStyle, BrowserType } = require("./helper");
 
 /**
- * Browser names.
- *
- * @type {Object.<string, string>}
- */
-const BrowserName = {
-    chromium: "Chromium",
-    firefox: "Firefox",
-    webkit: "WebKit"
-};
-
-/**
- * Whether to render PDF for the report
+ * Whether to render PDF for the report.
  *
  * @type {boolean}
  */
 const shouldRenderPDF = !!process.env.PDF;
 
 /**
- * Combines all config.js reports into one file
+ * Combines all config.js reports into one file.
  *
  * @param browsers {string[]}
  * @returns {void}
@@ -132,21 +121,21 @@ function combineReports(browsers = []) {
     }
 
     browsers = browsers.reduce((prev, curr) => {
-        if (BrowserName[curr.toLowerCase()]) {
+        if (BrowserType[curr.toLowerCase()]) {
             prev.push(curr.toLowerCase());
         } else if (curr.toLowerCase() === "c") {
-            prev.push("chromium");
+            prev.push(BrowserType.chromium.toLowerCase());
         } else if (curr.toLowerCase() === "f") {
-            prev.push("firefox");
+            prev.push(BrowserType.firefox.toLowerCase());
         } else if (curr.toLowerCase() === "w") {
-            prev.push("webkit");
+            prev.push(BrowserType.webkit.toLowerCase());
         }
 
         return prev;
     }, []);
 
     if (!browsers.length) {
-        browsers = ["chromium", "firefox", "webkit"];
+        browsers = Object.keys(BrowserType);
     }
 
     for (const browserType of browsers) {
@@ -166,7 +155,7 @@ function combineReports(browsers = []) {
             }
 
             const configPrefix = `report({
-  "testSuite": "${BrowserName[browserType]}",
+  "testSuite": "${BrowserType[browserType]}",
   "id": "Combined at ${currentTime.toLocaleString(undefined, {
                 year: "numeric",
                 month: "short",
@@ -228,10 +217,10 @@ function combineReports(browsers = []) {
                         const filePath = "file://" + path.join(__dirname, `${outputPath}/index.html`);
                         renderPDF(filePath, `${outputPath}/report.pdf`)
                             .then(() => {
-                                console.log(`${logStyle.fg.green}PDF report rendered successfully for ${BrowserName[browserType]}${logStyle.reset}`);
+                                console.log(`${logStyle.fg.green}PDF report rendered successfully for ${BrowserType[browserType]}${logStyle.reset}`);
                                 open(`${outputPath}/report.pdf`);
                             }).catch((e) => {
-                            console.error(`${logStyle.fg.red}An error occurred when rendering PDF report for ${BrowserName[browserType]}:\n${e}${logStyle.reset}`);
+                            console.error(`${logStyle.fg.red}An error occurred when rendering PDF report for ${BrowserType[browserType]}:\n${e}${logStyle.reset}`);
                         });
                     }
                 } catch (e) {
