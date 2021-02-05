@@ -41,10 +41,30 @@ const logStyle = {
  *
  * @type {Object.<string, string>}
  */
-const BrowserType = {
+const BrowserName = {
     chromium: "Chromium",
     firefox: "Firefox",
     webkit: "WebKit"
 };
 
-module.exports = { logStyle, BrowserType };
+/**
+ * Resolves browser type from line
+ *
+ * @param line {string}
+ * @return {string|null}
+ */
+function resolveBrowserName(line) {
+    if (BrowserName[line.toLowerCase()]) {
+        return BrowserName[line.toLowerCase()];
+    } else if (line.toLowerCase() === "c") {
+        return BrowserName.chromium;
+    } else if (line.toLowerCase() === "f") {
+        return BrowserName.firefox;
+    } else if (line.toLowerCase() === "w") {
+        return BrowserName.webkit;
+    } else {
+        return null;
+    }
+}
+
+module.exports = { logStyle, BrowserName, resolveBrowserName };

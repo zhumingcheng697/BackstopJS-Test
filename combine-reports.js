@@ -3,7 +3,7 @@ const open = require("open");
 const path = require("path");
 const playwright = require("playwright");
 
-const { logStyle, BrowserType } = require("./helper");
+const { logStyle, BrowserName } = require("./helper");
 
 /**
  * Whether to render PDF for the report.
@@ -121,21 +121,21 @@ function combineReports(browsers = []) {
     }
 
     browsers = browsers.reduce((prev, curr) => {
-        if (BrowserType[curr.toLowerCase()]) {
+        if (BrowserName[curr.toLowerCase()]) {
             prev.push(curr.toLowerCase());
         } else if (curr.toLowerCase() === "c") {
-            prev.push(BrowserType.chromium.toLowerCase());
+            prev.push(BrowserName.chromium.toLowerCase());
         } else if (curr.toLowerCase() === "f") {
-            prev.push(BrowserType.firefox.toLowerCase());
+            prev.push(BrowserName.firefox.toLowerCase());
         } else if (curr.toLowerCase() === "w") {
-            prev.push(BrowserType.webkit.toLowerCase());
+            prev.push(BrowserName.webkit.toLowerCase());
         }
 
         return prev;
     }, []);
 
     if (!browsers.length) {
-        browsers = Object.keys(BrowserType);
+        browsers = Object.keys(BrowserName);
     }
 
     for (const browserType of browsers) {
@@ -155,7 +155,7 @@ function combineReports(browsers = []) {
             }
 
             const configPrefix = `report({
-  "testSuite": "${BrowserType[browserType]}",
+  "testSuite": "${BrowserName[browserType]}",
   "id": "Combined at ${currentTime.toLocaleString(undefined, {
                 year: "numeric",
                 month: "short",
@@ -217,10 +217,10 @@ function combineReports(browsers = []) {
                         const filePath = "file://" + path.join(__dirname, `${outputPath}/index.html`);
                         renderPDF(filePath, `${outputPath}/report.pdf`)
                             .then(() => {
-                                console.log(`${logStyle.fg.green}PDF report rendered successfully for ${BrowserType[browserType]}${logStyle.reset}`);
+                                console.log(`${logStyle.fg.green}PDF report rendered successfully for ${browserType}${logStyle.reset}`);
                                 open(`${outputPath}/report.pdf`);
                             }).catch((e) => {
-                            console.error(`${logStyle.fg.red}An error occurred when rendering PDF report for ${BrowserType[browserType]}:\n${e}${logStyle.reset}`);
+                            console.error(`${logStyle.fg.red}An error occurred when rendering PDF report for ${browserType}:\n${e}${logStyle.reset}`);
                         });
                     }
                 } catch (e) {
