@@ -53,7 +53,14 @@ function main() {
 for (const browserType of resolveBrowserList(process.argv.slice(2))) {
     const reportPath = `combined_report/${browserType}`;
     if (fs.existsSync(reportPath)) {
-        const latestFolder = fs.readdirSync(reportPath, { withFileTypes: true }).filter((dir) => dir.isDirectory()).sort((a, b) => {
+        const latestFolder = fs.readdirSync(reportPath, { withFileTypes: true }).filter((dir) => {
+            if (dir.isDirectory()) {
+                const createDate = new Date(dir.name.replace(/(T\d{2})-(\d{2})-(\d{2})-(\d{3}Z)$/, `$1:$2:$3.$4`));
+                return !isNaN(createDate.getTime());
+            } else {
+                return false;
+            }
+        }).sort((a, b) => {
             if (a.name > b.name) {
                 return -1;
             } else if (a.name < b.name) {
@@ -63,11 +70,31 @@ for (const browserType of resolveBrowserList(process.argv.slice(2))) {
             }
         })[0];
 
-        if (latestFolder) {
-            console.log(latestFolder);
-            console.log(new Date(latestFolder.name.replace(/(T\d{2})-(\d{2})-(\d{2})-(\d{3}Z)$/, `$1:$2:$3.$4`)).toLocaleString());
+        if (latestFolder && latestFolder.name) {
+            const latestPath = `${reportPath}/${latestFolder.name}`;
+
+            if (fs.existsSync(`${latestPath}/config.js`)) {
+                try {
+                    const config = fs.readFileSync(`${latestPath}/config.js`, "utf8");
+                    const matchStr = config.match(/^report\({\s*"testSuite":\s*"([a-zA-Z]+)",\s*"id":\s*"Combined at ((?:[^"]|\\")+)"/);
+
+                    if (matchStr && matchStr.length === 3 && matchStr[1].toLowerCase() === browserType && !isNaN((new Date(matchStr[2])).getTime())) {
+                        console.log(`${logStyle.fg.green}Found report combined at ${matchStr[2]} for ${browserType}${logStyle.reset}`);
+                    } else {
+                        console.warn(`${logStyle.fg.red}The latest combined report for ${browserType} might be in an incorrect format${logStyle.reset}`);
+                    }
+
+
+                } catch (e) {
+                    console.error(`${logStyle.fg.red}Failed to load the latest combined report for ${browserType}:\n${e}${logStyle.reset}`);
+                }
+            } else {
+                console.error(`${logStyle.fg.red}The latest combined report for ${browserType} is missing "config.js"${logStyle.reset}`);
+            }
+
             continue;
         }
     }
+
     console.error(`${logStyle.fg.red}Combined report does not exist for ${browserType}${logStyle.reset}`);
 }
