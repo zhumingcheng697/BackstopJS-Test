@@ -3,7 +3,7 @@ const open = require("open");
 const path = require("path");
 const playwright = require("playwright");
 
-const { logStyle } = require("helper");
+const { logStyle } = require("./helper");
 
 /**
  * Browser names.

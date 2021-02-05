@@ -3,7 +3,7 @@ AWS.config.update({ region: "us-east-1" });
 
 const s3 = new AWS.S3({ apiVersion: "2006-03-01" });
 
-const { logStyle } = require("helper");
+const { logStyle } = require("./helper");
 
 /**
  * Name of the bucket to deploy the files at

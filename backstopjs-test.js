@@ -4,7 +4,7 @@ const readline = require("readline");
 const backstop = require("backstop-playwright");
 const combineReports = require("./combine-reports");
 
-const { logStyle } = require("helper");
+const { logStyle } = require("./helper");
 
 /**
  * Default Backstop configuration for all runs.
