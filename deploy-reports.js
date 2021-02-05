@@ -103,19 +103,26 @@ for (const browserType of resolveBrowserList(process.argv.slice(2))) {
                         } else {
                             console.warn(`${logStyle.fg.red}The latest combined report for ${browserType} might be in an incorrect format.${logStyle.reset}`);
                         }
+
+                        // "../../../backstop_data/bitmaps_reference/webkit/Alumni_Content/01781168764_Alumni_Content_0_document_0_320x2500_webkit.png"
+                        const dependencies = config.match(/"\s*:\s*"((?:\.\.\/)+(?:[^"]|\\")+)"/gi);
+                        dependencies.forEach((dir, index) => {
+                            dependencies[index] = dir.slice(dir.indexOf(`../`), dir.lastIndexOf(`"`));
+                        });
+                        console.log(dependencies);
                     } catch (e) {
                         console.error(`${logStyle.fg.red}Failed to load the latest combined report for ${browserType}:\n${e}${logStyle.reset}`);
                     }
                 } else {
-                    console.error(`${logStyle.fg.red}The latest combined report for ${browserType} is missing "config.js". Please run "npm run combine ${browserType.slice(0,1)}" again.${logStyle.reset}`);
+                    console.error(`${logStyle.fg.red}The latest combined report for ${browserType} is missing "config.js". Please run "npm run combine ${browserType.slice(0, 1)}" again.${logStyle.reset}`);
                 }
             } else {
-                console.error(`${logStyle.fg.red}The latest combined report for ${browserType} is missing some supporting files. Please run "npm run combine ${browserType.slice(0,1)}" again.${logStyle.reset}`);
+                console.error(`${logStyle.fg.red}The latest combined report for ${browserType} is missing some supporting files. Please run "npm run combine ${browserType.slice(0, 1)}" again.${logStyle.reset}`);
             }
 
             continue;
         }
     }
 
-    console.error(`${logStyle.fg.red}No combined report found for ${browserType}. Please run "npm run combine ${browserType.slice(0,1)}" first.${logStyle.reset}`);
+    console.error(`${logStyle.fg.red}No combined report found for ${browserType}. Please run "npm run combine ${browserType.slice(0, 1)}" first.${logStyle.reset}`);
 }
