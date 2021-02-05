@@ -47,7 +47,7 @@ function combineReports(browsers = []) {
         }
 
         if (!fs.existsSync(dest)) {
-            fs.mkdirSync(dest);
+            fs.mkdirSync(dest, { recursive: true });
         }
 
         for (const dir of fs.readdirSync(src, { withFileTypes: true })) {
@@ -127,13 +127,7 @@ function combineReports(browsers = []) {
             const outputPath = `combined_report/${browserType}/${currentTime.toISOString().replace(/[:.]/g, `-`)}`;
 
             if (!fs.existsSync(outputPath)) {
-                if (!fs.existsSync(`combined_report/${browserType}`)) {
-                    if (!fs.existsSync("combined_report")) {
-                        fs.mkdirSync("combined_report");
-                    }
-                    fs.mkdirSync(`combined_report/${browserType}`);
-                }
-                fs.mkdirSync(outputPath);
+                fs.mkdirSync(outputPath, { recursive: true });
             }
 
             const configPrefix = `report({
