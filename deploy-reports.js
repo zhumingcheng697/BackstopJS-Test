@@ -96,17 +96,17 @@ for (const browserType of resolveBrowserList(process.argv.slice(2))) {
                 if (fs.existsSync(`${latestPath}/config.js`)) {
                     try {
                         const config = fs.readFileSync(`${latestPath}/config.js`, "utf8");
-                        const matchStr = config.match(/^report\({\s*"testSuite":\s*"([a-zA-Z]+)",\s*"id":\s*"Combined at ((?:[^"]|\\")+(?:[^"\\]|\\"))"/);
+                        const matchStr = config.match(/^report\({\s*"testSuite": "([a-zA-Z]+)",\s*"id": "Combined at ((?:[^"]|\\")+(?:[^"\\]|\\"))"/);
 
-                        if (matchStr && matchStr.length === 3 && matchStr[1].toLowerCase() === browserType && !isNaN((new Date(matchStr[2])).getTime())) {
-                            console.log(`${logStyle.fg.green}Found report combined at ${matchStr[2]} for ${browserType}.${logStyle.reset}`);
+                        if (matchStr && matchStr.length === 3 && matchStr[1].toLowerCase() === browserType && !isNaN((new Date(JSON.parse(`"` + matchStr[2] + `"`))).getTime())) {
+                            console.log(`${logStyle.fg.green}Found report combined at ${JSON.parse(`"` + matchStr[2] + `"`)} for ${browserType}.${logStyle.reset}`);
                         } else {
                             console.warn(`${logStyle.fg.red}The latest combined report for ${browserType} might be in an incorrect format.${logStyle.reset}`);
                         }
 
                         const dependencies = config.match(/[^\\]": "(?:\.\.\/)+(?:[^"]|\\")*(?:[^"\\]|\\")"/gi) || [];
                         dependencies.forEach((dir, index) => {
-                            dependencies[index] = dir.slice(dir.indexOf(`../`), -1).replace(/\\"/g, `"`).replace(/\\\\/g, "\\");
+                            dependencies[index] = JSON.parse(dir.slice(dir.indexOf(`"../`)));
                             const testPath = latestPath + "/" + dependencies[index];
                             if (!fs.existsSync(testPath)) {
                                 console.log(path.join(testPath));
