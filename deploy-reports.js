@@ -41,6 +41,8 @@ function resolveBucketName() {
         }
     }
 
+    console.log(`${logStyle.fg.white}------Connecting to S3 bucket------${logStyle.reset}`);
+
     try {
         const foundName = fs.readFileSync("bucket-name.txt", "utf8");
         if (foundName && foundName.length >= 3 && foundName.length <= 63 && !foundName.match(/^(?:[0-9]+\.)+[0-9]+$/) && foundName.match(/^(?:[a-z0-9]+[.-])*[a-z0-9]+$/) && foundName.toLowerCase() === foundName) {
@@ -58,18 +60,19 @@ function resolveBucketName() {
 /**
  * Creates a new S3 bucket.
  *
+ * @param callback {function}
  * @see bucketName
  * @return {void}
  */
-function createBucket() {
+function createBucket(callback = () => {}) {
     console.log(`Creating bucket "${bucketName}".`);
     s3.createBucket({ Bucket: bucketName, ACL: "public-read" }, (err) => {
         if (err) {
             console.error(`${logStyle.fg.red}An error occurred when trying to create bucket "${bucketName}":\n${err}${logStyle.reset}`);
-            // process.exit(1);
+            process.exit(1);
         } else {
             console.log(`${logStyle.fg.green}Bucket "${bucketName}" created successfully.${logStyle.reset}`);
-            // upload files
+            callback();
         }
     });
 }
@@ -102,22 +105,22 @@ function uploadFile(filePath) {
 //     }
 // })
 
-function main() {
+(() => {
     s3.listBuckets((err, data) => {
         if (err) {
             console.error(`${logStyle.fg.red}An error occurred when trying to connect to AWS:\n${err}${logStyle.reset}`);
-            // process.exit(1);
+            process.exit(1);
         } else {
             if (data.Buckets.find((bucket) => (bucket.Name === bucketName))) {
                 console.log(`${logStyle.fg.green}Bucket "${bucketName}" found on AWS.${logStyle.reset}`);
-                // upload files
+                locateLatestReport();
             } else {
                 console.error(`${logStyle.fg.red}Bucket "${bucketName}" does not exist.${logStyle.reset}`);
-                createBucket();
+                createBucket(locateLatestReport);
             }
         }
     });
-}
+})();
 
 /**
  * Checks if the report folder contains all necessary files in reportSourceFilePath.
@@ -138,62 +141,73 @@ function checkReportValidity(dir) {
     return validity;
 }
 
-for (const browserType of resolveBrowserList(process.argv.slice(2))) {
-    const reportPath = `combined_report/${browserType}`;
-    if (fs.existsSync(reportPath)) {
-        const latestFolder = fs.readdirSync(reportPath, { withFileTypes: true }).filter((dir) => {
-            if (dir.isDirectory()) {
-                const createDate = new Date(dir.name.replace(/(T\d{2})-(\d{2})-(\d{2})-(\d{3}Z)$/, `$1:$2:$3.$4`));
-                return !isNaN(createDate.getTime());
-            } else {
-                return false;
-            }
-        }).sort((a, b) => {
-            if (a.name > b.name) {
-                return -1;
-            } else if (a.name < b.name) {
-                return 1;
-            } else {
-                return 0;
-            }
-        })[0];
+/**
+ * Locates the latest local reports.
+ *
+ * @return {void}
+ */
+function locateLatestReport() {
+    console.log(`${logStyle.fg.white}------Locating latest report------${logStyle.reset}`)
 
-        if (latestFolder && latestFolder.name) {
-            const latestPath = `${reportPath}/${latestFolder.name}`;
+    for (const browserType of resolveBrowserList(process.argv.slice(2))) {
+        const reportPath = `combined_report/${browserType}`;
+        if (fs.existsSync(reportPath)) {
+            const latestFolder = fs.readdirSync(reportPath, { withFileTypes: true }).filter((dir) => {
+                if (dir.isDirectory()) {
+                    const createDate = new Date(dir.name.replace(/(T\d{2})-(\d{2})-(\d{2})-(\d{3}Z)$/, `$1:$2:$3.$4`));
+                    return !isNaN(createDate.getTime());
+                } else {
+                    return false;
+                }
+            }).sort((a, b) => {
+                if (a.name > b.name) {
+                    return -1;
+                } else if (a.name < b.name) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            })[0];
 
-            if (checkReportValidity(latestPath)) {
-                if (fs.existsSync(`${latestPath}/config.js`)) {
-                    try {
-                        const config = fs.readFileSync(`${latestPath}/config.js`, "utf8");
-                        const matchStr = config.match(/^report\({\s*"testSuite": "([a-zA-Z]+)",\s*"id": "Combined at ((?:[^"]|\\")+(?:[^"\\]|\\"))"/);
+            if (latestFolder && latestFolder.name) {
+                const latestPath = `${reportPath}/${latestFolder.name}`;
 
-                        if (matchStr && matchStr.length === 3 && matchStr[1].toLowerCase() === browserType && !isNaN((new Date(JSON.parse(`"` + matchStr[2] + `"`))).getTime())) {
-                            console.log(`${logStyle.fg.green}Found report combined at ${JSON.parse(`"` + matchStr[2] + `"`)} for ${browserType}.${logStyle.reset}`);
-                        } else {
-                            console.warn(`${logStyle.fg.red}The latest combined report for ${browserType} might be in an incorrect format.${logStyle.reset}`);
-                        }
+                if (checkReportValidity(latestPath)) {
+                    if (fs.existsSync(`${latestPath}/config.js`)) {
+                        try {
+                            const config = fs.readFileSync(`${latestPath}/config.js`, "utf8");
+                            const matchStr = config.match(/^report\({\s*"testSuite": "([a-zA-Z]+)",\s*"id": "Combined at ((?:[^"]|\\")+(?:[^"\\]|\\"))"/);
 
-                        const dependencies = config.match(/[^\\]": "(?:\.\.\/)+(?:[^"]|\\")*(?:[^"\\]|\\")"/gi) || [];
-                        dependencies.forEach((dir, index) => {
-                            dependencies[index] = JSON.parse(dir.slice(dir.indexOf(`"../`)));
-                            const testPath = latestPath + "/" + dependencies[index];
-                            if (!fs.existsSync(testPath)) {
-                                console.log(path.join(testPath));
+                            if (matchStr && matchStr.length === 3 && matchStr[1].toLowerCase() === browserType && !isNaN((new Date(JSON.parse(`"` + matchStr[2] + `"`))).getTime())) {
+                                console.log(`${logStyle.fg.green}Found report combined at ${JSON.parse(`"` + matchStr[2] + `"`)} for ${browserType}.${logStyle.reset}`);
+                            } else {
+                                console.warn(`${logStyle.fg.red}The latest combined report for ${browserType} might be in an incorrect format.${logStyle.reset}`);
                             }
-                        });
-                    } catch (e) {
-                        console.error(`${logStyle.fg.red}Failed to load the latest combined report for ${browserType}:\n${e}${logStyle.reset}`);
+
+                            const dependencies = config.match(/[^\\]": "(?:\.\.\/)+(?:[^"]|\\")*(?:[^"\\]|\\")"/gi) || [];
+                            dependencies.forEach((dir, index) => {
+                                dependencies[index] = JSON.parse(dir.slice(dir.indexOf(`"../`)));
+                                const testPath = latestPath + "/" + dependencies[index];
+                                // if (!fs.existsSync(testPath)) {
+                                //     console.log(path.join(testPath));
+                                // }
+                            });
+
+                            // uploadFile(path.join(latestPath + "/" + dependencies[0]));
+                        } catch (e) {
+                            console.error(`${logStyle.fg.red}Failed to load the latest combined report for ${browserType}:\n${e}${logStyle.reset}`);
+                        }
+                    } else {
+                        console.error(`${logStyle.fg.red}The latest combined report for ${browserType} is missing "config.js". Please run "npm run combine ${browserType.slice(0, 1)}" again.${logStyle.reset}`);
                     }
                 } else {
-                    console.error(`${logStyle.fg.red}The latest combined report for ${browserType} is missing "config.js". Please run "npm run combine ${browserType.slice(0, 1)}" again.${logStyle.reset}`);
+                    console.error(`${logStyle.fg.red}The latest combined report for ${browserType} is missing some supporting files. Please run "npm run combine ${browserType.slice(0, 1)}" again.${logStyle.reset}`);
                 }
-            } else {
-                console.error(`${logStyle.fg.red}The latest combined report for ${browserType} is missing some supporting files. Please run "npm run combine ${browserType.slice(0, 1)}" again.${logStyle.reset}`);
+
+                continue;
             }
-
-            continue;
         }
-    }
 
-    console.error(`${logStyle.fg.red}No combined report found for ${browserType}. Please run "npm run combine ${browserType.slice(0, 1)}" first.${logStyle.reset}`);
+        console.error(`${logStyle.fg.red}No combined report found for ${browserType}. Please run "npm run combine ${browserType.slice(0, 1)}" first.${logStyle.reset}`);
+    }
 }
