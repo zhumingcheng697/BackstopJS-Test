@@ -205,7 +205,7 @@ function combineReports(browsers = []) {
     }
 
     if (shouldRenderPDF) {
-        console.log(`${logStyle.fg.white}Rendering PDF report${logStyle.reset}`);
+        console.log(`Rendering PDF report`);
     }
 }
 

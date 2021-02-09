@@ -12,7 +12,48 @@ const { reportSourceFilePath, logStyle, resolveBrowserList, forEachFile } = requ
  *
  * @type {string}
  */
-const bucketName = process.env.BUCKET_NAME || "backstop-reports";
+const bucketName = resolveBucketName();
+
+/**
+ * Resolves the name of the S3 bucket.
+ *
+ * @return {string}
+ */
+function resolveBucketName() {
+    /**
+     * Generates and saves new S3 bucket name.
+     *
+     * @return {string}
+     */
+    function getNewBucketName() {
+        console.log(`Generating new bucket name.`);
+
+        const srcStr = "abcdefghijklmnopqrstuvwxyz0123456789";
+        const newName = "backstop-reports-" + Array.from({ length: 12 }, () => srcStr[Math.floor(Math.random() * srcStr.length)]).join("");
+
+        try {
+            fs.writeFileSync("bucket-name.txt", newName);
+            console.log(`${logStyle.fg.green}Using bucket named "${newName}".${logStyle.reset}`);
+            return newName;
+        } catch (e) {
+            console.error(`${logStyle.fg.red}Unable to save generated bucket name to "bucket-name.txt":\n${e}${logStyle.reset}`);
+            process.exit(1);
+        }
+    }
+
+    try {
+        const foundName = fs.readFileSync("bucket-name.txt", "utf8");
+        if (foundName && foundName.length >= 3 && foundName.length <= 63 && !foundName.match(/^(?:[0-9]+\.)+[0-9]+$/) && foundName.match(/^(?:[a-z0-9]+[.-])*[a-z0-9]+$/) && foundName.toLowerCase() === foundName) {
+            console.log(`${logStyle.fg.green}Using bucket named "${foundName}".${logStyle.reset}`);
+            return foundName;
+        } else {
+            console.log(`${logStyle.fg.red}Bucket name "${foundName}" stored in "bucket-name.txt" is invalid.${logStyle.reset}`);
+            return getNewBucketName();
+        }
+    } catch (e) {
+        return getNewBucketName();
+    }
+}
 
 /**
  * Creates a new S3 bucket.
@@ -21,7 +62,7 @@ const bucketName = process.env.BUCKET_NAME || "backstop-reports";
  * @return {void}
  */
 function createBucket() {
-    console.log(`Creating bucket "${bucketName}"`);
+    console.log(`Creating bucket "${bucketName}".`);
     s3.createBucket({ Bucket: bucketName, ACL: "public-read" }, (err) => {
         if (err) {
             console.error(`${logStyle.fg.red}An error occurred when trying to create bucket "${bucketName}":\n${err}${logStyle.reset}`);
@@ -40,7 +81,7 @@ function createBucket() {
  */
 function uploadFile(filePath) {
     try {
-        s3.upload({ Bucket: bucketName, Key: filePath, Body: fs.createReadStream(filePath) }, (err, data) => {
+        s3.upload({ Bucket: bucketName, Key: filePath, Body: fs.createReadStream(filePath), ACL: "public-read" }, (err, data) => {
             if (err) {
                 console.error(`${logStyle.fg.red}An error occurred when trying to upload file "${filePath}":\n${err}${logStyle.reset}`);
             } else {
@@ -52,6 +93,14 @@ function uploadFile(filePath) {
         console.error(`${logStyle.fg.red}An error occurred when trying to upload file "${filePath}":\n${e}${logStyle.reset}`);
     }
 }
+
+// s3.listObjects({ Bucket: bucketName }, (err, data) => {
+//     if (err) {
+//         console.error(`${logStyle.fg.red}An error occurred when trying to connect to bucket "${bucketName}":\n${err}${logStyle.reset}`);
+//     } else {
+//         console.log(data.Contents);
+//     }
+// })
 
 function main() {
     s3.listBuckets((err, data) => {
