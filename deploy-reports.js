@@ -105,48 +105,31 @@ function uploadFile(filePath) {
 //     }
 // })
 
-(() => {
-    s3.listBuckets((err, data) => {
-        if (err) {
-            console.error(`${logStyle.fg.red}An error occurred when trying to connect to AWS:\n${err}${logStyle.reset}`);
-            process.exit(1);
-        } else {
-            if (data.Buckets.find((bucket) => (bucket.Name === bucketName))) {
-                console.log(`${logStyle.fg.green}Bucket "${bucketName}" found on AWS.${logStyle.reset}`);
-                locateLatestReport();
-            } else {
-                console.error(`${logStyle.fg.red}Bucket "${bucketName}" does not exist.${logStyle.reset}`);
-                createBucket(locateLatestReport);
-            }
-        }
-    });
-})();
-
-/**
- * Checks if the report folder contains all necessary files in reportSourceFilePath.
- *
- * @param dir {string}
- * @see reportSourceFilePath
- * @return {boolean}
- */
-function checkReportValidity(dir) {
-    let validity = true;
-
-    forEachFile(reportSourceFilePath, (srcDir) => {
-        if (!fs.existsSync(srcDir.replace(reportSourceFilePath, dir))) {
-            validity = false;
-        }
-    });
-
-    return validity;
-}
-
 /**
  * Locates the latest local reports.
  *
  * @return {void}
  */
 function locateLatestReport() {
+    /**
+     * Checks if the report folder contains all necessary files in reportSourceFilePath.
+     *
+     * @param dir {string}
+     * @see reportSourceFilePath
+     * @return {boolean}
+     */
+    function checkReportValidity(dir) {
+        let validity = true;
+
+        forEachFile(reportSourceFilePath, (srcDir) => {
+            if (!fs.existsSync(srcDir.replace(reportSourceFilePath, dir))) {
+                validity = false;
+            }
+        });
+
+        return validity;
+    }
+
     console.log(`${logStyle.fg.white}------Locating latest report------${logStyle.reset}`)
 
     for (const browserType of resolveBrowserList(process.argv.slice(2))) {
@@ -211,3 +194,25 @@ function locateLatestReport() {
         console.error(`${logStyle.fg.red}No combined report found for ${browserType}. Please run "npm run combine ${browserType.slice(0, 1)}" first.${logStyle.reset}`);
     }
 }
+
+/**
+ * Self-invoking main function.
+ *
+ * @return {void}
+ */
+(function main() {
+    s3.listBuckets((err, data) => {
+        if (err) {
+            console.error(`${logStyle.fg.red}An error occurred when trying to connect to AWS:\n${err}${logStyle.reset}`);
+            process.exit(1);
+        } else {
+            if (data.Buckets.find((bucket) => (bucket.Name === bucketName))) {
+                console.log(`${logStyle.fg.green}Bucket "${bucketName}" found on AWS.${logStyle.reset}`);
+                locateLatestReport();
+            } else {
+                console.error(`${logStyle.fg.red}Bucket "${bucketName}" does not exist.${logStyle.reset}`);
+                createBucket(locateLatestReport);
+            }
+        }
+    });
+})();
