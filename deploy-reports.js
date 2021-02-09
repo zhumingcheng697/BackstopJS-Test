@@ -33,6 +33,26 @@ function createBucket() {
     });
 }
 
+/**
+ * Uploads file to S3 Bucket with the key being its local path.
+ *
+ * @param filePath {string}
+ */
+function uploadFile(filePath) {
+    try {
+        s3.upload({ Bucket: bucketName, Key: filePath, Body: fs.createReadStream(filePath) }, (err, data) => {
+            if (err) {
+                console.error(`${logStyle.fg.red}An error occurred when trying to upload file "${filePath}":\n${err}${logStyle.reset}`);
+            } else {
+                console.log(`${logStyle.fg.green}File "${filePath}" uploaded successfully.${logStyle.reset}`);
+                console.log(data);
+            }
+        })
+    } catch (e) {
+        console.error(`${logStyle.fg.red}An error occurred when trying to upload file "${filePath}":\n${e}${logStyle.reset}`);
+    }
+}
+
 function main() {
     s3.listBuckets((err, data) => {
         if (err) {
