@@ -201,12 +201,12 @@ function locateLatestReport() {
  * @return {void}
  */
 (function main() {
-    s3.listBuckets((err, data) => {
+    s3.headBucket({ Bucket: bucketName }, (err, data) => {
         if (err) {
             console.error(`${logStyle.fg.red}An error occurred when trying to connect to AWS:\n${err}${logStyle.reset}`);
             process.exit(1);
         } else {
-            if (data.Buckets.find((bucket) => (bucket.Name === bucketName))) {
+            if (data) {
                 console.log(`${logStyle.fg.green}Bucket "${bucketName}" found on AWS.${logStyle.reset}`);
                 locateLatestReport();
             } else {
