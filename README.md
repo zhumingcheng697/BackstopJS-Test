@@ -138,7 +138,7 @@
 
 - `approve all` - Start running `approve` on parsed testing scenarios automatically.
 
-- `combine reports` - Generate an html report by combining results of all previously failed tests.
+- `combine reports` - Generate an HTML report by combining results of all previously failed tests.
 
 - `show list` - See a list of all the parsed testing scenarios.
 

@@ -1,4 +1,5 @@
 const fs = require("fs");
+const open = require("open");
 const path = require("path");
 const AWS = require("aws-sdk");
 AWS.config.update({ region: "us-east-1" });
@@ -188,6 +189,7 @@ function uploadReportFolder(dir, browserType) {
                         uploadFile(path.join(dir, "index.html"), (exists, err, data) => {
                             if (data && data.Location) {
                                 console.log(`${logStyle.fg.green}Report for ${browserType} deployed successfully:${logStyle.reset}\n${data.Location}`);
+                                open(data.Location);
                             } else {
                                 console.error(`${logStyle.fg.red}Report deploy failed for ${browserType}.${logStyle.reset}`);
                             }
