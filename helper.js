@@ -1,4 +1,5 @@
 const fs = require("fs");
+const path = require("path");
 
 /**
  * Path of the report source files in node_modules
@@ -121,7 +122,7 @@ function forEachFile(dir, callback, recursive = true) {
     }
 
     for (const subDir of fs.readdirSync(dir, { withFileTypes: true })) {
-        const newDir = `${dir}/${subDir.name}`;
+        const newDir = path.join(dir, subDir.name);
 
         if (subDir.isDirectory()) {
             if (recursive) {
