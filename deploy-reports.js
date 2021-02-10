@@ -202,17 +202,12 @@ function locateLatestReport() {
  */
 (function main() {
     s3.headBucket({ Bucket: bucketName }, (err, data) => {
-        if (err) {
-            console.error(`${logStyle.fg.red}An error occurred when trying to connect to AWS:\n${err}${logStyle.reset}`);
-            process.exit(1);
+        if (data) {
+            console.log(`${logStyle.fg.green}Bucket "${bucketName}" found on AWS.${logStyle.reset}`);
+            locateLatestReport();
         } else {
-            if (data) {
-                console.log(`${logStyle.fg.green}Bucket "${bucketName}" found on AWS.${logStyle.reset}`);
-                locateLatestReport();
-            } else {
-                console.error(`${logStyle.fg.red}Bucket "${bucketName}" does not exist.${logStyle.reset}`);
-                createBucket(locateLatestReport);
-            }
+            console.error(`${logStyle.fg.red}Bucket "${bucketName}" does not exist.${logStyle.reset}`);
+            createBucket(locateLatestReport);
         }
     });
 })();
