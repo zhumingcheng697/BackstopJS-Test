@@ -1,7 +1,7 @@
 {
   "name": "backstopjs-test",
-  "version": "2.0.5",
-  "description": "A Script that Parses YAML Config Files and Automates BackstopJS Tests in Chromium, Firefox, or WebKit Environment",
+  "version": "2.1.0",
+  "description": "A Script that Automates BackstopJS (or, technically, Backstop-Playwright) Tests in Chromium, Firefox, or WebKit Environment, and Deploys Failed Reports onto S3 Buckets",
   "license": "CC-BY-NC-SA-4.0",
   "author": {
     "name": "McCoy Zhu",
@@ -21,6 +21,8 @@
   },
   "scripts": {
     "start": "node backstopjs-test.js",
-    "combine": "node combine-reports.js"
+    "combine": "node combine-reports.js",
+    "deploy": "node deploy-reports.js",
+    "overwrite-deploy": "OVERWRITE_REFERENCE=1 node deploy-reports.js"
   }
 }

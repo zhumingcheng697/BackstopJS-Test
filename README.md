@@ -99,7 +99,6 @@
 
 2. Make sure you have already [combined a report](#how-to-combine-reports).
 
-
 3. Run the script `deploy-reports.js`.
     ```
     $ node deploy-reports.js
@@ -122,7 +121,7 @@
     > $ npm run deploy w
     > ```
 
-    > By default, reference images will not be updated to save time and bandwidth. To overwrite the old reference images, set the environment variable `OVERWRITE_REFERENCE` to any truthy value, or call `npm run overwrite-deploy`.
+    > **By default, reference images will not be updated to save time and bandwidth. To overwrite the old reference images, set the environment variable `OVERWRITE_REFERENCE` to any truthy value, or call `npm run overwrite-deploy`.**
     > ```
     > $ OVERWRITE_REFERENCE=1 node deploy-reports.js
     > ```
