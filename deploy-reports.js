@@ -22,7 +22,7 @@ const overwriteReference = !!process.env.OVERWRITE_REFERENCE;
 const uploadCounts = { chromium: 0, firefox: 0, webkit: 0 };
 
 /**
- * Name of the bucket to deploy the files at
+ * Name of the bucket to deploy the files at.
  *
  * @type {string}
  */
@@ -132,14 +132,20 @@ function uploadFile(filePath, callback = () => {}, overwrite = false) {
      * @return {void}
      */
     function uploadHelper() {
-        s3.upload({ Bucket: bucketName, Key: filePath, Body: fs.createReadStream(filePath), ACL: "public-read", ContentType: filePath.endsWith(".html") ? "text/html" : undefined }, (err, data) => {
+        s3.upload({
+            Bucket: bucketName,
+            Key: filePath,
+            Body: fs.createReadStream(filePath),
+            ACL: "public-read",
+            ContentType: filePath.endsWith(".html") ? "text/html" : undefined
+        }, (err, data) => {
             if (err) {
                 console.error(`${logStyle.fg.red}An error occurred when trying to upload file "${filePath}":\n${err}${logStyle.reset}`);
                 callback(false, err, data);
             } else {
                 callback(false, err, data);
             }
-        })
+        });
     }
 
     if (overwrite) {
@@ -158,7 +164,7 @@ function uploadFile(filePath, callback = () => {}, overwrite = false) {
         } else {
             callback(true, null, null);
         }
-    })
+    });
 }
 
 /**
@@ -185,12 +191,12 @@ function uploadReportFolder(dir, browserType) {
                             } else {
                                 console.error(`${logStyle.fg.red}Report deploy failed for ${browserType}.${logStyle.reset}`);
                             }
-                        }, true)
+                        }, true);
                     }
                 });
             }, 50);
         }
-    })
+    });
 }
 
 /**
@@ -287,7 +293,7 @@ function locateLatestReport(browserList) {
     }
 
     if (Object.keys(uploadCounts).some((el) => uploadCounts[el])) {
-        console.log(`${logStyle.fg.white}------Uploading latest report------${logStyle.reset}`);
+        console.log(`${logStyle.fg.white}------Deploying latest report------${logStyle.reset}`);
     }
 }
 
