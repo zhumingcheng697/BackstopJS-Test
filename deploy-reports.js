@@ -8,11 +8,25 @@ const s3 = new AWS.S3({ apiVersion: "2006-03-01" });
 const { reportSourceFilePath, logStyle, resolveBrowserList, forEachFile } = require("./helper");
 
 /**
+ * Whether to render PDF for the report.
+ *
+ * @type {boolean}
+ */
+const overwriteReference = !!process.env.OVERWRITE_REFERENCE;
+
+/**
+ * Keeps track of how many files are being uploaded.
+ *
+ * @type {{chromium: number, firefox: number, webkit: number}}
+ */
+const uploadCounts = { chromium: 0, firefox: 0, webkit: 0 };
+
+/**
  * Name of the bucket to deploy the files at
  *
  * @type {string}
  */
-const bucketName = resolveBucketName();
+let bucketName;
 
 /**
  * Resolves the name of the S3 bucket.
@@ -58,59 +72,134 @@ function resolveBucketName() {
 }
 
 /**
- * Creates a new S3 bucket.
+ * Makes sure bucket exists.
  *
  * @param callback {function}
- * @see bucketName
  * @return {void}
  */
-function createBucket(callback = () => {}) {
-    console.log(`Creating bucket "${bucketName}".`);
-    s3.createBucket({ Bucket: bucketName, ACL: "public-read" }, (err) => {
-        if (err) {
-            console.error(`${logStyle.fg.red}An error occurred when trying to create bucket "${bucketName}":\n${err}${logStyle.reset}`);
-            process.exit(1);
-        } else {
-            console.log(`${logStyle.fg.green}Bucket "${bucketName}" created successfully.${logStyle.reset}`);
+function checkBucketExistence(callback = () => {}) {
+    /**
+     * Creates a new S3 bucket.
+     *
+     * @param callback {function}
+     * @see bucketName
+     * @return {void}
+     */
+    function createBucket(callback = () => {}) {
+        console.log(`Creating bucket "${bucketName}".`);
+        s3.createBucket({ Bucket: bucketName, ACL: "public-read" }, (err) => {
+            if (err) {
+                console.error(`${logStyle.fg.red}An error occurred when trying to create bucket "${bucketName}":\n${err}${logStyle.reset}`);
+                process.exit(1);
+            } else {
+                console.log(`${logStyle.fg.green}Bucket "${bucketName}" created successfully.${logStyle.reset}`);
+                callback();
+            }
+        });
+    }
+
+    s3.headBucket({ Bucket: bucketName }, (err, data) => {
+        if (data) {
+            console.log(`${logStyle.fg.green}Bucket "${bucketName}" found on AWS.${logStyle.reset}`);
             callback();
+        } else {
+            console.error(`${logStyle.fg.red}Bucket "${bucketName}" does not exist.${logStyle.reset}`);
+            createBucket(callback);
         }
     });
 }
 
 /**
+ * @callback fileUploadCallback
+ * @param exists {boolean}
+ * @param err {Error}
+ * @param data {ManagedUpload.SendData}
+ * @return {void}
+ */
+
+/**
  * Uploads file to S3 Bucket with the key being its local path.
  *
  * @param filePath {string}
+ * @param callback {fileUploadCallback}
+ * @param overwrite {boolean}
+ * @return {void}
  */
-function uploadFile(filePath) {
-    try {
-        s3.upload({ Bucket: bucketName, Key: filePath, Body: fs.createReadStream(filePath), ACL: "public-read" }, (err, data) => {
+function uploadFile(filePath, callback = () => {}, overwrite = false) {
+    /**
+     * Helper function that actually uploads the file.
+     *
+     * @return {void}
+     */
+    function uploadHelper() {
+        s3.upload({ Bucket: bucketName, Key: filePath, Body: fs.createReadStream(filePath), ACL: "public-read", ContentType: filePath.endsWith(".html") ? "text/html" : undefined }, (err, data) => {
             if (err) {
                 console.error(`${logStyle.fg.red}An error occurred when trying to upload file "${filePath}":\n${err}${logStyle.reset}`);
+                callback(false, err, data);
             } else {
-                console.log(`${logStyle.fg.green}File "${filePath}" uploaded successfully.${logStyle.reset}`);
-                console.log(data);
+                callback(false, err, data);
             }
         })
-    } catch (e) {
-        console.error(`${logStyle.fg.red}An error occurred when trying to upload file "${filePath}":\n${e}${logStyle.reset}`);
     }
+
+    if (overwrite) {
+        uploadHelper();
+        return;
+    }
+
+    s3.headObject({ Bucket: bucketName, Key: filePath }, (err, data) => {
+        if (!data) {
+            try {
+                uploadHelper();
+            } catch (e) {
+                console.error(`${logStyle.fg.red}An error occurred when trying to upload file "${filePath}":\n${e}${logStyle.reset}`);
+                callback(false, e, null);
+            }
+        } else {
+            callback(true, null, null);
+        }
+    })
 }
 
-// s3.listObjects({ Bucket: bucketName }, (err, data) => {
-//     if (err) {
-//         console.error(`${logStyle.fg.red}An error occurred when trying to connect to bucket "${bucketName}":\n${err}${logStyle.reset}`);
-//     } else {
-//         console.log(data.Contents);
-//     }
-// })
+/**
+ * Uploads files in the latest report folder.
+ *
+ * @param dir {string}
+ * @param browserType {string}
+ * @return {void}
+ */
+function uploadReportFolder(dir, browserType) {
+    let localCount = 0;
+
+    forEachFile(dir, (filePath) => {
+        if (!filePath.endsWith("index.html")) {
+            localCount += 1;
+            setTimeout(() => {
+                uploadFile(filePath, () => {
+                    localCount -= 1;
+
+                    if (!localCount) {
+                        uploadFile(path.join(dir, "index.html"), (exists, err, data) => {
+                            if (data && data.Location) {
+                                console.log(`${logStyle.fg.green}Report for ${browserType} deployed successfully:${logStyle.reset}\n${data.Location}`);
+                            } else {
+                                console.error(`${logStyle.fg.red}Report deploy failed for ${browserType}.${logStyle.reset}`);
+                            }
+                        }, true)
+                    }
+                });
+            }, 50);
+        }
+    })
+}
 
 /**
  * Locates the latest local reports.
  *
+ * @param browserList {string[]}
  * @return {void}
  */
-function locateLatestReport() {
+function locateLatestReport(browserList) {
     /**
      * Checks if the report folder contains all necessary files in reportSourceFilePath.
      *
@@ -130,9 +219,9 @@ function locateLatestReport() {
         return validity;
     }
 
-    console.log(`${logStyle.fg.white}------Locating latest report------${logStyle.reset}`)
+    console.log(`${logStyle.fg.white}------Locating latest report------${logStyle.reset}`);
 
-    for (const browserType of resolveBrowserList(process.argv.slice(2))) {
+    for (const browserType of browserList) {
         const reportPath = `combined_report/${browserType}`;
         if (fs.existsSync(reportPath)) {
             const latestFolder = fs.readdirSync(reportPath, { withFileTypes: true }).filter((dir) => {
@@ -167,16 +256,19 @@ function locateLatestReport() {
                                 console.warn(`${logStyle.fg.red}The latest combined report for ${browserType} might be in an incorrect format.${logStyle.reset}`);
                             }
 
-                            const dependencies = config.match(/[^\\]": "(?:\.\.\/)+(?:[^"]|\\")*(?:[^"\\]|\\")"/gi) || [];
-                            dependencies.forEach((dir, index) => {
-                                dependencies[index] = JSON.parse(dir.slice(dir.indexOf(`"../`)));
-                                const testPath = latestPath + "/" + dependencies[index];
-                                // if (!fs.existsSync(testPath)) {
-                                //     console.log(path.join(testPath));
-                                // }
-                            });
+                            (config.match(/[^\\]": "(?:\.\.\/)+(?:[^"]|\\")*(?:[^"\\]|\\")"/gi) || []).forEach((dir) => {
+                                const dependency = path.join(latestPath, JSON.parse(dir.slice(dir.indexOf(`"../`))));
+                                uploadCounts[browserType] += 1;
+                                setTimeout(() => {
+                                    uploadFile(dependency, () => {
+                                        uploadCounts[browserType] -= 1;
 
-                            // uploadFile(path.join(latestPath + "/" + dependencies[0]));
+                                        if (!uploadCounts[browserType]) {
+                                            uploadReportFolder(latestPath, browserType);
+                                        }
+                                    }, overwriteReference && dependency.includes(`/bitmaps_reference/${browserType}/`));
+                                }, 50);
+                            });
                         } catch (e) {
                             console.error(`${logStyle.fg.red}Failed to load the latest combined report for ${browserType}:\n${e}${logStyle.reset}`);
                         }
@@ -193,6 +285,10 @@ function locateLatestReport() {
 
         console.error(`${logStyle.fg.red}No combined report found for ${browserType}. Please run "npm run combine ${browserType.slice(0, 1)}" first.${logStyle.reset}`);
     }
+
+    if (Object.keys(uploadCounts).some((el) => uploadCounts[el])) {
+        console.log(`${logStyle.fg.white}------Uploading latest report------${logStyle.reset}`);
+    }
 }
 
 /**
@@ -201,13 +297,12 @@ function locateLatestReport() {
  * @return {void}
  */
 (function main() {
-    s3.headBucket({ Bucket: bucketName }, (err, data) => {
-        if (data) {
-            console.log(`${logStyle.fg.green}Bucket "${bucketName}" found on AWS.${logStyle.reset}`);
-            locateLatestReport();
-        } else {
-            console.error(`${logStyle.fg.red}Bucket "${bucketName}" does not exist.${logStyle.reset}`);
-            createBucket(locateLatestReport);
-        }
-    });
+    const browserList = resolveBrowserList(process.argv.slice(2));
+
+    if (browserList.length) {
+        bucketName = resolveBucketName();
+        checkBucketExistence(() => {
+            locateLatestReport(browserList);
+        });
+    }
 })();

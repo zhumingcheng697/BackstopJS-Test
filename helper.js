@@ -103,7 +103,7 @@ function resolveBrowserList(args) {
  * Callback for forEachFile
  *
  * @callback fileCallback
- * @param path {string}
+ * @param filePath {string}
  * @see forEachFile
  * @return {void}
  */
