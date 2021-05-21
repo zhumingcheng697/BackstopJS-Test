@@ -51,6 +51,7 @@ const rl = readline.createInterface({
 let runMode = "";
 let scenarios = [];
 let isRunning = false;
+let isConfigNYU = false;
 let isLastRunSuccessful = true;
 let willAutoRunResume = false;
 let willApproveAllResume = false;
@@ -89,6 +90,10 @@ function loadYamlConfig(path) {
     if (path === "") {
         loadYamlConfig("nyu.yml");
         return;
+    }
+
+    if (path.match(/^nyu\.[^.]+$/i)) {
+        isConfigNYU = true;
     }
 
     try {
@@ -487,6 +492,7 @@ function runBackstop(scenario, action = "test", originalAction = "", alwaysAppro
     config.scenarios = [
         {
             label: name,
+            onBeforeScript: isConfigNYU ? "../../playwright/interceptGoogleMaps.js" : undefined,
             cookiePath: "",
             url: scenario["url1"],
             referenceUrl: (scenario["url2"] || ""),
@@ -563,13 +569,11 @@ function runBackstop(scenario, action = "test", originalAction = "", alwaysAppro
         }
     }
 
-    backstop(parsedAction, { config: config })
-        .then(() => {
-            runNextSteps(true);
-        })
-        .catch(() => {
-            runNextSteps(false);
-        });
+    backstop(parsedAction, { config: config }).then(() => {
+        runNextSteps(true);
+    }).catch(() => {
+        runNextSteps(false);
+    });
 }
 
 /**
