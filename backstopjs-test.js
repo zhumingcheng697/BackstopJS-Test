@@ -92,7 +92,7 @@ function loadYamlConfig(path) {
         return;
     }
 
-    if (path.match(/^nyu\.[^.]+$/i)) {
+    if (path.match(/^(?:[^/]*\/)*nyu\.[^./]+$/i)) {
         isConfigNYU = true;
     }
 
