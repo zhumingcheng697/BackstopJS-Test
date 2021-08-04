@@ -140,7 +140,7 @@ function forEachFile(dir, callback, recursive = true) {
  *
  * @return {void}
  */
-function fixWebkitForUbuntu() {
+function applyUbuntuWebkitFix() {
     try {
         if (os.platform() === "linux") {
             if (fs.existsSync("/etc/os-release")) {
@@ -168,4 +168,4 @@ function fixWebkitForUbuntu() {
     }
 }
 
-module.exports = { reportSourceFilePath, logStyle, BrowserName, resolveBrowserType, resolveBrowserList, forEachFile, fixWebkitForUbuntu };
+module.exports = { reportSourceFilePath, logStyle, BrowserName, resolveBrowserType, resolveBrowserList, forEachFile, applyUbuntuWebkitFix };
