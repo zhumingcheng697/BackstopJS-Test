@@ -135,7 +135,7 @@ function forEachFile(dir, callback, recursive = true) {
 }
 
 /**
- * Overrides the system setup to fix WebKit for Ubuntu 20 and newer.
+ * Overrides the system setup to fix WebKit on Ubuntu 20 and newer.
  *
  * @return {void}
  */
@@ -163,7 +163,7 @@ function applyUbuntuWebkitFix() {
             }
         }
     } catch (e) {
-        console.error(`${logStyle.fg.red}Failed to apply fix for WebKit on Ubuntu 20 and newer${logStyle.reset}`);
+        console.error(`${logStyle.fg.red}Failed to apply fix for WebKit on Ubuntu 20 and newer:\n${e}${logStyle.reset}`);
     }
 }
 
