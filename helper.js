@@ -1,4 +1,3 @@
-const os = require("os");
 const fs = require("fs");
 const path = require("path");
 
@@ -142,7 +141,7 @@ function forEachFile(dir, callback, recursive = true) {
  */
 function applyUbuntuWebkitFix() {
     try {
-        if (os.platform() === "linux") {
+        if (process.platform === "linux") {
             if (fs.existsSync("/etc/os-release")) {
                 const osRelease = fs.readFileSync("/etc/os-release", "utf8");
                 const osName = osRelease.match(/\bNAME=([^\n]+)/i)[1];
