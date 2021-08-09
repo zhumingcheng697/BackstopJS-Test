@@ -134,37 +134,37 @@ function forEachFile(dir, callback, recursive = true) {
     }
 }
 
-/**
- * Overrides the system setup to fix WebKit on Ubuntu 20 and newer.
- *
- * @return {void}
- */
-function applyUbuntuWebkitFix() {
-    try {
-        if (process.platform === "linux") {
-            if (fs.existsSync("/etc/os-release")) {
-                const osRelease = fs.readFileSync("/etc/os-release", "utf8");
-                const osName = osRelease.match(/\bNAME=([^\n]+)/i)[1];
-                if (osName && osName.toLowerCase().includes("ubuntu")) {
-                    const osVersion = osRelease.match(/\bVERSION="?([0-9]+(?:\.[0-9]+)*)/i)[1];
-                    if (osVersion && osVersion.split(".").map(Number)[0] >= 20) {
-                        if (!fs.existsSync("/etc/gnutls")) {
-                            fs.mkdirSync("/etc/gnutls");
-                        }
+// /**
+//  * Overrides the system setup to fix WebKit on Ubuntu 20 and newer.
+//  *
+//  * @return {void}
+//  */
+// function applyUbuntuWebkitFix() {
+//     try {
+//         if (process.platform === "linux") {
+//             if (fs.existsSync("/etc/os-release")) {
+//                 const osRelease = fs.readFileSync("/etc/os-release", "utf8");
+//                 const osName = osRelease.match(/\bNAME=([^\n]+)/i)[1];
+//                 if (osName && osName.toLowerCase().includes("ubuntu")) {
+//                     const osVersion = osRelease.match(/\bVERSION="?([0-9]+(?:\.[0-9]+)*)/i)[1];
+//                     if (osVersion && osVersion.split(".").map(Number)[0] >= 20) {
+//                         if (!fs.existsSync("/etc/gnutls")) {
+//                             fs.mkdirSync("/etc/gnutls");
+//                         }
+//
+//                         const configStr = "[overrides]\ndefault-priority-string = NORMAL:-VERS-ALL:+VERS-TLS1.3:+VERS-TLS1.2:+VERS-DTLS1.2:%PROFILE_LOW";
+//
+//                         if (!fs.existsSync("/etc/gnutls/config") || !fs.readFileSync("/etc/gnutls/config", "utf8").includes(configStr)) {
+//                             fs.appendFileSync("/etc/gnutls/config", configStr);
+//                             console.log(`${logStyle.fg.green}Fix applied successfully for WebKit on Ubuntu ${osVersion}${logStyle.reset}`);
+//                         }
+//                     }
+//                 }
+//             }
+//         }
+//     } catch (e) {
+//         console.error(`${logStyle.fg.red}Failed to apply fix for WebKit on Ubuntu 20 and newer:\n${e}${logStyle.reset}`);
+//     }
+// }
 
-                        const configStr = "[overrides]\ndefault-priority-string = NORMAL:-VERS-ALL:+VERS-TLS1.3:+VERS-TLS1.2:+VERS-DTLS1.2:%PROFILE_LOW";
-
-                        if (!fs.existsSync("/etc/gnutls/config") || !fs.readFileSync("/etc/gnutls/config", "utf8").includes(configStr)) {
-                            fs.appendFileSync("/etc/gnutls/config", configStr);
-                            console.log(`${logStyle.fg.green}Fix applied successfully for WebKit on Ubuntu ${osVersion}${logStyle.reset}`);
-                        }
-                    }
-                }
-            }
-        }
-    } catch (e) {
-        console.error(`${logStyle.fg.red}Failed to apply fix for WebKit on Ubuntu 20 and newer:\n${e}${logStyle.reset}`);
-    }
-}
-
-module.exports = { reportSourceFilePath, logStyle, BrowserName, resolveBrowserType, resolveBrowserList, forEachFile, applyUbuntuWebkitFix };
+module.exports = { reportSourceFilePath, logStyle, BrowserName, resolveBrowserType, resolveBrowserList, forEachFile };

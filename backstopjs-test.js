@@ -4,7 +4,7 @@ const readline = require("readline");
 const backstop = require("backstop-playwright");
 const combineReports = require("./combine-reports");
 
-const { logStyle, resolveBrowserType, BrowserName } = require("./helper");
+const { logStyle, BrowserName, resolveBrowserType } = require("./helper");
 
 /**
  * Default Backstop configuration for all runs.
@@ -14,7 +14,7 @@ const { logStyle, resolveBrowserType, BrowserName } = require("./helper");
 const defaultConfig = {
     engine: "playwright",
     engineOptions: {
-        "args": ["--no-sandbox"]
+        args: ["--no-sandbox"]
     },
     asyncCaptureLimit: 20,
     asyncCompareLimit: 100,
