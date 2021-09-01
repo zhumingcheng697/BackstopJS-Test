@@ -17,6 +17,7 @@ const defaultConfig = {
         args: ["--no-sandbox"]
     },
     asyncCaptureLimit: 20,
+    // asyncCompareLimit: 100,
     asyncCompareLimit: 50, // Config change #1
     debug: false,
     debugWindow: false
@@ -502,6 +503,7 @@ function runBackstop(scenario, action = "test", originalAction = "", alwaysAppro
             referenceUrl: (scenario["url2"] || ""),
             readyEvent: "",
             readySelector: "",
+            // delay: (parseFloat(scenario.delay || "0") || 0) * 1000,
             delay: (parseFloat(scenario.delay || "0") || 15) * 1000, // Config change #2
             hideSelectors: [],
             removeSelectors: [],
@@ -511,7 +513,9 @@ function runBackstop(scenario, action = "test", originalAction = "", alwaysAppro
             selectors: [],
             selectorExpansion: true,
             expect: 0,
+            // misMatchThreshold: 0.1,
             misMatchThreshold: 0.2, // Config change #3
+            // requireSameDimensions: true
             requireSameDimensions: false // Config change #4
         }
     ];
