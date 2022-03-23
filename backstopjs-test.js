@@ -14,6 +14,8 @@ const { logStyle, BrowserName, resolveBrowserType } = require("./helper");
 const defaultConfig = {
     engine: "playwright",
     engineOptions: {
+        timeout: 300000,
+        waitTimeout: 300000,
         args: ["--no-sandbox"]
     },
     asyncCaptureLimit: 20,

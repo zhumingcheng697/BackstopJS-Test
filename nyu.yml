@@ -1,144 +1,144 @@
 urls:
   - name: Alumni Role
-    url1: http://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/alumni-role-page.html
-    url2: http://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/alumni-role-page.html
+    url1: https://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/alumni-role-page.html
+    url2: https://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/alumni-role-page.html
 
   - name: Alumni Content
-    url1: http://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/alumni-role-page/alumni-content-template.html
-    url2: http://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/alumni-role-page/alumni-content-template.html
+    url1: https://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/alumni-role-page/alumni-content-template.html
+    url2: https://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/alumni-role-page/alumni-content-template.html
 
   - name: Alumni Content w Sidebar
-    url1: http://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/alumni-role-page/alumni-content-template-w-sidebar.html
-    url2: http://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/alumni-role-page/alumni-content-template-w-sidebar.html
+    url1: https://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/alumni-role-page/alumni-content-template-w-sidebar.html
+    url2: https://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/alumni-role-page/alumni-content-template-w-sidebar.html
 
   - name: Undergrad Admissions Landing
-    url1: http://qacms.home.nyu.edu/admissions/undergraduate-admissions.html
-    url2: http://www.nyu.edu/admissions/undergraduate-admissions.html
+    url1: https://qacms.home.nyu.edu/admissions/undergraduate-admissions.html
+    url2: https://www.nyu.edu/admissions/undergraduate-admissions.html
 
   - name: Undergrad Admissions Page
-    url1: http://qacms.home.nyu.edu/admissions/undergraduate-admissions/majors-and-programs.html
-    url2: http://www.nyu.edu/admissions/undergraduate-admissions/majors-and-programs.html
+    url1: https://qacms.home.nyu.edu/admissions/undergraduate-admissions/majors-and-programs.html
+    url2: https://www.nyu.edu/admissions/undergraduate-admissions/majors-and-programs.html
 
   - name: Homepage
-    url1: http://qacms.home.nyu.edu/
-    url2: http://www.nyu.edu/
+    url1: https://qacms.home.nyu.edu/
+    url2: https://www.nyu.edu/
 
   - name: Channel
-    url1: http://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel.html
-    url2: http://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel.html
+    url1: https://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel.html
+    url2: https://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel.html
 
   - name: Role
-    url1: http://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/role.html
-    url2: http://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/role.html
+    url1: https://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/role.html
+    url2: https://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/role.html
 
   - name: Content
-    url1: http://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/content-template.html
-    url2: http://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/content-template.html
+    url1: https://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/content-template.html
+    url2: https://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/content-template.html
 
   - name: Content with Sidebar
-    url1: http://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/content-template-with-sidebar.html
-    url2: http://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/content-template-with-sidebar.html
+    url1: https://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/content-template-with-sidebar.html
+    url2: https://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/content-template-with-sidebar.html
 
   - name: Study Abroad Home
-    url1: http://qacms.home.nyu.edu/sydney.html
-    url2: http://www.nyu.edu/sydney.html
+    url1: https://qacms.home.nyu.edu/sydney.html
+    url2: https://www.nyu.edu/sydney.html
 
   - name: Study Abroad Landing (1)
-    url1: http://qacms.home.nyu.edu/sydney/about-us.html
-    url2: http://www.nyu.edu/sydney/about-us.html
+    url1: https://qacms.home.nyu.edu/sydney/about-us.html
+    url2: https://www.nyu.edu/sydney/about-us.html
 
   - name: Study Abroad Content (1)
-    url1: http://qacms.home.nyu.edu/sydney/student-life/living-in-sydney.html
-    url2: http://www.nyu.edu/sydney/student-life/living-in-sydney.html
+    url1: https://qacms.home.nyu.edu/sydney/student-life/living-in-sydney.html
+    url2: https://www.nyu.edu/sydney/student-life/living-in-sydney.html
 
   - name: Study Abroad Content with Sidebar (1)
-    url1: http://qacms.home.nyu.edu/sydney/student-life/living-in-sydney/beaches.html
-    url2: http://qacms.home.nyu.edu/sydney/student-life/living-in-sydney/beaches.html
+    url1: https://qacms.home.nyu.edu/sydney/student-life/living-in-sydney/beaches.html
+    url2: https://qacms.home.nyu.edu/sydney/student-life/living-in-sydney/beaches.html
 
   - name: Org Page
-    url1: http://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/organization-page.html
-    url2: http://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/organization-page.html
+    url1: https://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/organization-page.html
+    url2: https://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/organization-page.html
 
   - name: Personnel Bio Page
-    url1: http://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/organization-page/personnel-bio-page.html
-    url2: http://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/organization-page/personnel-bio-page.html
+    url1: https://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/organization-page/personnel-bio-page.html
+    url2: https://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/organization-page/personnel-bio-page.html
 
   - name: Policy Detail
-    url1: http://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/policy/policy-detail.html
-    url2: http://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/policy/policy-detail.html
+    url1: https://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/policy/policy-detail.html
+    url2: https://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/policy/policy-detail.html
 
   - name: Policy Search
-    url1: http://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/policy/policy-search.html
-    url2: http://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/policy/policy-search.html
+    url1: https://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/policy/policy-search.html
+    url2: https://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/policy/policy-search.html
 
   - name: News Landing
-    url1: http://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/news-landing.html
-    url2: http://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/news-landing.html
+    url1: https://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/news-landing.html
+    url2: https://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/news-landing.html
 
   - name: News Year Archive
-    url1: http://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/news-landing/news-year-archive.html
-    url2: http://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/news-landing/news-year-archive.html
+    url1: https://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/news-landing/news-year-archive.html
+    url2: https://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/news-landing/news-year-archive.html
 
   - name: News Month Archive
-    url1: http://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/news-landing/news-year-archive/news-month-archive.html
-    url2: http://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/news-landing/news-year-archive/news-month-archive.html
+    url1: https://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/news-landing/news-year-archive/news-month-archive.html
+    url2: https://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/news-landing/news-year-archive/news-month-archive.html
 
   - name: News Release
-    url1: http://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/news-landing/news-year-archive/news-month-archive/news-release-article.html
-    url2: http://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/news-landing/news-year-archive/news-month-archive/news-release-article.html
+    url1: https://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/news-landing/news-year-archive/news-month-archive/news-release-article.html
+    url2: https://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/news-landing/news-year-archive/news-month-archive/news-release-article.html
 
   - name: News Story
-    url1: http://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/news-landing/news-year-archive/news-month-archive/news-story-article.html
-    url2: http://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/news-landing/news-year-archive/news-month-archive/news-story-article.html
+    url1: https://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/news-landing/news-year-archive/news-month-archive/news-story-article.html
+    url2: https://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/news-landing/news-year-archive/news-month-archive/news-story-article.html
 
   - name: News Category
-    url1: http://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/news-landing/news-category.html
-    url2: http://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/news-landing/news-category.html
+    url1: https://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/news-landing/news-category.html
+    url2: https://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/news-landing/news-category.html
 
   - name: News Series
-    url1: http://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/news-landing/series-archive/news-series.html
-    url2: http://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/news-landing/series-archive/news-series.html
+    url1: https://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/news-landing/series-archive/news-series.html
+    url2: https://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/news-landing/series-archive/news-series.html
 
   - name: News Series Archive
-    url1: http://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/news-landing/series-archive.html
-    url2: http://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/news-landing/series-archive.html
+    url1: https://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/news-landing/series-archive.html
+    url2: https://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/channel/news-landing/series-archive.html
 
   - name: News Search Results
-    url1: http://qacms.home.nyu.edu/about/news-publications/news/search.html?kw=test
-    url2: http://www.nyu.edu/about/news-publications/news/search.html?kw=test
+    url1: https://qacms.home.nyu.edu/about/news-publications/news/search.html?kw=test
+    url2: https://www.nyu.edu/about/news-publications/news/search.html?kw=test
 
   - name: Search (web)
-    url1: http://qacms.home.nyu.edu/search.html?search=testing
-    url2: http://www.nyu.edu/search.html?search=testing
+    url1: https://qacms.home.nyu.edu/search.html?search=testing
+    url2: https://www.nyu.edu/search.html?search=testing
 
   - name: Search (people)
-    url1: http://qacms.home.nyu.edu/search.html?search=varoqua&st=people
-    url2: http://www.nyu.edu/search.html?search=varoqua&st=people
+    url1: https://qacms.home.nyu.edu/search.html?search=varoqua&st=people
+    url2: https://www.nyu.edu/search.html?search=varoqua&st=people
 
   - name: Error
-    url1: http://qacms.home.nyu.edu/fake
-    url2: http://www.nyu.edu/fake
+    url1: https://qacms.home.nyu.edu/fake
+    url2: https://www.nyu.edu/fake
 
   - name: Campus Map
-    url1: http://qacms.home.nyu.edu/footer/map.html
-    url2: http://www.nyu.edu/footer/map.html
+    url1: https://qacms.home.nyu.edu/footer/map.html
+    url2: https://www.nyu.edu/footer/map.html
 
   - name: Content Template - Col Ctrl1
-    url1: http://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/role/content_col-ctrl1.html
-    url2: http://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/role/content_col-ctrl1.html
+    url1: https://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/role/content_col-ctrl1.html
+    url2: https://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/role/content_col-ctrl1.html
 
   - name: Content Template - Col Ctrl2
-    url1: http://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/role/content_col-ctrl2.html
-    url2: http://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/role/content_col-ctrl2.html
+    url1: https://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/role/content_col-ctrl2.html
+    url2: https://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/role/content_col-ctrl2.html
 
   - name: Content Template - Col Ctrl3
-    url1: http://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/role/content_col-ctrl3.html
-    url2: http://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/role/content_col-ctrl3.html
+    url1: https://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/role/content_col-ctrl3.html
+    url2: https://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/role/content_col-ctrl3.html
 
   - name: Column Control - Content w Sidebar 1
-    url1: http://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/role/contentsidebar_col-ctrl11.html
-    url2: http://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/role/contentsidebar_col-ctrl11.html
+    url1: https://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/role/contentsidebar_col-ctrl11.html
+    url2: https://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/role/contentsidebar_col-ctrl11.html
 
   - name: Column Control - Content w Sidebar 2
-    url1: http://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/role/contentsidebar_col-ctrl21.html
-    url2: http://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/role/contentsidebar_col-ctrl21.html
+    url1: https://qacms.home.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/role/contentsidebar_col-ctrl21.html
+    url2: https://www.nyu.edu/employees/resources-and-services/media-and-communications/digital-communications/test/qa-regression/role/contentsidebar_col-ctrl21.html
